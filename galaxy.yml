@@ -1,14 +1,15 @@
 ---
 authors:
   - Ansible Network Community (ansible-network)
+  - Nikita Mishagin
 dependencies:
   "ansible.netcommon": ">=8.1.0"
 license_file: LICENSE
-name: ios
-namespace: cisco
-description: Ansible Network Collection for Cisco IOS devices.
+name: mes
+namespace: nikitamishagin
+description: Ansible Network Collection for Eltex MES devices.
 readme: README.md
-repository: https://github.com/ansible-collections/cisco.ios
-issues: https://github.com/ansible-collections/cisco.ios/issues
-tags: [cisco, ios, iosxe, networking]
-version: "11.0.0"
+repository: https://github.com/nikitamishagin/ansible_eltex
+issues: https://github.com/nikitamishagin/ansible_eltex/issues
+tags: [eltex, mes, networking]
+version: "0.0.1"
