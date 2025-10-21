@@ -114,6 +114,7 @@ venv.bak/
 *.code-workspace
 .vscode/
 .DS_Store
+.idea/
 
 changelogs/.plugin-cache.yaml
 .ansible/.lock
