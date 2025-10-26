@@ -1,0 +1,114 @@
+---
+- name: Check the ntp config of eltex switchs for upgrading
+#!!! Here need to enter group-hosts !!!
+  hosts: hosts
+#lan-global-mes
+#labstand_eltex
+  gather_facts: false
+
+  vars:
+#    ansible_connection: ansible.netcommon.network_cli
+    ansible_connection: network_cli
+    ansible_network_os: cisco.ios.ios
+
+  tasks:
+  - name: Get system info
+    ansible.netcommon.cli_command:
+      command: show system | include MES
+    register: sh_sys
+
+  - name: Check switch series
+# Parse output system info
+    set_fact:
+      switch_model: "{{ sh_sys.stdout | parse_cli_textfsm('/ansible/sh_sys.textfsm') }}"
+    failed_when:
+#!!! Here need to enter all supported model !!!
+    - switch_model[0]["Model"] != "2324" and
+      switch_model[0]["Model"] != "2324P" and
+      switch_model[0]["Model"] != "2348P" and
+      switch_model[0]["Model"] != "2348B" and
+      switch_model[0]["Model"] != "3324F" and
+      switch_model[0]["Model"] != "3324" and
+      switch_model[0]["Model"] != "2124" and
+      switch_model[0]["Model"] != "2124P" and
+      switch_model[0]["Model"] != "2124M" and
+      switch_model[0]["Model"] != "2124MB" and
+      switch_model[0]["Model"] != "3124F" and
+      switch_model[0]["Model"] != "3124"
+
+  - name: Check ntp config (mes2300)
+    when:
+    - switch_model[0]["Model"] == "2324" or
+      switch_model[0]["Model"] == "2324P" or
+      switch_model[0]["Model"] == "2348P" or
+      switch_model[0]["Model"] == "2348B" or
+      switch_model[0]["Model"] == "3324F" or
+      switch_model[0]["Model"] == "3324"
+    block:
+    - name: Get system info
+      ansible.netcommon.cli_command:
+        command: show ip interface
+      register: sh_ip_int
+
+    - name: Define mgmt vlan id
+# Parse output version info
+      set_fact:
+        mgmt_vlan: "{{ sh_ip_int.stdout | parse_cli_textfsm('/ansible/vlan-id.textfsm') }}"
+      failed_when: mgmt_vlan[0] is not defined
+
+    - name: Configure ntp
+      vars:
+        ansible_command_timeout: 60
+      cisco.ios.ios_config:
+        lines:
+#        - no sntp server 172.31.192.34
+#        - no sntp server 172.31.192.53
+#        - no sntp unicast client poll
+        - clock timezone MSK +3
+        - clock source sntp
+        - sntp source-interface vlan {{ mgmt_vlan[0]["Vlan_id"] }}
+        - sntp unicast client enable
+        - sntp server 172.31.172.15
+        - sntp server 172.31.172.30
+        - sntp client poll timer 180
+
+  - name: Check ntp config (mes2000)
+    when:
+    - switch_model[0]["Model"] == "2124" or
+      switch_model[0]["Model"] == "2124P" or
+      switch_model[0]["Model"] == "2124M" or
+      switch_model[0]["Model"] == "2124MB" or
+      switch_model[0]["Model"] == "3124F" or
+      switch_model[0]["Model"] == "3124"
+    cisco.ios.ios_config:
+      lines:
+#      - no sntp server 172.31.192.34
+#      - no sntp server 172.31.192.53
+#      - no sntp unicast client poll
+      - clock timezone MSK +3
+      - clock source sntp
+      - sntp unicast client enable
+      - sntp server 172.31.172.15
+      - sntp server 172.31.172.30
+      - sntp client poll timer 180
+
+  - name: Save config
+    register: write_out
+    cisco.ios.ios_command:
+      commands:
+      - command: 'write'
+        prompt: 'Overwrite file '
+        answer: 'y'
+#      wait_for:
+#      - result[0] contains 'Copy succeeded'
+    changed_when: write_out.stdout is search(".*Copy succeeded.*")
+    failed_when: write_out.stdout is not search(".*Copy succeeded.*")
+
+  - name: Get clock
+    register: sh_clock
+    cisco.ios.ios_command:
+      commands: show clock
+
+  - name: Show clock
+    debug:
+      msg: "{{ sh_clock.stdout }}"

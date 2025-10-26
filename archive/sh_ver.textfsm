@@ -1,0 +1,13 @@
+Value Active_image (\S+)
+Value Inactive_image (\S+)
+
+Start
+  ^\s*Active-* -> Act
+  ^\s*Inactive-* -> Inact
+
+
+Act
+  ^\s Version: ${Active_image} -> Start
+
+Inact
+  ^\s Version: ${Inactive_image} -> Start

@@ -1,0 +1,164 @@
+---
+- name: Check eltex switchs firmware
+#!!! Here need to enter group-hosts !!!
+  hosts: hosts
+#labstand_eltex
+  gather_facts: false
+
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+
+# For MES23-33 SERIES
+#!!! Here need to enter the number of the NEW firmware version for MES23-33 SERIES !!!
+    mes23_new_version: 4.0.16.5
+#!!! Here need to enter the path to the NEW firmware version for MES23-33 SERIES !!!
+    mes23_path_ver: boot system tftp://172.31.172.172/Eltex_firmware/mes2324/mes3300-4016-5R1.ros
+#!!! Here need to enter the size of the firmware image to check !!!
+# Show the size of the image: ls -l /path/to/image
+    mes23_byt_sum: 26533727 bytes copied in
+# For MES21 SERIES
+#!!! Here need to enter the number of the NEW bootloader version for MES21 SERIES !!!
+    mes21_new_bootloader: 0.0.1.7
+#!!! Here need to enter the path to the NEW bootloader version for MES21 SERIES !!!
+    mes21_path_bootloader: copy tftp://172.31.172.172/Eltex_firmware/mes2124/franchise_boot-0017.rfb boot
+#!!! Here need to enter the size of the bootloader image to check !!!
+# Show the size of the image: ls -l /path/to/image
+    mes21_bl_bytsum: 393232 bytes copied in
+#!!! Here need to enter the number of the NEW firmware version for MES21 SERIES !!!
+    mes21_new_version: 1.1.48.13[54de2175]
+#!!! Here need to enter the path to the NEW firmware version for MES21 SERIES !!!
+    mes21_path_ver: copy tftp://172.31.172.172/Eltex_firmware/mes2124/mes2000-114813.ros image 
+#!!! Here need to enter the size of the firmware image to check !!!
+# Show the size of the image: ls -l /path/to/image
+    mes21_fw_bytsum: 6587150 bytes copied in
+
+  tasks:
+  - name: Get system info
+    ansible.netcommon.cli_command:
+      command: show system
+    register: sh_sys
+# If you use the "ios_command" module, then parsing will display an error:
+# "parse_cli_textfsm input should be a string, but was given a input of <class 'list'>".
+
+  - name: Check switch series
+    set_fact:
+      switch_model: "{{ sh_sys.stdout | parse_cli_textfsm('/ansible/sh_sys.textfsm') }}"
+    failed_when:
+#!!! Here need to enter all supported model !!!
+    - switch_model[0]["Model"] != "2324" and
+      switch_model[0]["Model"] != "2324P" and
+      switch_model[0]["Model"] != "2348P" and
+      switch_model[0]["Model"] != "2348B" and
+      switch_model[0]["Model"] != "3324F" and
+      switch_model[0]["Model"] != "2124" and
+      switch_model[0]["Model"] != "2124M" and
+      switch_model[0]["Model"] != "2124P" and
+      switch_model[0]["Model"] != "2124MB" and
+      switch_model[0]["Model"] != "2124F"
+
+  - name: Clear schedule
+    ios_command:
+      commands: reload cancel
+    register: canc_output
+    changed_when: "'Reload cancelled' in canc_output.stdout"
+
+  - name: For mes23-33 series
+    when:
+    - switch_model[0]["Model"] == "2324" or
+      switch_model[0]["Model"] == "2324P" or
+      switch_model[0]["Model"] == "2348P" or
+      switch_model[0]["Model"] == "2348B" or
+      switch_model[0]["Model"] == "3324F"
+    block:
+    - name: Get version info
+      ansible.netcommon.cli_command:
+        command: show version
+      register: sh_ver
+
+    - name: Check active image
+      set_fact:
+        switch_facts: "{{ sh_ver.stdout | parse_cli_textfsm('/ansible/sh_ver.textfsm') }}"
+      failed_when: switch_facts[0]["Active_image"] == mes23_new_version
+
+    - name: Download new image
+      vars:
+        ansible_command_timeout: 400
+      when: switch_facts[0]["Inactive_image"] != mes23_new_version
+      ios_command:
+        commands: "{{ mes23_path_ver }}"
+      register: download_output
+      changed_when: "mes23_byt_sum in download_output.stdout[0]"
+      failed_when: "mes23_byt_sum not in download_output.stdout[0]"
+    # end block mes23-33 series
+
+  - name: For mes21 series
+    when:
+    - switch_model[0]["Model"] == "2124" or
+      switch_model[0]["Model"] == "2124P" or
+      switch_model[0]["Model"] == "2124F" or
+      switch_model[0]["Model"] == "2124M" or
+      switch_model[0]["Model"] == "2124MB"
+    block:
+    - name: Get boot info
+      ansible.netcommon.cli_command:
+        command: show version
+      register: sh_boot
+
+    - name: Check bootloader image
+      set_fact:
+        boot_facts: "{{ sh_boot.stdout | parse_cli_textfsm('/ansible/sh_boot_mes21.textfsm') }}"
+
+    - name: Download new bootloader image
+      vars:
+        ansible_command_timeout: 120
+      when: boot_facts[0]["Boot_image"] != mes21_new_bootloader
+      ios_command:
+        commands: "{{ mes21_path_bootloader }}"
+      register: download_output
+      changed_when: "mes21_bl_bytsum in download_output.stdout[0]"
+      failed_when: "mes21_bl_bytsum not in download_output.stdout[0]"
+
+    - name: Get version info
+      ansible.netcommon.cli_command:
+        command: show bootvar
+      register: sh_ver
+
+    - name: Check active image
+      set_fact:
+        version_facts: "{{ sh_ver.stdout | parse_cli_textfsm('/ansible/sh_ver_mes21.textfsm') }}"
+      failed_when: version_facts[0]["Active_image"] == mes21_new_version
+
+    - name: Define nember version
+      set_fact:
+        number_version: "{{ sh_ver.stdout | parse_cli_textfsm('/ansible/num_ver.textfsm') }}"
+      failed_when: number_version[0] is not defined
+
+    - name: Download new image
+      vars:
+        ansible_command_timeout: 300
+      when: 
+      - version_facts[0]["Inactive_image"] != mes21_new_version and
+        number_version[0]["Number"] >= 47
+      ios_command:
+        commands: "{{ mes21_path_ver }}"
+      register: download_output
+      changed_when: "mes21_fw_bytsum in download_output.stdout[0]"
+      failed_when: "mes21_fw_bytsum not in download_output.stdout[0]"
+
+    - name: Download 1.1.47 image
+      vars:
+        ansible_command_timeout: 300
+      when:
+      - version_facts[0]["Inactive_image"] != mes21_new_version and
+        number_version[0]["Number"] < 47       
+      ios_command:
+        commands: copy tftp://172.31.172.172/Eltex_firmware/mes2124/mes2000_1147.ros image
+      register: download_output
+      changed_when: "'6476145 bytes copied in' in download_output.stdout[0]"
+      failed_when: "'6476145 bytes copied in' not in download_output.stdout[0]"
+
+    - name: Set new image
+      ios_command:
+        commands: boot system inactive-image
+    #end block mes21 series
