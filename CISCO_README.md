@@ -1,3 +1,4 @@
+[//]: # (TODO: Rewrite this README, replace ios with mes, update the links)
 # Cisco IOS Collection
 
 [![CI](https://zuul-ci.org/gated.svg)](https://dashboard.zuul.ansible.com/t/ansible/project/github.com/ansible-collections/cisco.ios)
