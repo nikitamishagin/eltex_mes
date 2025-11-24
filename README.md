@@ -2,15 +2,13 @@
 
 **PROJECT UNDER DEVELOPMENT**
 
-🚀 Join the effort to build a dedicated Eltex Ansible collection!  
+🚀 Join the effort to build a dedicated Eltex Ansible collection!
 
 If you work with Eltex network devices and are familiar with Ansible/Python, I invite you to contribute. The plan is a
-phased adaptation of modules from the cisco.ios collection for Eltex devices within the dedicated
-`feature/ansible-collection` branch. Please propose and implement your Eltex-specific adaptations following the roadmap
-below.
+phased adaptation of modules from the cisco.ios collection for Eltex devices. Please propose and implement your
+Eltex-specific adaptations following the roadmap below.
 
 I’m happy to receive any suggestions, ideas, and support for creating this collection. Thank you!
-
 
 ## Common plan for improvement
 
@@ -90,7 +88,8 @@ Low applicability/typically not supported on MES:
 Playbooks for automating routine administration tasks of Eltex switches.
 (mes2100, mes2300, mes3300, mes3500, mes5300 series.)
 
-Modules ios_command and ios_config are suitable (almost) for work with Eltex switches. I made two changes to the modules:
+Modules ios_command and ios_config are suitable (almost) for work with Eltex switches. I made two changes to the
+modules:
 
 /usr/lib/python3/dist-packages/ansible_collections/cisco/ios/plugins/cliconf/ios.py
 self.send_command("configure terminal") // "configure terminal" -> "configure"
