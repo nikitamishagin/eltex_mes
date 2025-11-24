@@ -74,12 +74,12 @@ Conditionally applicable/depends on model and firmware (requires thorough verifi
 - `ios_ospfv3` - IPv6 OSPF support depends on model and software version; often available on high-end MES.
 - `ios_bgp_global` / `ios_bgp_address_family` - BGP is not on all MES; more common on higher-end models (MES53xx/75xx)
   and certain software versions. Adaptation is possible but highly model-dependent.
+- `ios_evpn_global` / `ios_evpn_evi` / `ios_evpn_ethernet` - сan be adapted based on documentation, but is challenging
+  and highly model/firmware-dependent.
+- `ios_vxlan_vtep` - сan be adapted based on documentation, but is challenging and rarely supported on MES.
 
 Low applicability/typically not supported on MES:
 
-- `ios_evpn_global` / `ios_evpn_evi` / `ios_evpn_ethernet` - EVPN/L2VPN is absent on most MES.
-- `ios_vxlan_vtep` - VXLAN/VTEP is rare on MES; generally not available. If VXLAN is needed, consider DC/specialized
-  lines; for MES it is usually inapplicable.
 - `ios_service` - IOS-specific service toggles/options (service timestamps, pad, etc.) may partially exist, but overlap
   is small; benefit is questionable.## Old description
 
