@@ -1,0 +1,57 @@
+---
+- ansible.builtin.debug: msg="START cli/set_name_servers.yaml on connection={{ ansible_connection }}"
+
+- name: Setup
+  cisco.ios.ios_config:
+    lines:
+      - no ip name-server
+    match: none
+
+- name: Configure name_servers
+  register: result
+  cisco.ios.ios_system:
+    name_servers:
+      - 192.0.2.1
+      - 192.0.2.2
+      - 192.0.2.3
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - result.commands|length == 3
+      - "'ip name-server 192.0.2.1' in result.commands"
+      - "'ip name-server 192.0.2.2' in result.commands"
+      - "'ip name-server 192.0.2.3' in result.commands"
+
+- name: Verify name_servers
+  register: result
+  cisco.ios.ios_system:
+    name_servers:
+      - 192.0.2.1
+      - 192.0.2.2
+      - 192.0.2.3
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+
+- name: Remove one
+  register: result
+  cisco.ios.ios_system:
+    name_servers:
+      - 192.0.2.1
+      - 192.0.2.2
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - result.commands|length == 1
+      - "'no ip name-server 192.0.2.3' in result.commands"
+
+- name: Teardown
+  cisco.ios.ios_config:
+    lines:
+      - no ip name-server
+    match: none
+
+- ansible.builtin.debug: msg="END cli/set_name_servers.yaml on connection={{ ansible_connection }}"

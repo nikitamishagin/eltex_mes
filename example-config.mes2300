@@ -1,0 +1,182 @@
+vlan database
+ vlan 2-4,6,8,11,27,100,200,2313,2335
+exit
+!
+port jumbo-frame
+!
+loopback-detection enable
+!
+hostname mes2324
+!
+management access-list MGMT
+ permit ip-source 192.168.1.0 mask 255.255.255.0
+ permit ip-source 10.200.12.64 mask 255.255.255.248
+ permit ip-source 10.10.250.152 mask 255.255.255.248
+exit
+!
+management access-class MGMT
+!
+logging host 192.168.1.222
+no logging console
+!
+aaa authentication mode break
+!
+line telnet
+ history size 180
+ exec-timeout 20
+exit
+!
+line ssh
+ history size 180
+ exec-timeout 20
+exit
+!
+username iac password encrypted XXXXX privilege 15
+!
+ip ssh server
+!
+snmp-server server
+snmp-server contact ooo
+encrypted snmp-server community XXXXXXX ro 192.168.1.0 mask 255.255.255.0 view Default
+encrypted snmp-server host 192.168.1.222 traps version 2c XXXX
+!
+aaa authentication login authorization default tacacs local
+aaa authentication enable authorization default tacacs enable
+!
+no ip http server
+!
+encrypted tacacs-server host 192.168.1.0 key XXXXXXXX
+!
+clock timezone MSK +3
+clock source sntp
+!
+sntp client poll timer 120
+sntp unicast client enable
+sntp server 192.168.1.155
+sntp server 192.168.1.200
+sntp source-interface vlan 28
+!
+service cpu-rate-limits arp-inspection 1024
+!
+interface gigabitethernet1/0/3
+ description FREE
+exit
+!
+interface gigabitethernet1/0/5
+ description other_device
+ switchport mode trunk
+ switchport trunk allowed vlan add 3-4,6
+exit
+!
+interface gigabitethernet1/0/8
+ loopback-detection enable
+ description other_device
+ spanning-tree disable
+exit
+!
+interface gigabitethernet1/0/9
+ description other_device
+ switchport access vlan 100
+exit
+!
+interface gigabitethernet1/0/10
+ description other_device
+ switchport access vlan 200
+exit
+!
+interface gigabitethernet1/0/11
+ description other_device
+ switchport mode trunk
+ switchport trunk allowed vlan add 100,200
+exit
+!
+interface gigabitethernet1/0/12
+ description other_device
+ switchport mode trunk
+ switchport trunk allowed vlan add 2-4,8,11
+exit
+!
+interface gigabitethernet1/0/22
+ description other_device
+ switchport mode trunk
+ switchport trunk allowed vlan add 2313,2335
+ lldp optional-tlv sys-name
+ lldp management-address automatic
+exit
+!
+interface gigabitethernet1/0/23
+ loopback-detection enable
+ description other_device
+ spanning-tree disable
+ switchport access vlan 28
+exit
+!
+interface gigabitethernet1/0/24
+ description other_device
+ switchport access vlan 28
+exit
+!
+interface tengigabitethernet1/0/1
+ shutdown
+ description FREE
+exit
+!
+interface tengigabitethernet1/0/2
+ shutdown
+ description FREE
+exit
+!
+interface tengigabitethernet1/0/3
+ description other_device
+ channel-group 1 mode auto
+exit
+!
+interface tengigabitethernet1/0/4
+ description other_device
+ channel-group 1 mode auto
+exit
+!
+interface Port-channel1
+ description other_device
+ switchport mode trunk
+ switchport trunk allowed vlan add 2-4,8,11,27,100,200,2313
+exit
+!
+interface vlan 1
+ no ip address dhcp
+exit
+!
+interface vlan 2
+ name some_name
+ ip address 172.25.25.2 255.255.255.0
+ shutdown
+exit
+!
+interface vlan 6
+ name some_name
+exit
+!
+interface vlan 8
+ name some_name
+exit
+!
+interface vlan 27
+ name MGT
+ ip address 10.200.12.66 255.255.255.248
+exit
+!
+interface vlan 2313
+ name some_name
+exit
+!
+interface vlan 2435
+ name some_name
+ ip address 10.10.250.155 255.255.255.248
+exit
+!
+!
+!
+ip default-gateway 10.10.250.153
+ip default-gateway 10.200.12.65
+!
+end

@@ -1,0 +1,19 @@
+---
+- ansible.builtin.debug: msg="START cli/contains.yaml on connection={{ ansible_connection }}"
+
+- name: Test contains operator
+  register: result
+  cisco.ios.ios_command:
+    commands:
+      - show version
+      - show interface loopback 888
+    wait_for:
+      - result[0] contains Cisco
+      - result[1] contains Loopback888
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+      - result.stdout is defined
+
+- ansible.builtin.debug: msg="END cli/contains.yaml on connection={{ ansible_connection }}"

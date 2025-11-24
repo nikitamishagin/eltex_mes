@@ -1,0 +1,135 @@
+---
+# cisco.ios.ios_config -> dumps, NetworkConfig
+
+- ansible.builtin.debug: msg="START cli/common_config.yaml on connection={{ ansible_connection }}"
+
+# Hit NetworkConfig
+
+- name: Set hostname
+  cisco.ios.ios_config:
+    lines:
+      - "hostname ios-smoke"
+    match: none
+
+- name: Hit diff_ignore_lines
+  cisco.ios.ios_config:
+    lines:
+      - "hostname ios-smoke-diff"
+    diff_ignore_lines:
+      - hostname ios-smoke
+    save_when: modified
+
+- name: Return hostname
+  cisco.ios.ios_config:
+    lines:
+      - "hostname {{ shorter_hostname }}"
+    match: none
+
+- name: Hit items with parents
+  cisco.ios.ios_config:
+    lines:
+      - "permit ip any any log"
+    parents:
+      - "ip access-list extended test"
+    match: exact
+  register: result
+
+- name: Teardown
+  cisco.ios.ios_config:
+    lines:
+      - "no ip access-list extended test"
+    match: none
+
+- name: Setup test networkconfig.difference, replace=block
+  cisco.ios.ios_config:
+    lines:
+      - permit ip host 192.0.2.1 any log
+      - permit ip host 192.0.2.2 any log
+      - permit ip host 192.0.2.3 any log
+    parents:
+      - "ip access-list extended test"
+    before:
+      - "no ip access-list extended test"
+    after:
+      - "exit"
+    match: none
+
+- name: Test networkconfig.difference, replace=block
+  cisco.ios.ios_config:
+    lines:
+      - permit ip host 192.0.2.1 any log
+      - permit ip host 192.0.2.2 any log
+      - permit ip host 192.0.2.3 any log
+      - permit ip host 192.0.2.4 any log
+    parents:
+      - "ip access-list extended test"
+    replace: block
+    after:
+      - "exit"
+  register: result
+
+- ansible.builtin.assert:
+    that:
+      - "result.changed == true"
+      - "'ip access-list extended test' in result.updates"
+      - "'permit ip host 192.0.2.1 any log' in result.updates"
+      - "'permit ip host 192.0.2.2 any log' in result.updates"
+      - "'permit ip host 192.0.2.3 any log' in result.updates"
+      - "'permit ip host 192.0.2.4 any log' in result.updates"
+
+- name: Teardown- networkconfig.difference, replace=block
+  cisco.ios.ios_config:
+    lines:
+      - no ip access-list extended test
+    match: none
+
+# CustomNetworkConfig
+# currently gets skipped because switch_type != 'L2'
+- ansible.builtin.set_fact: switch_type="{{ switch_type }}"
+
+- block:
+    - name: Setup - remove configuration used in test(part1)
+      cisco.ios.ios_config:
+        lines:
+          - no interface port-channel 20
+      ignore_errors: true
+
+    - name: Setup - remove configuration used in test(part2)
+      cisco.ios.ios_config:
+        lines:
+          - no interface port-channel 5
+      ignore_errors: true
+
+    - name: Setup - remove configuration used in test(part3)
+      cisco.ios.ios_config:
+        lines:
+          - no channel-group 20 mode active
+        parents: "{{ item }}"
+      loop:
+        - interface GigabitEthernet2
+        - interface GigabitEthernet3
+
+    - name: Teardown(part1)
+      cisco.ios.ios_config:
+        lines:
+          - no interface port-channel 20
+      ignore_errors: true
+
+    - name: Teardown(part2)
+      cisco.ios.ios_config:
+        lines:
+          - no interface port-channel 5
+      ignore_errors: true
+
+    - name: Teardown(part3)
+      cisco.ios.ios_config:
+        lines:
+          - no channel-group 20 mode active
+        parents: "{{ item }}"
+      loop:
+        - interface GigabitEthernet2
+        - interface GigabitEthernet3
+
+  when: switch_type == 'L2'
+
+- ansible.builtin.debug: msg="END cli/common_config.yaml on connection={{ ansible_connection }}"

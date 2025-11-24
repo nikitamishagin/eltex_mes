@@ -85,7 +85,7 @@ Low applicability/typically not supported on MES:
 - `ios_service` - IOS-specific service toggles/options (service timestamps, pad, etc.) may partially exist, but overlap
   is small; benefit is questionable.## Old description
 
-## Old description
+## Old description (files in ./archive/)
 
 Playbooks for automating routine administration tasks of Eltex switches.
 (mes2100, mes2300, mes3300, mes3500, mes5300 series.)

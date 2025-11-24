@@ -1,0 +1,82 @@
+---
+- ansible.builtin.debug:
+    msg: START Merged ios_l3_interfaces state for integration tests on connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+
+- block:
+    - name: L3_interface merged - merge provided configuration with device configuration
+      register: result
+      cisco.ios.ios_l3_interfaces: &id001
+        config:
+          - name: Loopback999
+            ipv4:
+              - address: 192.0.2.1/24
+          - name: GigabitEthernet2
+            ipv6:
+              - autoconfig:
+                  enable: true
+          - name: GigabitEthernet3
+            helper_addresses:
+              ipv4:
+                - destination_ip: 10.0.0.1
+                  global: true
+                - destination_ip: 10.0.0.2
+            ipv4:
+              - address: 198.51.100.1/24
+                secondary: true
+              - address: 198.51.100.2/24
+
+            ipv6:
+              - address: 2001:db8:0:3::/64
+          - name: Vlan901
+            autostate: false
+            ipv4:
+              - source_interface:
+                  name: Loopback1
+            ipv6:
+              - enable: true
+          - name: Vlan902
+            autostate: true
+            ipv6:
+              - enable: true
+          - name: Vlan101
+            autostate: false
+        state: merged
+
+    - name: L3_interface merged - assert that correct set of commands were generated
+      ansible.builtin.assert:
+        that:
+          - "{{ merged['commands'] | symmetric_difference(result['commands']) | length == 0 }}"
+
+    - name: L3_interface merged - assert that before dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - >
+            {{
+              result['before']
+              | selectattr('name', 'in', 'GigabitEthernet1,GigabitEthernet2,GigabitEthernet3,GigabitEthernet4')
+              | symmetric_difference(merged['before'])
+              | length == 0
+            }}
+
+    - name: L3_interface merged - assert that after dict is correctly generated
+      ansible.builtin.assert:
+        that:
+          - >
+            {{
+              result['after']
+              | rejectattr('name', 'in', 'Loopback888')
+              | symmetric_difference(merged['after'])
+              | length == 0
+            }}
+
+    - name: L3_interface merged - merge provided configuration with device configuration (idempotent)
+      register: result
+      cisco.ios.ios_l3_interfaces: *id001
+    - name: L3_interface merged - assert that the previous task was idempotent
+      ansible.builtin.assert:
+        that:
+          - result['changed'] == false
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

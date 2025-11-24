@@ -1,0 +1,7 @@
+Value Active_image (\S+)
+Value Inactive_image (\S+)
+
+Start
+  ^\s*.*image-.    ${Inactive_image}*.*Not active
+  ^\s*.*image-.    ${Active_image}*.*Active
+  

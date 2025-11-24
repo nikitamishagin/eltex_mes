@@ -1,0 +1,36 @@
+---
+- ansible.builtin.debug:
+    msg: Start ios_l3_interfaces rendered integration tests ansible_connection={{ ansible_connection }}
+
+- block:
+    - name: Render the commands for provided  configuration
+      become: true
+      register: result
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: Loopback999
+            ipv4:
+              - address: 192.0.2.1/24
+          - name: GigabitEthernet2
+            ipv4:
+              - dhcp:
+                  client_id: GigabitEthernet0/0
+                  hostname: test.com
+            ipv6:
+              - autoconfig:
+                  enable: true
+          - name: GigabitEthernet3
+            ipv4:
+              - address: 198.51.100.1/24
+                secondary: true
+              - address: 198.51.100.2/24
+            ipv6:
+              - dhcp:
+                  enable: true
+              - address: 2001:db8:0:3::/64
+        state: rendered
+
+    - ansible.builtin.assert:
+        that:
+          - result.changed == false
+          - result.rendered|symmetric_difference(rendered.commands) == []

@@ -1,0 +1,3 @@
+---
+- name: Main task for ping module
+  ansible.builtin.include_tasks: cli.yaml

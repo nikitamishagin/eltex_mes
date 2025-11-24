@@ -1,0 +1,186 @@
+---
+- name: Tear down old users if they exist (setup)
+  become: true
+  cisco.ios.ios_user:
+    aggregate:
+      - name: ansibletest1
+      - name: ansibletest2
+      - name: ansibletest3
+      - name: ansibletest4
+      - name: ansibletest5
+      - name: ansibletest6
+    state: absent
+
+- name: Create user (setup)
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibletest1
+    privilege: 15
+    role: network-operator
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - result.commands == ["username ansibletest1 view network-operator", "username ansibletest1 privilege 15"]
+
+- name: Collection of users (setup)
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    aggregate:
+      - name: ansibletest2
+      - name: ansibletest3
+    state: present
+    view: network-admin
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - result.commands == ["username ansibletest2 view network-admin", "username ansibletest3 view network-admin"]
+
+- name: Add user again (idempotent)
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibletest1
+    privilege: 15
+    role: network-operator
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+      - result.commands | length == 0
+
+- name: Add collection of users again (idempotent)
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    aggregate:
+      - name: ansibletest2
+      - name: ansibletest3
+    state: present
+    view: network-admin
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+      - result.commands | length == 0
+
+- name: Create user with password_type (password)
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibleuser4
+    password_type: password
+    configured_password: testpass
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'username ansibleuser4 password' in result.commands[0]"
+
+- name: Create user with password_type (secret)
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibleuser5
+    password_type: secret
+    configured_password: testpass
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'username ansibleuser5 secret' in result.commands[0]"
+
+- name: Create user with hashed_password
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibleuser6
+    hashed_password:
+      type: 5
+      value: $1$SpMm$eALjeyED.WSZs0naLNv22/
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'username ansibleuser6 secret' in result.commands[0]"
+
+- name: Teardown
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    aggregate:
+      - name: ansibletest1
+      - name: ansibletest2
+      - name: ansibletest3
+      - name: ansibleuser4
+      - name: ansibleuser5
+      - name: ansibleuser6
+      - name: ansibleuser7
+      - name: ssh_user
+    state: absent
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - '"no username ansibletest1" in result.commands[0]["command"]'
+      - '"no username ansibletest2" in result.commands[1]["command"]'
+      - '"no username ansibletest3" in result.commands[2]["command"]'
+
+- name: Add user to check purge
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibletest1
+    privilege: 15
+    role: network-operator
+    state: present
+
+- name: Create user with hashed_password 9
+  become: true
+  register: result
+  cisco.ios.ios_user:
+    name: ansibleuser6
+    hashed_password:
+      type: 9
+      value: $9$B/6NVV7joWJ9w.$XueHQxIOZk0GhNC3lxUFioUeowJrtLmXxouXfTuoNpc
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'username ansibleuser6 secret' in result.commands[0]"
+
+- name: Ensure SSH key is not world readable
+  ansible.builtin.file:
+    path: "{{ role_path }}/files/test_rsa"
+    mode: 384
+
+- name: Create user with sshkey to check purge
+  cisco.ios.ios_user:
+    name: ssh_user
+    privilege: 15
+    state: present
+    sshkey: "{{ lookup('file', 'files/test_rsa.pub') }}"
+
+- name: Reset connection with {{ ansible_user }}
+  ansible.builtin.meta: reset_connection
+
+- name: check if purge removes ssh_user
+  become: true
+  register: result_purge
+  cisco.ios.ios_user:
+    aggregate:
+      - name: "{{ ansible_user }}"
+    purge: true
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true

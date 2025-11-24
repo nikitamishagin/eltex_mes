@@ -1,0 +1,38 @@
+---
+- name: Remove configuration
+  vars:
+    lines: |
+      interface loopback888
+      no description
+      no shutdown
+      interface loopback999
+      no description
+      no shutdown
+      interface GigabitEthernet 2
+      no description
+      no mtu
+      no speed
+      no shutdown
+      interface GigabitEthernet 3
+      no description
+      no mtu
+      no speed
+      no shutdown
+      interface GigabitEthernet 4
+      no description
+      no mtu
+      no speed
+      no shutdown
+  ansible.netcommon.cli_config:
+    config: "{{ lines }}"
+
+- name: Delete attributes of all configured interfaces
+  register: result
+  cisco.ios.ios_interfaces:
+    config:
+      - name: Port-channel10
+      - name: Port-channel11
+      - name: Port-channel22
+      - name: Port-channel40
+      - name: Loopback1
+    state: purged

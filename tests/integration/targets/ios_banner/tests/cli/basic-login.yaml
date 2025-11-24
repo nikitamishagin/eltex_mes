@@ -1,0 +1,73 @@
+---
+- name: Setup - remove login
+  cisco.ios.ios_banner:
+    banner: login
+    state: absent
+
+- name: Set login
+  register: result
+  cisco.ios.ios_banner:
+    banner: login
+    text: "this is my login banner\nthat has a multiline\nstring\n"
+    state: present
+
+- ansible.builtin.debug:
+    msg: "{{ result }}"
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'banner login @\nthis is my login banner\nthat has a multiline\nstring\n@' in result.commands"
+
+- name: Set login again (idempotent)
+  register: result
+  cisco.ios.ios_banner:
+    banner: login
+    text: "this is my login banner\nthat has a multiline\nstring"
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+      - result.commands | length == 0
+
+- name: Set login delimiter
+  register: result
+  cisco.ios.ios_banner:
+    multiline_delimiter: "x"
+    banner: login
+    text: "this is my login banner\nthat has a multiline\nstring\nand a non-default multiline_delimiter"
+    state: present
+
+- ansible.builtin.debug:
+    msg: "{{ result }}"
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == True
+      - "'banner login x\nthis is my login banner\nthat has a multiline\nstring\nand a non-default multiline_delimiter\nx' in result.commands"
+
+- name: Set new login banner that has multiline delimination characters present - preparation for the next test
+  register: result
+  cisco.ios.ios_banner:
+    banner: login
+    multiline_delimiter: "^CCC"
+    text: "this is my login banner\nthat has a multiline\nstring\nand a multiple C chars in the multiline_delimiter\n"
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'banner login ^CCC\nthis is my login banner\nthat has a multiline\nstring\nand a multiple C chars in the multiline_delimiter\n^CCC' in result.commands"
+
+- name: Set new banner over device banner configuration with multiline delimination chars present - testing dynamic and resilent banner regex search
+  register: result
+  cisco.ios.ios_banner:
+    banner: login
+    text: "this is my login banner\nthat has a multiline\nstring\n"
+    state: present
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+      - "'banner login @\nthis is my login banner\nthat has a multiline\nstring\n@' in result.commands"

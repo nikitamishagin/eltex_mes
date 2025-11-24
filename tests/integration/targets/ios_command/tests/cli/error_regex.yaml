@@ -1,0 +1,60 @@
+---
+- ansible.builtin.debug: msg="START cli/error_regex.yaml on connection={{ ansible_connection }}"
+
+- block:
+    - name: Clear logs 1
+      ignore_errors: true
+      ansible.netcommon.cli_command: &id001
+        command: clear logging
+        prompt:
+          - Clear logging buffer
+        answer:
+          - "\r"
+
+    - name: Increase log buffer size
+      ansible.netcommon.cli_config:
+        config: logging buffered 9600000
+
+    - name: Send log with error regex match 1
+      ignore_errors: true
+      ansible.netcommon.cli_command: &id002
+        command: "send log 'IPSEC-3-REPLAY_ERROR: test log_1'\n"
+
+    - name: Pause to avoid rate limiting-1
+      ansible.builtin.pause:
+        seconds: 20
+
+    - name: Fetch logs without command specific error regex
+      register: result
+      ignore_errors: true
+      cisco.ios.ios_command:
+        commands:
+          - show logging
+
+    - name: Pause to avoid rate limiting-2
+      ansible.builtin.pause:
+        seconds: 20
+
+    - name: Clear logs 2
+      ignore_errors: true
+      ansible.netcommon.cli_command: *id001
+    - name: Send log with error regex match 2
+      ignore_errors: true
+      ansible.netcommon.cli_command: *id002
+    - name: Fetch logs with command specific error regex
+      register: result
+      vars:
+        ansible_terminal_stderr_re:
+          - pattern: connection timed out
+            flags: re.I
+      cisco.ios.ios_command:
+        commands:
+          - show logging
+
+    - name: Ensure task with modified error regex is success
+      ansible.builtin.assert:
+        that:
+          - result.failed == false
+  when: ansible_connection == 'ansible.netcommon.network_cli'
+
+- ansible.builtin.debug: msg="END cli/error_regex.yaml on connection={{ ansible_connection }}"

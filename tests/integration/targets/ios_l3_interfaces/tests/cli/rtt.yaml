@@ -1,0 +1,60 @@
+---
+- ansible.builtin.debug:
+    msg: START ios_l3_interfaces round trip integration tests on connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+
+- block:
+    - name: L3_interface RTT - apply the provided configuration (base config)
+      register: result
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: Loopback999
+            ipv4:
+              - address: 192.0.2.1/24
+          - name: GigabitEthernet1
+            ipv4:
+              - dhcp:
+                  enable: true
+          - name: GigabitEthernet3
+            ipv4:
+              - address: 198.51.100.1/24
+                secondary: true
+              - address: 198.51.100.2/24
+            ipv6:
+              - address: 2001:db8:0:3::/64
+        state: merged
+
+    - name: L3_interface RTT - gather layer 3 interfaces facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - "!all"
+          - "!min"
+        gather_network_resources:
+          - l3_interfaces
+
+    - name: L3_interface RTT - apply the provided configuration (config to be reverted)
+      # register: result
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: Loopback999
+            ipv4:
+              - address: 192.0.2.2/24
+          - name: GigabitEthernet1
+            ipv4:
+              - dhcp:
+                  enable: true
+        state: replaced
+
+    - name: L3_interface RTT - revert back to base configuration using facts round trip
+      register: revert
+      cisco.ios.ios_l3_interfaces:
+        config: "{{ ansible_facts['network_resources']['l3_interfaces'] }}"
+        state: overridden
+
+    - ansible.builtin.assert:
+        that:
+          - revert.changed == true
+          - "{{ revert['commands'] | symmetric_difference(rtt['commands']) | length == 0 }}"
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

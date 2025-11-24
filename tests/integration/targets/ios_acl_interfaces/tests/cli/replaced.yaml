@@ -1,0 +1,38 @@
+---
+- ansible.builtin.debug:
+    msg: Start ios_acl_interfaces replced integration tests ansible_connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _populate_config.yaml
+
+- block:
+    - name: Replaces device configuration of listed acl_interfaces with provided configuration
+      become: true
+      register: result
+      cisco.ios.ios_acl_interfaces: &id001
+        config:
+          - name: GigabitEthernet2
+            access_groups:
+              - afi: ipv4
+                acls:
+                  - name: 100
+                    direction: out
+
+                  - name: 110
+                    direction: in
+        state: replaced
+
+    - ansible.builtin.assert:
+        that:
+          - result.changed == true
+          - result.commands|symmetric_difference(replaced.commands) == []
+
+    - name: Replaces device configuration of listed acl_interfaces with provided configuration (idempotent)
+      become: true
+      register: result
+      cisco.ios.ios_acl_interfaces: *id001
+    - ansible.builtin.assert:
+        that:
+          - result.commands|length == 0
+          - result.changed == false
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

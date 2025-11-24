@@ -1,0 +1,38 @@
+---
+- ansible.builtin.debug:
+    msg: Start Deleted integration state for ios_lldp_global  ansible_connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+
+- ansible.builtin.include_tasks: _populate_config.yaml
+
+- block:
+    - name: Delete configured global lldp
+      register: result
+      cisco.ios.ios_lldp_global: &id001
+        state: deleted
+
+    - name: Assert that correct set of commands were generated
+      ansible.builtin.assert:
+        that:
+          - "{{ deleted['commands'] | symmetric_difference(result['commands']) | length == 0 }}"
+
+    - name: Assert that before dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - "{{ deleted['before'] == result['before'] }}"
+
+    - name: Assert that after dict is correctly generated
+      ansible.builtin.assert:
+        that:
+          - "{{ deleted['after'] == result['after'] }}"
+
+    - name: Delete configured global lldp (idempotent)
+      register: result
+      cisco.ios.ios_lldp_global: *id001
+    - name: Assert that the previous task was idempotent
+      ansible.builtin.assert:
+        that:
+          - result.changed == false
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

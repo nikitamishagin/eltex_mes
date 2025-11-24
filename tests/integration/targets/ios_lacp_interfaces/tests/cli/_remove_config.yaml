@@ -1,0 +1,30 @@
+---
+- name: Remove configuration
+  vars:
+    lines: |
+      interface GigabitEthernet 2
+      no lacp port-priority
+      interface GigabitEthernet 3
+      no lacp port-priority
+      interface GigabitEthernet 4
+      no lacp port-priority
+      interface Port-channel 10
+      no lacp fast-switchover
+      no lacp max-bundle
+      interface Port-channel 40
+      no lacp fast-switchover
+      no lacp max-bundle
+  when: ansible_net_version != "15.6(2)T"
+  ansible.netcommon.cli_config:
+    config: "{{ lines }}"
+
+- name: Delete attributes of all configured interfaces
+  register: result
+  cisco.ios.ios_interfaces:
+    config:
+      - name: Loopback1
+      - name: Port-channel10
+      - name: Port-channel11
+      - name: Port-channel22
+      - name: Port-channel40
+    state: purged

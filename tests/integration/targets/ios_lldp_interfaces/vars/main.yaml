@@ -1,0 +1,188 @@
+---
+merged:
+  before:
+    - name: GigabitEthernet1
+      receive: false
+      transmit: false
+    - name: GigabitEthernet2
+      receive: false
+      transmit: false
+    - name: GigabitEthernet3
+      receive: false
+      transmit: false
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+  commands:
+    - interface GigabitEthernet1
+    - lldp receive
+    - lldp transmit
+    - interface GigabitEthernet2
+    - lldp receive
+    - lldp transmit
+    - interface GigabitEthernet3
+    - lldp receive
+  after:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: true
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: false
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+
+replaced:
+  before:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: true
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: true
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+  commands:
+    - interface GigabitEthernet2
+    - no lldp receive
+    - interface GigabitEthernet3
+    - no lldp transmit
+  after:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: false
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: false
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+
+overridden:
+  before:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: true
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: true
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+  commands:
+    - interface GigabitEthernet2
+    - no lldp receive
+    - no lldp transmit
+    - interface GigabitEthernet3
+    - no lldp transmit
+  after:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: false
+      transmit: false
+    - name: GigabitEthernet3
+      receive: true
+      transmit: false
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+
+deleted:
+  before:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: true
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: true
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+  commands:
+    - interface GigabitEthernet1
+    - no lldp receive
+    - no lldp transmit
+    - interface GigabitEthernet2
+    - no lldp receive
+    - no lldp transmit
+    - interface GigabitEthernet3
+    - no lldp receive
+    - no lldp transmit
+  after:
+    - name: GigabitEthernet1
+      receive: false
+      transmit: false
+    - name: GigabitEthernet2
+      receive: false
+      transmit: false
+    - name: GigabitEthernet3
+      receive: false
+      transmit: false
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+
+gathered:
+  config:
+    - name: GigabitEthernet1
+      receive: true
+      transmit: true
+    - name: GigabitEthernet2
+      receive: true
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: true
+    - name: GigabitEthernet4
+      receive: false
+      transmit: false
+
+parsed:
+  config:
+    - name: GigabitEthernet1
+      receive: false
+      transmit: true
+    - name: GigabitEthernet2
+      receive: true
+      transmit: true
+    - name: GigabitEthernet3
+      receive: true
+      transmit: false
+
+rtt:
+  commands:
+    - interface GigabitEthernet2
+    - lldp receive
+    - lldp transmit
+    - interface GigabitEthernet3
+    - lldp transmit
+
+rendered:
+  commands:
+    - interface GigabitEthernet1
+    - lldp receive
+    - lldp transmit
+    - interface GigabitEthernet2
+    - lldp receive
+    - lldp transmit
+    - interface GigabitEthernet3
+    - lldp receive

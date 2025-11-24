@@ -1,0 +1,44 @@
+---
+- ansible.builtin.debug: msg="START cli/toplevel_before.yaml on connection={{ ansible_connection }}"
+
+- name: Setup
+  cisco.ios.ios_config:
+    lines:
+      - snmp-server contact ansible
+      - hostname {{ shorter_hostname }}
+    match: none
+
+- name: Configure top level command with before
+  register: result
+  cisco.ios.ios_config:
+    lines:
+      - hostname foo
+    before:
+      - snmp-server contact bar
+
+# - ansible.builtin.assert:
+#     that:
+#       - result.changed == true
+#       - "'hostname foo' in result.updates"
+#       - "'snmp-server contact bar' in result.updates"
+
+- name: Configure top level command with before idempotent check
+  register: result
+  cisco.ios.ios_config:
+    lines:
+      - hostname foo
+    before:
+      - snmp-server contact foo
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+
+- name: Teardown
+  cisco.ios.ios_config:
+    lines:
+      - no snmp-server contact
+      - hostname {{ shorter_hostname }}
+    match: none
+
+- ansible.builtin.debug: msg="END cli/toplevel_before.yaml on connection={{ ansible_connection }}"

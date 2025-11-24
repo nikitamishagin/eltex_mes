@@ -1,0 +1,24 @@
+---
+- ansible.builtin.debug:
+    msg: Start ios_lldp_interfaces rendered integration tests ansible_connection={{ ansible_connection }}
+
+- block:
+    - name: Render the commands for provided  configuration
+      become: true
+      register: result
+      cisco.ios.ios_lldp_interfaces:
+        config:
+          - name: GigabitEthernet1
+            receive: true
+            transmit: true
+          - name: GigabitEthernet2
+            receive: true
+            transmit: true
+          - name: GigabitEthernet3
+            receive: true
+        state: rendered
+
+    - ansible.builtin.assert:
+        that:
+          - result.changed == false
+          - result.rendered|symmetric_difference(rendered.commands) == []

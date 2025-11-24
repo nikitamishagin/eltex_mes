@@ -1,0 +1,29 @@
+Directory of bootflash:/
+
+131075  drwx            24576  Jun 25 2023 13:10:37 +00:00  tracelogs
+131078  drwx             4096  Feb 21 2023 12:23:20 +00:00  .installer
+17      -rw-              509  Feb 21 2023 12:20:00 +00:00  cvac.log
+131124  drwx             4096  Feb 21 2023 12:19:59 +00:00  license_evlog
+
+
+5183766528 bytes total (4009947136 bytes free)
+
+Directory of flash:/
+
+131075  drwx            24576  Jun 25 2023 13:10:37 +00:00  tracelogs
+131078  drwx             4096  Feb 21 2023 12:23:20 +00:00  .installer
+17      -rw-              509  Feb 21 2023 12:20:00 +00:00  cvac.log
+131124  drwx             4096  Feb 21 2023 12:19:59 +00:00  license_evlog
+
+
+4183766528 bytes total (4009947136 bytes free)
+
+Directory of flash1:/
+
+131075  drwx            24576  Jun 25 2023 13:10:37 +00:00  tracelogs
+131078  drwx             4096  Feb 21 2023 12:23:20 +00:00  .installer
+17      -rw-              509  Feb 21 2023 12:20:00 +00:00  cvac.log
+131124  drwx             4096  Feb 21 2023 12:19:59 +00:00  license_evlog
+
+
+6183766528 bytes total (4009921136 bytes free)

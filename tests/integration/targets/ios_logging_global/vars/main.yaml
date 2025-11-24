@@ -1,0 +1,170 @@
+---
+merged:
+  before: {}
+  commands:
+    - logging on
+    - logging host 192.0.2.13 transport tcp port 514
+    - logging userinfo
+    - logging facility local5
+    - logging message-counter log
+    - logging dmvpn rate-limit 10
+    - logging host 192.0.2.12
+    - logging host 192.0.2.11 xml
+    - logging message-counter syslog
+    - logging buffered xml 5099 notifications
+    - logging console xml critical
+    - logging monitor warnings
+    - logging exception 4099
+    - logging host 192.0.2.10 filtered stream 10
+    - logging cns-events warnings
+    - logging trap informational
+
+  after:
+    buffered:
+      severity: notifications
+      size: 5099
+      xml: true
+    cns_events: warnings
+    console:
+      severity: critical
+      xml: true
+    dmvpn:
+      rate_limit: 10
+    exception: 4099
+    facility: local5
+    hosts:
+      - host: 192.0.2.10
+        filtered: true
+        stream: 10
+      - host: 192.0.2.11
+        xml: true
+      - host: 192.0.2.12
+      - host: 192.0.2.13
+        transport:
+          tcp:
+            port: 514
+    message_counter:
+      - log
+    monitor:
+      severity: warnings
+    trap: informational
+    userinfo: true
+
+replaced:
+  commands:
+    - logging buffered 6025 alerts
+    - no logging cns-events warnings
+    - no logging console xml critical
+    - no logging dmvpn rate-limit 10
+    - no logging exception 4099
+    - logging facility local6
+    - no logging monitor warnings
+    - logging trap errors
+    - no logging userinfo
+    - logging host 192.0.2.19
+    - no logging host 192.0.2.10
+    - logging host 192.0.2.10 filtered stream 15
+    - no logging host 192.0.2.11
+    - no logging host 192.0.2.12
+    - no logging host 192.0.2.13
+    - no logging message-counter log
+
+  after:
+    buffered:
+      severity: alerts
+      size: 6025
+    facility: local6
+    hosts:
+      - host: 192.0.2.10
+        filtered: true
+        stream: 15
+      - host: 192.0.2.19
+    trap: errors
+
+overridden:
+  commands:
+    - logging buffered xml 5099 warnings
+    - no logging cns-events warnings
+    - no logging console xml critical
+    - no logging dmvpn rate-limit 10
+    - no logging exception 4099
+    - logging facility local6
+    - logging monitor critical
+    - no logging trap informational
+    - no logging userinfo
+    - no logging host 192.0.2.12
+    - logging host 192.0.2.12 xml
+    - no logging host 192.0.2.10
+    - no logging host 192.0.2.11
+    - no logging host 192.0.2.13
+    - no logging message-counter log
+
+  after:
+    buffered:
+      severity: warnings
+      xml: true
+      size: 5099
+    facility: local6
+    hosts:
+      - host: 192.0.2.12
+        xml: true
+    monitor:
+      severity: critical
+
+deleted:
+  commands:
+    - no logging message-counter log
+    - no logging host 192.0.2.13
+    - no logging host 192.0.2.11
+    - no logging host 192.0.2.12
+    - no logging host 192.0.2.10
+    - no logging exception 4099
+    - no logging userinfo
+    - no logging buffered xml 5099 notifications
+    - no logging console xml critical
+    - no logging monitor warnings
+    - no logging cns-events warnings
+    - no logging dmvpn rate-limit 10
+    - no logging trap informational
+    - no logging facility local5
+  after: {}
+parsed:
+  after:
+    buffered:
+      severity: notifications
+      size: 5099
+      xml: true
+
+rendered:
+  commands:
+    - logging buffered xml 5099 notifications
+    - logging buginf
+    - logging cns-events warnings
+    - logging console xml critical
+    - logging count
+    - logging delimiter tcp
+    - logging dmvpn rate-limit 10
+    - logging esm config
+    - logging exception 4099
+    - logging facility local5
+    - logging history alerts
+    - logging monitor warnings
+    - no logging on
+    - logging origin-id hostname
+    - logging persistent batch 4444
+    - logging queue-limit esm 150
+    - logging rate-limit all 2 except alerts
+    - logging reload alerts
+    - logging server-arp
+    - logging trap informational
+    - logging userinfo
+    - logging host 192.0.2.1
+    - logging host 192.0.2.11 transport tcp port 514
+    - logging host 192.0.2.10 filtered stream 10
+    - logging filter tftp://192.0.2.18/ESM/elate.tcl args TESTInst2
+    - logging filter tftp://192.0.2.14/ESM/escalate.tcl args TESTInst
+    - logging source-interface GBit1/0
+    - logging source-interface CTunnel2
+    - logging message-counter log
+    - logging message-counter syslog
+    - logging discriminator msglog01 severity includes 5

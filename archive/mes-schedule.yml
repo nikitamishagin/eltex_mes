@@ -1,0 +1,59 @@
+---
+- name: Scheduling reboot
+#!!! Here need to enter group-hosts !!!
+  hosts: hosts
+  gather_facts: false
+
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+
+#!!! Here need to enter the time (hh:mm) and the date (mon d). The month examples: jan feb mar apr may jun jul aug sep oct nov dec !!!
+# (only mes23,33,53 series)
+#    date_reload: reload at 21:30 mar 2
+#!!! Here need to enter the minutes !!!
+    date_reload: reload in 400
+
+  tasks:
+  - name: Save config
+    register: write_out
+    ios_command:
+      commands:
+      - command: 'write'
+        prompt: 'Overwrite file '
+        answer: 'y'
+#    changed_when: write_out.stdout is search(".*Copy succeeded.*")
+    failed_when: write_out.stdout is not search(".*Copy succeeded.*")
+    
+  - name: Get schedule
+    ios_command:
+      commands: show reload
+    register: sh_reload
+    failed_when:
+    - ('Scheduled-reload is not configured.' not in sh_reload.stdout)
+
+  - name: Schedule system reboot
+    ios_command:
+      commands: '{{ date_reload }}'
+      prompt: 'Do you want to continue ?'
+      answer: 'y'
+    register: sched_output
+#    changed_when:
+#    - ('% bad parameter value' not in sched_output.stdout) and
+#      ('Maximum allowed time-span for scheduled reload is 24 days.' not in sched_output.stdout) and
+#      ('command please set the system clock time first.' not in sched_output.stdout) and
+#      ('Unrecognized' not in sched_output.stdout)
+    failed_when:
+    - ('% bad parameter value' in sched_output.stdout) or
+      ('Maximum allowed time-span for scheduled reload is 24 days.' in sched_output.stdout) or
+      ('command please set the system clock time first.' in sched_output.stdout) or
+      ('Unrecognized' in sched_output.stdout)
+
+  - name: Get schedule
+    ios_command:
+      commands: show reload
+    register: sh_reload
+
+  - name: Show result
+    debug:
+      msg: "{{ sh_reload.stdout_lines }}"

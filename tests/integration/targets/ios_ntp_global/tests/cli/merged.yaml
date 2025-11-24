@@ -1,0 +1,37 @@
+---
+- ansible.builtin.debug:
+    msg: START Merged ios_ntp_global state for integration tests on connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+
+- block:
+    - name: Ios_ntp_global merged - play
+      register: result
+      cisco.ios.ios_ntp_global: &id001
+        config:
+          master:
+            stratum: 4
+          max_associations: 34
+          max_distance: 3
+          min_distance: 10
+        state: merged
+
+    - name: Ios_ntp_global merged - assert commands
+      ansible.builtin.assert:
+        that:
+          - "{{ merged['commands'] | symmetric_difference(result['commands']) | length == 0 }}"
+
+    - name: Ios_ntp_global merged - assert after
+      ansible.builtin.assert:
+        that:
+          - merged['after'] == result['after']
+
+    - name: Ios_ntp_global merged - play (idempotent)
+      register: result
+      cisco.ios.ios_ntp_global: *id001
+    - name: Ios_ntp_global merged - assert above task was idempotent
+      ansible.builtin.assert:
+        that:
+          - result['changed'] == false
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

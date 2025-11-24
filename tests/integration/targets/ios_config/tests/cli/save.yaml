@@ -1,0 +1,49 @@
+---
+- ansible.builtin.debug: msg="START cli/save.yaml on connection={{ ansible_connection }}"
+
+- name: Setup
+  cisco.ios.ios_config:
+    commands:
+      - no description
+      - no shutdown
+    parents:
+      - interface Loopback999
+    match: none
+    save_when: modified
+
+- name: Save should always run
+  register: result
+  cisco.ios.ios_config:
+    save_when: always
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+
+- name: Delete configuration (setup)
+  register: result
+  cisco.ios.ios_config:
+    replace: line
+    lines:
+      - no ip http server
+    save_when: modified
+
+- name: Save should run when changed
+  register: result
+  cisco.ios.ios_config:
+    replace: line
+    lines:
+      - ip http server
+    save_when: modified
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == true
+
+- name: Teardown
+  register: result
+  cisco.ios.ios_config:
+    lines:
+      - no ip http server
+
+- ansible.builtin.debug: msg="END cli/save.yaml on connection={{ ansible_connection }}"

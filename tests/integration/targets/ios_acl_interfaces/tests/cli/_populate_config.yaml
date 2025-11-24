@@ -1,0 +1,28 @@
+---
+- name: Merge the provided configuration with the existing running configuration
+  register: result
+  cisco.ios.ios_acl_interfaces:
+    config:
+      - access_groups:
+          - acls:
+              - direction: in
+                name: 110
+              - direction: out
+                name: 123
+            afi: ipv4
+          - acls:
+              - direction: in
+                name: temp_v6
+              - direction: out
+                name: test_v6
+            afi: ipv6
+        name: GigabitEthernet2
+      - access_groups:
+          - acls:
+              - direction: in
+                name: 110
+              - direction: out
+                name: 123
+            afi: ipv4
+        name: GigabitEthernet3
+    state: merged

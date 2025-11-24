@@ -1,0 +1,80 @@
+---
+- ansible.builtin.debug:
+    msg: Start Merged integration state for ios_logging_global ansible_connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+
+- block:
+    - name: Test - [merged] apply provided configuration
+      cisco.ios.ios_logging_global:
+        config:
+          buffered:
+            severity: notifications
+            size: 5099
+            xml: true
+          console:
+            severity: critical
+            xml: true
+          facility: local5
+          hosts:
+            - hostname: 192.0.2.12
+            - hostname: 192.0.2.11
+              xml: true
+            - hostname: 192.0.2.10
+              filtered: true
+              stream: 10
+            - hostname: 192.0.2.13
+              transport:
+                tcp:
+                  port: 514
+          monitor:
+            severity: warnings
+          message_counter:
+            - log
+            - syslog
+          trap: informational
+          userinfo: true
+          logging_on: enable
+          exception: 4099
+          dmvpn:
+            rate_limit: 10
+          cns_events: warnings
+        state: merged
+      register: result
+
+    - name: Test - [merged] assert that correct set of commands were generated
+      ansible.builtin.assert:
+        that:
+          - "{{ merged['commands'] | symmetric_difference(result['commands']) | length == 0 }}"
+
+    - name: Test - [merged] assert that before dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - merged['before'] == {}
+
+    - name: Test - [merged] assert that after dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - merged['after'] == result['after']
+
+    - name: Test - [merged] merge buffered severity with device configuration (idempotent)
+      cisco.ios.ios_logging_global: &id001
+        config:
+          buffered:
+            severity: debugging
+            size: 5099
+            xml: true
+
+    - name: Test - [merged] merge console severity with device configuration (idempotent)
+      register: resultdeb
+      cisco.ios.ios_logging_global: *id001
+
+    - name: Test - [merged] assert that debugging value is not idempotent
+      ansible.builtin.assert:
+        that:
+          - resultdeb['changed'] == true
+          - "'logging buffered xml 5099 debugging' in resultdeb['commands']"
+          - resultdeb["before"]["buffered"] == resultdeb["after"]["buffered"]
+
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

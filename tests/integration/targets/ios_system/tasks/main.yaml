@@ -1,0 +1,3 @@
+---
+- name: Main task for systems module
+  ansible.builtin.include_tasks: cli.yaml

@@ -1,0 +1,9 @@
+---
+- name: Populate configuration
+  vars:
+    lines: "interface GigabitEthernet 2\nchannel-group 11 mode active\ninterface GigabitEthernet 3\nchannel-group 22 mode active\n"
+  when: ansible_net_version != "15.6(2)T"
+  ansible.netcommon.cli_config:
+    config: "{{ lines }}"
+
+- ansible.builtin.include_tasks: _add_port_channels.yml

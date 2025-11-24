@@ -1,0 +1,49 @@
+---
+- ansible.builtin.debug:
+    msg: START Overridden ios_logging_global state for integration tests on connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+- ansible.builtin.include_tasks: _populate_config.yaml
+
+- block:
+    - name: Test - [overridden] override provided logging configuration
+      register: result
+      cisco.ios.ios_logging_global: &overrideid001
+        config:
+          monitor:
+            severity: critical
+          buffered:
+            severity: warnings
+            xml: true
+            size: 5099
+          facility: local6
+          hosts:
+            - host: 192.0.2.12
+              xml: true
+        state: overridden
+
+    - name: Test - [overridden] assert that correct set of commands were generated
+      ansible.builtin.assert:
+        that:
+          - "{{ overridden['commands'] | symmetric_difference(result['commands']) | length == 0 }}"
+
+    - name: Test - [overridden] assert that before dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - merged['after'] == result['before']
+
+    - name: Test - [overridden] assert that after dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - overridden['after'] == result['after']
+
+    - name: Test - [overridden] override provided IOS logging global configuration idempotent
+      register: result
+      cisco.ios.ios_logging_global: *overrideid001
+    - name: Test - [overridden] assert that task was idempotent
+      ansible.builtin.assert:
+        that:
+          - result['changed'] == false
+
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

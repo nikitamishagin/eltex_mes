@@ -1,0 +1,39 @@
+---
+- name: Setup - set login and exec
+  loop:
+    - login
+    - exec
+  cisco.ios.ios_banner:
+    banner: "{{ item }}"
+    text: "this is my login banner\nthat as a multiline\nstring\n"
+    state: present
+
+- name: Set login
+  register: result
+  cisco.ios.ios_banner:
+    banner: login
+    text: "this is my login banner\nthat as a multiline\nstring"
+    state: present
+
+- ansible.builtin.debug:
+    msg: "{{ result }}"
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+      - result.commands | length == 0
+
+- name: Set exec
+  register: result
+  cisco.ios.ios_banner:
+    banner: exec
+    text: "this is my login banner\nthat as a multiline\nstring"
+    state: present
+
+- ansible.builtin.debug:
+    msg: "{{ result }}"
+
+- ansible.builtin.assert:
+    that:
+      - result.changed == false
+      - result.commands | length == 0

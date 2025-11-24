@@ -1,0 +1,99 @@
+---
+- ansible.builtin.debug:
+    msg: Start ios_bgp_address_family rendered integration tests ansible_connection={{ ansible_connection }}
+
+- block:
+    - name: Render config lines for the provided configuration
+      register: result
+      cisco.ios.ios_bgp_address_family:
+        config:
+          address_family:
+            - afi: ipv4
+              maximum_paths:
+                paths: 12
+              maximum_secondary_paths:
+                eibgp: 2
+              redistribute:
+                - connected:
+                    metric: 10
+                - ospf:
+                    process_id: 124
+                - ospf:
+                    process_id: 123
+                    match:
+                      internal: true
+                      externals:
+                        type_1: true
+                        type_2: true
+                      nssa_externals:
+                        type_1: true
+                        type_2: true
+                    metric: 10
+                    route_map: bar
+                - ospfv3:
+                    process_id: 123
+                    match:
+                      internal: true
+                      externals:
+                        type_1: true
+                        type_2: true
+                      nssa_externals:
+                        type_1: true
+                        type_2: true
+                    metric: 10
+                    route_map: bar
+            - afi: ipv4
+              aggregate_addresses:
+                - address: 192.0.3.1
+                  as_confed_set: true
+                  netmask: 255.255.255.255
+              default_metric: 12
+              distance:
+                external: 10
+                internal: 10
+                local: 100
+              networks:
+                - address: 198.51.111.11
+                  mask: 255.255.255.255
+                  route_map: test
+              safi: multicast
+              table_map:
+                filter: true
+                name: test_tableMap
+            - afi: ipv4
+              bgp:
+                dampening:
+                  max_suppress: 5
+                  penalty_half_time: 1
+                  reuse_route_val: 10
+                  suppress_route_val: 100
+                dmzlink_bw: true
+                soft_reconfig_backup: true
+              safi: mdt
+            - afi: ipv6
+              redistribute:
+                - ospf:
+                    process_id: 124
+                    match:
+                      internal: true
+                      externals:
+                        type_1: true
+                        type_2: true
+                      nssa_externals:
+                        type_1: true
+                        type_2: true
+                    metric: 10
+                    route_map: bar
+                    include_connected: true
+          as_number: "65000"
+        state: rendered
+
+    - name: Assert that change was false
+      ansible.builtin.assert:
+        that:
+          - result.changed == false
+
+    - name: Assert that correct set of commands were generated
+      ansible.builtin.assert:
+        that:
+          - "{{ rendered['commands'] | symmetric_difference(result['rendered']) | length == 0 }}"

@@ -1,0 +1,4 @@
+---
+- name: Remove BGP global configuration
+  cisco.ios.ios_bgp_global:
+    state: purged

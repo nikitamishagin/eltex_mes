@@ -1,0 +1,40 @@
+---
+- ansible.builtin.debug:
+    msg: START Merged ios_lacp state for integration tests on connection={{ ansible_connection }}
+
+- ansible.builtin.include_tasks: _remove_config.yaml
+
+- block:
+    - name: Merge provided configuration system lacp
+      register: result
+      cisco.ios.ios_lacp: &id001
+        config:
+          system:
+            priority: 10
+        state: merged
+
+    - name: Assert that correct set of commands were generated
+      ansible.builtin.assert:
+        that:
+          - "{{ merged['commands'] | symmetric_difference(result['commands']) | length == 0 }}"
+
+    - name: Assert that before dicts are correctly generated
+      ansible.builtin.assert:
+        that:
+          - "{{ merged['before'] == result['before'] }}"
+
+    - name: Assert that after dict is correctly generated
+      ansible.builtin.assert:
+        that:
+          - "{{ merged['before'] == result['before'] }}"
+
+    - name: Merge provided configuration system lacp (idempotent)
+      register: result
+      cisco.ios.ios_lacp: *id001
+    - name: Assert that the previous task was idempotent
+      ansible.builtin.assert:
+        that:
+          - result['changed'] == false
+  when: ansible_net_version != "15.6(2)T"
+  always:
+    - ansible.builtin.include_tasks: _remove_config.yaml

@@ -1,0 +1,4 @@
+Value Boot_image (\d.\d.\d.\d)
+
+Start
+  ^\s*.*Boot version    ${Boot_image}*
