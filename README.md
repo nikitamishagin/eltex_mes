@@ -10,7 +10,7 @@ Eltex-specific adaptations following the roadmap below.
 
 I’m happy to receive any suggestions, ideas, and support for creating this collection. Thank you!
 
-**If you need a quick way** to make a cisco.ios module work with Eltex devices (just to get it working), check out
+⚠️ **If you need a quick way** to make a cisco.ios module work with Eltex devices (just to get it working), check out
 [this section](#old-description-files-in-archive). This is how my project started and how I adapted the module for
 my needs.
 
