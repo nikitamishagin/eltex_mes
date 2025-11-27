@@ -18,6 +18,7 @@ my needs.
 
 - [x] Fork the Ansible cisco.ios collection
 - [x] Create a list of modules that can be adapted for Eltex
+- [x] Polish the repository
 - [ ] Define the order of the most important modules
 - [ ] Implement getting facts for Eltex devices
 - [ ] Implement the modules in this order
@@ -39,6 +40,7 @@ Ansible Cisco IOS Collection: https://github.com/ansible-collections/cisco.ios
 - Merged the `feature/ansible-collection` branch into `main` to preserve the original cisco.ios project history and
   incorporate it into this project.
 - Improved the part of the README that covers legacy solutions.
+- Added a section for contributors.
 
 ### List of modules that can be adapted for Eltex (series 23xx/33xx/53xx/54xx)
 
