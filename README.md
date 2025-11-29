@@ -41,6 +41,7 @@ Ansible Cisco IOS Collection: https://github.com/ansible-collections/cisco.ios
   incorporate it into this project.
 - Improved the part of the README that covers legacy solutions.
 - Added a section for contributors.
+- Added templates for issues and pull requests.
 
 ### List of modules that can be adapted for Eltex (series 23xx/33xx/53xx/54xx)
 

@@ -1,0 +1,59 @@
+name: Data Request
+description: Request device output needed for implementing or updating features
+title: "[Data Request]: "
+labels: ["needs-output"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Short summary
+      placeholder: "One sentence"
+    validations:
+      required: true
+
+  - type: input
+    id: devices
+    attributes:
+      label: "Device models"
+      description: "List multiple models separated by commas, e.g.: MES2300-24, MES3324F, MES5400-24X"
+      placeholder: "MES2300-24, MES3324F, MES5400-24X"
+    validations:
+      required: true
+
+  - type: input
+    id: firmware
+    attributes:
+      label: "Firmware / software version"
+      placeholder: "e.g., 6.3.0 or 6.6.2"
+    validations:
+      required: true
+
+  - type: textarea
+    id: commands
+    attributes:
+      label: "Required command(s)"
+      description: "Commands to run on the device"
+      placeholder: |
+        Example:
+        - show running-config
+        - show interfaces status
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: "Additional notes"
+      description: "Any context needed before collecting output"
+      placeholder: "Optional"
+    validations:
+      required: false
+
+  - type: textarea
+    id: output-format
+    attributes:
+      label: "Output format"
+      description: "Preferred format: code block, attached .txt file, or screenshot if needed"
+      value: "Please provide output as a code block or attach a .txt file"
+    validations:
+      required: false
