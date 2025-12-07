@@ -24,9 +24,9 @@ remarks or suggestions can help.
 3. Make your changes.
 4. Check that everything works for Eltex (if you have the opportunity to test).
 5. Submit a Pull Request with a clear title and description:
-    - What exactly you are changing.
-    - For which Eltex models/versions.
-    - Usage examples.
+   - What exactly you are changing.
+   - For which Eltex models/versions.
+   - Usage examples.
 
 ## 📄 Code / Style / Structure
 
@@ -47,6 +47,40 @@ When opening an issue:
 - Specify the device model and firmware version.
 - Steps to reproduce or a reproducible playbook.
 - Expected behavior vs. actual behavior.
+
+## 🔧 Enable pre-commit locally
+
+To run the same checks locally as in CI:
+
+1. Ensure Python is available, then install pre-commit in your **virtualenv**:
+
+   ```bash
+   python -m pip install pre-commit
+   ```
+
+2. Install the git hook scripts:
+
+   ```bash
+   pre-commit install
+   ```
+
+3. (Optional) Update hooks to the latest compatible versions:
+
+   ```bash
+   pre-commit autoupdate
+   ```
+
+4. Run all checks on the whole repo before committing:
+
+   ```bash
+   pre-commit run --all-files
+   ```
+
+Notes:
+
+- pre-commit runs automatically on commit after step 2.
+- If a hook reformats files, re-stage the changes and commit again.
+- Some hooks respect ignore files like `.prettierignore`.
 
 ## 🔖 License
 

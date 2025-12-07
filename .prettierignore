@@ -21,3 +21,7 @@ collections/
 # WIP
 tests/integration/targets/ios_config/templates/config.js
 README.md
+CISCO_README.md
+
+# Archive files
+archive/

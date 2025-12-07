@@ -26,9 +26,10 @@ repos:
     rev: "v3.6.2"
     hooks:
       - id: prettier
-        entry: env CI=1 bash -c "prettier --list-different . || ec=$? && prettier --loglevel=error --write . && exit $ec"
-        pass_filenames: false
-        args: []
+        args:
+          - --log-level=error
+          - --ignore-path=.prettierignore
+          - --write
         additional_dependencies:
           - prettier
           - prettier-plugin-toml
