@@ -34,7 +34,6 @@ except ImportError:
 from unittest import TestCase
 
 from ansible.module_utils._text import to_bytes
-
 from ansible_collections.nikitamishagin.eltex_mes.plugins.cliconf import ios
 
 

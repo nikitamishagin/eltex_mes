@@ -93,6 +93,70 @@ Low applicability/typically not supported on MES:
 - `ios_service` - IOS-specific service toggles/options (service timestamps, pad, etc.) may partially exist, but overlap
   is small; benefit is questionable.## Old description
 
+<!--start requires_ansible-->
+## Ansible version compatibility
+
+This collection has been tested against the following Ansible versions: **>=2.16.0**.
+
+Plugins and modules within a collection may be tested with only specific Ansible versions.
+A collection may contain metadata that identifies these versions.
+PEP440 is the schema used to describe the versions of Ansible.
+<!--end requires_ansible-->
+
+## Included content
+
+<!--start collection content-->
+### Cliconf plugins
+Name | Description
+--- | ---
+[nikitamishagin.eltex_mes.ios](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_cliconf.rst)|Use ios cliconf to run command on Cisco IOS platform
+
+### Modules
+Name | Description
+--- | ---
+[nikitamishagin.eltex_mes.ios_acl_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_acl_interfaces_module.rst)|Resource module to configure ACL interfaces.
+[nikitamishagin.eltex_mes.ios_acls](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_acls_module.rst)|Resource module to configure ACLs.
+[nikitamishagin.eltex_mes.ios_banner](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_banner_module.rst)|Module to configure multiline banners.
+[nikitamishagin.eltex_mes.ios_bgp_address_family](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_bgp_address_family_module.rst)|Resource module to configure BGP Address family.
+[nikitamishagin.eltex_mes.ios_bgp_global](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_bgp_global_module.rst)|Resource module to configure BGP.
+[nikitamishagin.eltex_mes.ios_command](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_command_module.rst)|Module to run commands on remote devices.
+[nikitamishagin.eltex_mes.ios_config](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_config_module.rst)|Module to manage configuration sections.
+[nikitamishagin.eltex_mes.ios_evpn_ethernet](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_evpn_ethernet_module.rst)|Resource module to configure L2VPN EVPN Ethernet Segment.
+[nikitamishagin.eltex_mes.ios_evpn_evi](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_evpn_evi_module.rst)|Resource module to configure L2VPN EVPN EVI.
+[nikitamishagin.eltex_mes.ios_evpn_global](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_evpn_global_module.rst)|Resource module to configure L2VPN EVPN.
+[nikitamishagin.eltex_mes.ios_facts](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_facts_module.rst)|Module to collect facts from remote devices.
+[nikitamishagin.eltex_mes.ios_hostname](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_hostname_module.rst)|Resource module to configure hostname.
+[nikitamishagin.eltex_mes.ios_hsrp_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_hsrp_interfaces_module.rst)|Resource module to configure HSRP on interfaces.
+[nikitamishagin.eltex_mes.ios_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_interfaces_module.rst)|Resource module to configure interfaces.
+[nikitamishagin.eltex_mes.ios_l2_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_l2_interfaces_module.rst)|Resource module to configure L2 interfaces.
+[nikitamishagin.eltex_mes.ios_l3_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_l3_interfaces_module.rst)|Resource module to configure L3 interfaces.
+[nikitamishagin.eltex_mes.ios_lacp](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_lacp_module.rst)|Resource module to configure LACP.
+[nikitamishagin.eltex_mes.ios_lacp_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_lacp_interfaces_module.rst)|Resource module to configure LACP interfaces.
+[nikitamishagin.eltex_mes.ios_lag_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_lag_interfaces_module.rst)|Resource module to configure LAG interfaces.
+[nikitamishagin.eltex_mes.ios_lldp_global](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_lldp_global_module.rst)|Resource module to configure LLDP.
+[nikitamishagin.eltex_mes.ios_lldp_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_lldp_interfaces_module.rst)|Resource module to configure LLDP interfaces.
+[nikitamishagin.eltex_mes.ios_logging_global](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_logging_global_module.rst)|Resource module to configure logging.
+[nikitamishagin.eltex_mes.ios_ntp_global](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_ntp_global_module.rst)|Resource module to configure NTP.
+[nikitamishagin.eltex_mes.ios_ospf_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_ospf_interfaces_module.rst)|Resource module to configure OSPF interfaces.
+[nikitamishagin.eltex_mes.ios_ospfv2](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_ospfv2_module.rst)|Resource module to configure OSPFv2.
+[nikitamishagin.eltex_mes.ios_ospfv3](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_ospfv3_module.rst)|Resource module to configure OSPFv3.
+[nikitamishagin.eltex_mes.ios_ping](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_ping_module.rst)|Tests reachability using ping from IOS switch.
+[nikitamishagin.eltex_mes.ios_prefix_lists](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_prefix_lists_module.rst)|Resource module to configure prefix lists.
+[nikitamishagin.eltex_mes.ios_route_maps](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_route_maps_module.rst)|Resource module to configure route maps.
+[nikitamishagin.eltex_mes.ios_service](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_service_module.rst)|Resource module to configure service.
+[nikitamishagin.eltex_mes.ios_snmp_server](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_snmp_server_module.rst)|Resource module to configure snmp server.
+[nikitamishagin.eltex_mes.ios_static_routes](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_static_routes_module.rst)|Resource module to configure static routes.
+[nikitamishagin.eltex_mes.ios_system](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_system_module.rst)|Module to manage the system attributes.
+[nikitamishagin.eltex_mes.ios_user](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_user_module.rst)|Module to manage the aggregates of local users.
+[nikitamishagin.eltex_mes.ios_vrf](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_vrf_module.rst)|Module to configure VRF definitions.
+[nikitamishagin.eltex_mes.ios_vrf_address_family](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_vrf_address_family_module.rst)|Resource module to configure VRF definitions.
+[nikitamishagin.eltex_mes.ios_vrf_global](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_vrf_global_module.rst)|Resource module to configure global VRF definitions.
+[nikitamishagin.eltex_mes.ios_vrf_interfaces](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_vrf_interfaces_module.rst)|Manages VRF configuration on interfaces.
+[nikitamishagin.eltex_mes.ios_vxlan_vtep](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_vxlan_vtep_module.rst)|Resource module to configure VXLAN VTEP interface.
+[nikitamishagin.eltex_mes.mes_vlans](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.mes_vlans_module.rst)|Resource module to configure VLANs.
+
+<!--end collection content-->
+
 ## Old description (files in ./archive/)
 
 Playbooks for automating routine administration tasks of Eltex switches.

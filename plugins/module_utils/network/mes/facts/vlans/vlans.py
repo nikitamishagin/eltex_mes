@@ -57,7 +57,7 @@ class VlansFacts(object):
     def get_vlan_conf_data(self, connection):
         return connection.get(
             "show running-config | section ^vlan configuration .+",
-        )  ### TODO: Rewrite because there's no same command for MES
+        )  # TODO: Rewrite because there's no same command for MES
 
     def populate_vlans_config_facts(self, connection, data=None):
         """

@@ -11,7 +11,10 @@ from textwrap import dedent
 from unittest.mock import patch
 
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_bgp_global
-from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import AnsibleFailJson, set_module_args
+from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import (
+    AnsibleFailJson,
+    set_module_args,
+)
 
 from .ios_module import TestIosModule
 
