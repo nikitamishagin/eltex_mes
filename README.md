@@ -18,13 +18,48 @@ my needs.
 
 - [x] Fork the Ansible cisco.ios collection
 - [x] Create a list of modules that can be adapted for Eltex
-- [x] Polish the repository
-- [ ] Define the order of the most important modules
-- [ ] Implement getting facts for Eltex devices
-- [ ] Implement the modules in this order
-- [ ] Identify useful Ansible roles for device configuration
-- [ ] Create the Ansible roles
-- [ ] Prepare Ansible playbooks
+- [ ] Polish the repository
+    - [x] Improve the README
+    - [x] Add the contribution page
+    - [x] Add Pull Request and Issue templates
+    - [x] Fix pre-commit hooks
+    - [x] Fix import paths
+    - [ ] Adapt GitHub Actions workflows
+    - [ ] Add the support page
+- [x] Define the order of the most important modules
+- [ ] Adapt the main modules to get a minimally functional collection
+    - [ ] Adapt cliconf module
+    - [ ] Adapt terminal module
+- [ ] Adapt facts modules
+- [ ] Adapt high-priority modules
+    - [ ] Adapt command module
+    - [ ] Adapt config module
+    - [ ] Adapt hostname module
+    - [ ] Adapt vlans module
+    - [ ] Adapt interfaces module
+    - [ ] Adapt l2_interfaces module
+    - [ ] Adapt l3_interfaces module
+    - [ ] Adapt ping module
+    - [ ] Adapt banner module
+    - [ ] Adapt static_routes module
+    - [ ] Adapt user module
+    - [ ] Adapt system module
+- [ ] Adapt less-important modules
+    - [ ] Adapt prefix_lists module
+    - [ ] Adapt route_maps module
+    - [ ] Adapt acls module
+    - [ ] Adapt acl_interfaces module
+    - [ ] Adapt lldp_global module
+    - [ ] Adapt lldp_interfaces module
+    - [ ] Adapt lacp module
+    - [ ] Adapt lacp_interfaces module
+    - [ ] Adapt lag_interfaces module
+    - [ ] Adapt snmp_server module
+    - [ ] Adapt ntp_global module
+    - [ ] Adapt logging_global module
+- [ ] Create useful Ansible roles
+- [ ] Prepare useful use cases with Ansible playbooks
+- [ ] Try to adapt the remaining modules
 
 Ansible Cisco IOS Collection: https://github.com/ansible-collections/cisco.ios
 
@@ -40,58 +75,71 @@ Ansible Cisco IOS Collection: https://github.com/ansible-collections/cisco.ios
 - Merged the `feature/ansible-collection` branch into `main` to preserve the original cisco.ios project history and
   incorporate it into this project.
 - Improved the part of the README that covers legacy solutions.
-- Added a section for contributors.
+- Improved the contribution section.
 - Added templates for issues and pull requests.
+- Fixed pre-commit hooks and documentation generation.
+- Fixed all import paths in modules and tests.
+- Defined the order of the most important modules.
+- Updated project improvement plan.
 
 ### List of modules that can be adapted for Eltex (series 23xx/33xx/53xx/54xx)
 
-High applicability (expected to be adaptable):
+Facts are an important Ansible mechanism. It definitely needs to be adapted. However, this module has a lot of
+dependencies and requires parsing multiple outputs from different devices. Therefore, adapting it can take a relatively
+long time.
 
-- `ios_hostname` - hostname is supported.
-- `ios_interfaces` - basic L2/L3 interface attributes are supported (shutdown, description, speed/duplex/mtu -
-  model-dependent).
+- `ios_facts` - collects facts from devices.
+
+I believe these modules should be adapted first. They cover the basic functionality of network switches. They also adapt
+well from iOS to MES.
+
+- `ios_command` - run commands - supported.
+- `ios_config` - push configuration fragments - supported.
+- `ios_hostname` - set up hostname - supported.
+- `ios_vlans` - create, delete VLAN - supported.
+- `ios_interfaces` - basic L2/L3 interface attributes - supported.
 - `ios_l2_interfaces` - switchport mode access/trunk, allowed VLANs - supported.
-- `ios_vlans` - create/delete VLAN, name - supported.
 - `ios_l3_interfaces` - SVI (interface vlan) and IP on routed ports - supported on L3 models.
+- `ios_ping` - device-originated ping - supported.
+- `ios_banner` - add banner - supported.
 - `ios_static_routes` - static routing - supported on L3 models.
-- `ios_acl_interfaces` - applying ACL to an interface - supported (ACL in/out).
-- `ios_acls` - standard/extended ACLs - supported, but syntax may differ (translation needed).
-- `ios_prefix_lists` - prefix-lists are typically available (for routing/policy) - supported on L3 models.
-- `ios_route_maps` - route-map (policy routing/redistribution) - present on L3 models, syntax differences expected.
-- `ios_ntp_global` - NTP server, source-interface - usually available.
-- `ios_logging_global` - syslog/logging host, facility/level - available.
-- `ios_lldp_global` - LLDP enable/global options - available.
-- `ios_lldp_interfaces` - LLDP on interfaces - available.
-- `ios_snmp_server` - SNMP communities/users, traps - available.
-- `ios_system` - basic system parameters (hostname, domain-name, clock) - partially overlap; usable.
-- `ios_banner` - MOTD/exec banners - typically supported.
 - `ios_user` - local users/passwords/privilege - supported.
-- `ios_ping` - device-originated ping - available.
-- `ios_command` - run commands - universal.
-- `ios_config` - push configuration fragments - universal.
+- `ios_system` - basic system parameters (hostname, domain-name, clock) - supported.
 
-Conditionally applicable/depends on model and firmware (requires thorough verification):
+The following modules can be adapted, but I consider them less of a priority. They are supported by many models.
 
-- `ios_hsrp_interfaces` - HSRP is not present on many MES; VRRP is often used instead. If you need FHRP, adapting to
-  VRRP is more likely (requires a different module/logic).
-- `ios_lacp` - LACP (802.3ad) is usually supported, but global parameters may differ.
-- `ios_lacp_interfaces` - configuring LAG membership and active/passive modes - generally available, but syntax and
-  terms (channel-group/lag) differ.
-- `ios_lag_interfaces` - aggregations (Port-Channel/LAG) - supported, but translation to Eltex CLI is needed.
-- `ios_vrf` / `ios_vrf_global` / `ios_vrf_address_family` / `ios_vrf_interfaces` - VRF exists on L3 models/lines with IP
-  Advanced; feature set and commands differ. Realistically adaptable, but verify per series.
-- `ios_ospfv2` / `ios_ospf_interfaces` - OSPFv2 is supported on L3 models with the appropriate license/firmware.
-- `ios_ospfv3` - IPv6 OSPF support depends on model and software version; often available on high-end MES.
-- `ios_bgp_global` / `ios_bgp_address_family` - BGP is not on all MES; more common on higher-end models (MES53xx/75xx)
-  and certain software versions. Adaptation is possible but highly model-dependent.
-- `ios_evpn_global` / `ios_evpn_evi` / `ios_evpn_ethernet` - сan be adapted based on documentation, but is challenging
-  and highly model/firmware-dependent.
-- `ios_vxlan_vtep` - сan be adapted based on documentation, but is challenging and rarely supported on MES.
+- `ios_prefix_lists` - prefix-lists - supported on L3 models.
+- `ios_route_maps` - route-map - supported on L3 models.
+- `ios_acls` - standard/extended ACLs - supported.
+- `ios_acl_interfaces` - applying ACL to an interface - supported.
+- `ios_lldp_global` - global LLDP parameters - supported.
+- `ios_lldp_interfaces` - LLDP on interfaces - supported.
+- `ios_lacp` - interface aggregation (802.3ad) - supported.
+- `ios_lacp_interfaces` - configuring LAG membership and active/passive modes - supported.
+- `ios_lag_interfaces` - aggregations (Port-Channel/LAG) - depends on model.
+- `ios_snmp_server` - SNMP communities/users, traps - supported.
+- `ios_ntp_global` - NTP server, source-interface - supported.
+- `ios_logging_global` - syslog/logging host, facility/level - supported.
 
-Low applicability/typically not supported on MES:
+The modules below appear to be the least important. They implement specific and unpopular functionality. They are
+difficult to adapt, and some require a complete rewrite. Furthermore, they are difficult to test at the initial stage of
+a project. Therefore, their adaptation should be done last.
 
-- `ios_service` - IOS-specific service toggles/options (service timestamps, pad, etc.) may partially exist, but overlap
-  is small; benefit is questionable.## Old description
+`ios_service` - manages specific functions.
+`ios_evpn_evi`- can be adapted based on documentation, but is challenging and rarely supported on MES.
+`ios_evpn_global` - can be adapted based on documentation, but is challenging and rarely supported on MES.
+`ios_evpn_ethernet`  - can be adapted based on documentation, but is challenging and rarely supported on MES.
+`ios_hsrp_interfaces` - HSRP is not present on many MES; VRRP is often used instead.
+`ios_ospfv2` - OSPF is support depends on model and software version.
+`ios_ospfv3` - OSPF is support depends on model and software version.
+`ios_ospf_interfaces` - OSPF is support depends on model and software version.
+`ios_bgp_global` - BGP is not on all MES; more common on higher-end models (MES5xxx) and certain software versions.
+`ios_bgp_address_family` - BGP is not on all MES; more common on higher-end models.
+`ios_vrf` - VRF is not on all MES; more common on higher-end models.
+`ios_vrf_global` - VRF is not on all MES; more common on higher-end models.
+`ios_vrf_interfaces` - VRF is not on all MES; more common on higher-end models.
+`ios_vrf_address_family` - VRF is not on all MES; more common on higher-end models.
+`ios_vxlan_vtep` - can be adapted based on documentation, but is challenging and rarely supported on MES.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
@@ -173,7 +221,7 @@ modules:
 These changes will let you use some basic cisco.ios modules with Eltex MES devices. But you should not use a
 `gather_facts` function, because it will not work correctly. Set `gather_facts: false` in your playbook by default.
 
-Also you can see my old playbooks for some tasks:
+Also, you can see my old playbooks for some tasks:
 
 - `./archive/mes-upgrade.yml` - playbook for downloading new firmware images;
 - `./archive/mes-schedule.yml` - playbook for restarting switches on a schedule;
