@@ -16,6 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Copyright 2025 Nikita Mishagin
+# Modified from cisco.ios to Eltex MES
+#
 from __future__ import absolute_import, division, print_function
 
 
@@ -24,20 +27,14 @@ __metaclass__ = type
 import json
 
 from os import path
-
-
-try:
-    from unittest.mock import MagicMock
-except ImportError:
-    from mock import MagicMock
-
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 from ansible.module_utils._text import to_bytes
-from ansible_collections.nikitamishagin.eltex_mes.plugins.cliconf import ios
+from ansible_collections.nikitamishagin.eltex_mes.plugins.cliconf import mes
 
 
-b_FIXTURE_DIR = b"%s/fixtures/ios" % (
+b_FIXTURE_DIR = b"%s/fixtures/mes" % (
     to_bytes(path.dirname(path.abspath(__file__)), errors="surrogate_or_strict")
 )
 
@@ -65,13 +62,13 @@ def _connection_side_effect(*args, **kwargs):
         return "Nope"
 
 
-class TestPluginCLIConfIOS(TestCase):
-    """Test class for IOS CLI Conf Methods"""
+class TestPluginCLIConfMES(TestCase):
+    """Test class for MES CLI Conf Methods"""
 
     def setUp(self):
         self._mock_connection = MagicMock()
         self._mock_connection.send.side_effect = _connection_side_effect
-        self._cliconf = ios.Cliconf(self._mock_connection)
+        self._cliconf = mes.Cliconf(self._mock_connection)
         self.maxDiff = None
 
     def tearDown(self):
@@ -82,11 +79,13 @@ class TestPluginCLIConfIOS(TestCase):
         device_info = self._cliconf.get_device_info()
 
         mock_device_info = {
-            "network_os": "ios",
-            "network_os_model": "CSR1000V",
-            "network_os_version": "16.06.01",
-            "network_os_hostname": "an-csr-01",
-            "network_os_image": "bootflash:packages.conf",
+            "network_os": "mes",
+            "network_os_model": "MES2324P",
+            "network_os_version": "6.6.3.8",
+            "network_os_inactive_version": "6.5.1.6",
+            "network_os_hostname": "SW1",
+            "network_os_image": "flash://system/images/mes3300-663-8R4.ros",
+            "network_os_inactive_image": "flash://system/images/_image1.bin",
             "network_os_type": "L2",
         }
 
@@ -97,12 +96,14 @@ class TestPluginCLIConfIOS(TestCase):
         capabilities = json.loads(self._cliconf.get_capabilities())
         mock_capabilities = {
             "device_info": {
-                "network_os": "ios",
-                "network_os_hostname": "an-csr-01",
-                "network_os_image": "bootflash:packages.conf",
-                "network_os_model": "CSR1000V",
+                "network_os": "mes",
+                "network_os_hostname": "SW1",
+                "network_os_image": "flash://system/images/mes3300-663-8R4.ros",
+                "network_os_inactive_image": "flash://system/images/_image1.bin",
+                "network_os_inactive_version": "6.5.1.6",
+                "network_os_model": "MES2324P",
                 "network_os_type": "L2",
-                "network_os_version": "16.06.01",
+                "network_os_version": "6.6.3.8",
             },
             "device_operations": {
                 "supports_commit": False,

@@ -16,7 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Copyright 2025 Nikita Mishagin
+# Modified from cisco.ios to Eltex MES
+#
 from __future__ import absolute_import, division, print_function
+
 
 __metaclass__ = type
 
@@ -24,6 +28,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 author:
 - Ansible Networking Team (@ansible-network)
+- Nikita Mishagin
 name: mes
 short_description: Use mes cliconf to run commands on Eltex MES platform
 description:
@@ -81,7 +86,7 @@ class Cliconf(CliconfBase):
 
     @enable_mode
     def get_config(self, source="running", flags=None, format=None):
-        if source not in ("running", "startup"):
+        if source != "running":
             raise ValueError("fetching configuration from %s is not supported" % source)
 
         if format:
@@ -89,22 +94,20 @@ class Cliconf(CliconfBase):
 
         if not flags:
             flags = []
-        if source == "running":
-            cmd = "show running-config "
-        else:
-            cmd = "show startup-config "
 
+        cmd = "show running-config "
         cmd += " ".join(to_list(flags))
         cmd = cmd.strip()
 
         return self.send_command(cmd)
 
-    @enable_mode
-    def restore(self, filename=None, path=""):
-        if not filename:
-            raise ValueError("'file_name' value is required for restore")
-        cmd = f"configure replace {path}{filename} force"
-        return self.send_command(cmd)
+    # I'm not sure if this can be used in Eltex MES, but let's leave it for now
+    # @enable_mode
+    # def restore(self, filename=None, path=""):
+    #     if not filename:
+    #         raise ValueError("'file_name' value is required for restore")
+    #     cmd = f"configure replace {path}{filename} force"
+    #     return self.send_command(cmd)
 
     def get_diff(
         self,
@@ -124,11 +127,11 @@ class Cliconf(CliconfBase):
         :param candidate: The configuration which is expected to be present on remote host.
         :param running: The base configuration which is used to generate diff.
         :param diff_match: Instructs how to match the candidate configuration with current device configuration
-                      Valid values are 'line', 'strict', 'exact', 'none'.
-                      'line' - commands are matched line by line
-                      'strict' - command lines are matched with respect to position
-                      'exact' - command lines must be an equal match
-                      'none' - will not compare the candidate configuration with the running configuration
+                           Valid values are 'line', 'strict', 'exact', 'none'.
+                           'line' - commands are matched line by line
+                           'strict' - command lines are matched with respect to position
+                           'exact' - command lines must be an equal match
+                           'none' - will not compare the candidate configuration with the running configuration
         :param diff_ignore_lines: Use this argument to specify one or more lines that should be
                                   ignored during the diff.  This is used for lines in the configuration
                                   that are automatically updated by the system.  This argument takes
@@ -136,17 +139,17 @@ class Cliconf(CliconfBase):
         :param path: The ordered set of parents that uniquely identify the section or hierarchy
                      the commands should be checked against.  If the parents argument
                      is omitted, the commands are checked against the set of top
-                    level or global commands.
+                     level or global commands.
         :param diff_replace: Instructs on the way to perform the configuration on the device.
-                        If the replace argument is set to I(line) then the modified lines are
-                        pushed to the device in configuration mode.  If the replace argument is
-                        set to I(block) then the entire command block is pushed to the device in
-                        configuration mode if any line is not correct.
-        :return: Configuration diff in  json format.
-               {
-                   'config_diff': '',
-                   'banner_diff': {}
-               }
+                             If the replace argument is set to I(line) then the modified lines are
+                             pushed to the device in configuration mode.  If the replace argument is
+                             set to I(block) then the entire command block is pushed to the device in
+                             configuration mode if any line is not correct.
+        :return: Configuration diff in json format.
+                 {
+                     'config_diff': '',
+                     'banner_diff': {}
+                 }
         """
         diff = {}
         device_operations = self.get_device_operations()
@@ -199,7 +202,7 @@ class Cliconf(CliconfBase):
         :return: None
         """
         # Enter configuration mode on Eltex MES
-        self.send_command("configure")
+        self.send_command("configure terminal")
 
     @enable_mode
     def edit_config(self, candidate=None, commit=True, replace=None, comment=None):
@@ -248,7 +251,7 @@ class Cliconf(CliconfBase):
         requests = []
         if commit:
             commands = ""
-            self.send_command("configure")
+            self.send_command("configure terminal")
             time.sleep(0.1)
             # first item: macro command
             commands += candidate.pop(0) + "\n"
@@ -304,43 +307,49 @@ class Cliconf(CliconfBase):
 
     def get_device_info(self):
         if not self._device_info:
-            device_info = {}
+            device_info = {"network_os": "mes"}
 
-            device_info["network_os"] = "mes"
             # Ensure we are not in config mode
             self._update_cli_prompt_context(config_context=")#", exit_command="end")
+
+            # Get information about software versions
             reply = self.get(command="show version")
             data = to_text(reply, errors="surrogate_or_strict").strip()
-            # Try common Eltex version markers first, then fall back to a generic 'Version'
-            # TODO: Request "show version" outputs to validate these templates.
-            match = (
-                    re.search(r"Software Version\s*[:]?\s*(\S+)", data, re.I)
-                    or re.search(r"SW(?:\s+)?version\s*[:]?\s*(\S+)", data, re.I)
-                    or re.search(r"Version (\S+)", data)
+
+            # Search an active image (path and version)
+            active_match = re.search(
+                r"Active-image:\s+(\S+)\n\s+Version:\s+(\S+)",
+                data,
+                re.S | re.I,
             )
-            if match:
-                device_info["network_os_version"] = match.group(1).strip(",")
+            if active_match:
+                device_info["network_os_image"] = active_match.group(1)
+                device_info["network_os_version"] = active_match.group(2)
 
-            # Identify model for Eltex MES; try several patterns
-            model_patterns = [
-                r"^ELTEX\s+(MES\S+)",
-                r"^Product\s+name\s*[:]?\s*(MES\S+)",
-                r"^System\s+type\s*[:]?\s*(MES\S+)",
-                r"\b(MES\d+\w*)\b",
-            ]
-            for pat in model_patterns:
-                m_model = re.search(pat, data, re.M | re.I)
-                if m_model:
-                    device_info["network_os_model"] = m_model.group(1)
-                    break
+            # Search an inactive image (path and version)
+            inactive_match = re.search(
+                r"Inactive-image:\s+(\S+)\n\s+Version:\s+(\S+)",
+                data,
+                re.S | re.I,
+            )
+            if inactive_match:
+                device_info["network_os_inactive_image"] = inactive_match.group(1)
+                device_info["network_os_inactive_version"] = inactive_match.group(2)
 
-            match = re.search(r"^(.+) uptime", data, re.M)
-            if match:
-                device_info["network_os_hostname"] = match.group(1)
+            # Get information about a device
+            reply = self.get(command="show system")
+            data = to_text(reply, errors="surrogate_or_strict").strip()
 
-            match = re.search(r'image file is "(.+)"', data)
-            if match:
-                device_info["network_os_image"] = match.group(1)
+            # Search a model name and hostname
+            device_match = re.search(
+                r"System Description:\s+(MES\S+)[\s\S]*?System Name:\s+(\S+)",
+                data,
+                re.M | re.I,
+            )
+            if device_match:
+                device_info["network_os_model"] = device_match.group(1).strip(",")
+                device_info["network_os_hostname"] = device_match.group(2).strip(",")
+
             device_info["network_os_type"] = self.check_device_type()
             self._device_info = device_info
 
@@ -383,10 +392,10 @@ class Cliconf(CliconfBase):
         :param multiline_delimiter: Line delimiter for banner
         :param commit: Boolean value that indicates if the device candidate
                configuration should be  pushed in the running configuration or discarded.
-        :param diff: Boolean flag to indicate if configuration that is applied on remote host should
-                     generated and returned in response or not
+        :param diff: Boolean flag to indicate if configuration applied on remote host should be
+               generated and returned in response or not
         :return: Returns response of executing the configuration command received
-             from remote host
+                 from remote host
         """
         resp = {}
         banners_obj = json.loads(candidate)
@@ -439,7 +448,7 @@ class Cliconf(CliconfBase):
         """
         The method identifies the filter that should be used to fetch running-configuration
         with defaults.
-        :return: valid default filter
+        :return: Valid default filter
         """
         out = self.get("show running-config ?")
         out = to_text(out, errors="surrogate_then_replace")
