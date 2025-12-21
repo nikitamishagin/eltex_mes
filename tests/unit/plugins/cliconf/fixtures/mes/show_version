@@ -1,0 +1,14 @@
+Active-image: flash://system/images/mes3300-663-8R4.ros
+  Version: 6.6.3.8
+  Commit: 3e5add0b
+  Build: 4 (master)
+  MD5 Digest: 0fe772e23740d0255ef454fcb51a0a7a
+  Date: 05-Jun-2024
+  Time: 11:45:53
+Inactive-image: flash://system/images/_image1.bin
+  Version: 6.5.1.6
+  Commit: 19366927
+  Build: 1 (master-6.5.1.6)
+  MD5 Digest: 1c10926a6f1f8597a276d0f06d52549f
+  Date: 08-Sep-2023
+  Time: 12:35:37

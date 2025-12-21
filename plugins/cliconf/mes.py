@@ -16,47 +16,26 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Copyright 2025 Nikita Mishagin
+# Modified from cisco.ios to Eltex MES
+#
 from __future__ import absolute_import, division, print_function
 
 
 __metaclass__ = type
 
+# Note: commit-confirm workflow from Cisco IOS is not supported on Eltex MES.
 DOCUMENTATION = """
 author:
 - Ansible Networking Team (@ansible-network)
-name: ios
-short_description: Use ios cliconf to run command on Cisco IOS platform
+- Nikita Mishagin
+name: mes
+short_description: Use mes cliconf to run commands on Eltex MES platform
 description:
-- This ios plugin provides low level abstraction apis for sending and receiving CLI
-  commands from Cisco IOS network devices.
+- This mes plugin provides low-level abstraction APIs for sending and receiving CLI
+  commands from Eltex MES network devices.
 version_added: 1.0.0
 options:
-  commit_confirm_immediate:
-    type: boolean
-    default: false
-    description:
-    - Enable or disable commit confirm mode.
-    - Confirms the configuration pushed after a custom/ default timeout.(default 1 minute).
-    - For custom timeout configuration set commit_confirm_timeout value.
-    - On commit_confirm_immediate default value for commit_confirm_timeout is considered 1 minute
-      when variable in not explicitly declared.
-    env:
-    - name: ANSIBLE_IOS_COMMIT_CONFIRM_IMMEDIATE
-    vars:
-    - name: ansible_ios_commit_confirm_immediate
-  commit_confirm_timeout:
-    type: int
-    description:
-    - Commits the configuration on a trial basis for the time
-      specified in minutes.
-    - Using commit_confirm_timeout without specifying commit_confirm_immediate would
-      need an explicit C(configure confirm) using the ios_command module
-      to confirm/commit the changes made.
-    - Refer to example for a use case demonstration.
-    env:
-    - name: ANSIBLE_IOS_COMMIT_CONFIRM_TIMEOUT
-    vars:
-    - name: ansible_ios_commit_confirm_timeout
   config_commands:
     description:
     - Specifies a list of commands that can make configuration changes
@@ -68,71 +47,17 @@ options:
     elements: str
     default: []
     vars:
-    - name: ansible_ios_config_commands
+    - name: ansible_mes_config_commands
 """
 
 EXAMPLES = """
-# NOTE - IOS waits for a `configure confirm` when the configure terminal
-# command executed is `configure terminal revert timer <timeout>` within the timeout
-# period for the configuration to commit successfully, else a rollback
-# happens.
-
-# Use commit confirm with timeout and confirm the commit explicitly
-
-- name: Example commit confirmed
-  vars:
-    ansible_ios_commit_confirm_timeout: 1
+- name: Set hostname on Eltex MES
   tasks:
-    - name: "Commit confirmed with timeout"
-      cisco.ios.ios_hostname:
+    - name: Configure hostname
+      nikitamishagin.eltex_mes.mes_hostname:
         state: merged
         config:
-          hostname: R1
-
-    - name: "Confirm the Commit"
-      cisco.ios.ios_command:
-        commands:
-          - configure confirm
-
-# Commands fired
-# - configure terminal revert timer 1 (cliconf specific)
-# - hostname R1 (from hostname resource module)
-# - configure confirm (from ios_command module)
-
-# Use commit confirm with timeout and confirm the commit via cliconf
-
-- name: Example commit confirmed
-  vars:
-    ansible_ios_commit_confirm_immediate: True
-    ansible_ios_commit_confirm_timeout: 3
-  tasks:
-    - name: "Commit confirmed with timeout"
-      cisco.ios.ios_hostname:
-        state: merged
-        config:
-          hostname: R1
-
-# Commands fired
-# - configure terminal revert timer 3 (cliconf specific)
-# - hostname R1 (from hostname resource module)
-# - configure confirm (cliconf specific)
-
-# Use commit confirm via cliconf using default timeout
-
-- name: Example commit confirmed
-  vars:
-    ansible_ios_commit_confirm_immediate: True
-  tasks:
-    - name: "Commit confirmed with timeout"
-      cisco.ios.ios_hostname:
-        state: merged
-        config:
-          hostname: R1
-
-# Commands fired
-# - configure terminal revert timer 1 (cliconf specific with default timeout)
-# - hostname R1 (from hostname resource module)
-# - configure confirm (cliconf specific)
+          hostname: SW1
 
 """
 
@@ -161,7 +86,7 @@ class Cliconf(CliconfBase):
 
     @enable_mode
     def get_config(self, source="running", flags=None, format=None):
-        if source not in ("running", "startup"):
+        if source != "running":
             raise ValueError("fetching configuration from %s is not supported" % source)
 
         if format:
@@ -169,22 +94,20 @@ class Cliconf(CliconfBase):
 
         if not flags:
             flags = []
-        if source == "running":
-            cmd = "show running-config "
-        else:
-            cmd = "show startup-config "
 
+        cmd = "show running-config "
         cmd += " ".join(to_list(flags))
         cmd = cmd.strip()
 
         return self.send_command(cmd)
 
-    @enable_mode
-    def restore(self, filename=None, path=""):
-        if not filename:
-            raise ValueError("'file_name' value is required for restore")
-        cmd = f"configure replace {path}{filename} force"
-        return self.send_command(cmd)
+    # I'm not sure if this can be used in Eltex MES, but let's leave it for now
+    # @enable_mode
+    # def restore(self, filename=None, path=""):
+    #     if not filename:
+    #         raise ValueError("'file_name' value is required for restore")
+    #     cmd = f"configure replace {path}{filename} force"
+    #     return self.send_command(cmd)
 
     def get_diff(
         self,
@@ -204,11 +127,11 @@ class Cliconf(CliconfBase):
         :param candidate: The configuration which is expected to be present on remote host.
         :param running: The base configuration which is used to generate diff.
         :param diff_match: Instructs how to match the candidate configuration with current device configuration
-                      Valid values are 'line', 'strict', 'exact', 'none'.
-                      'line' - commands are matched line by line
-                      'strict' - command lines are matched with respect to position
-                      'exact' - command lines must be an equal match
-                      'none' - will not compare the candidate configuration with the running configuration
+                           Valid values are 'line', 'strict', 'exact', 'none'.
+                           'line' - commands are matched line by line
+                           'strict' - command lines are matched with respect to position
+                           'exact' - command lines must be an equal match
+                           'none' - will not compare the candidate configuration with the running configuration
         :param diff_ignore_lines: Use this argument to specify one or more lines that should be
                                   ignored during the diff.  This is used for lines in the configuration
                                   that are automatically updated by the system.  This argument takes
@@ -216,17 +139,17 @@ class Cliconf(CliconfBase):
         :param path: The ordered set of parents that uniquely identify the section or hierarchy
                      the commands should be checked against.  If the parents argument
                      is omitted, the commands are checked against the set of top
-                    level or global commands.
+                     level or global commands.
         :param diff_replace: Instructs on the way to perform the configuration on the device.
-                        If the replace argument is set to I(line) then the modified lines are
-                        pushed to the device in configuration mode.  If the replace argument is
-                        set to I(block) then the entire command block is pushed to the device in
-                        configuration mode if any line is not correct.
-        :return: Configuration diff in  json format.
-               {
-                   'config_diff': '',
-                   'banner_diff': {}
-               }
+                             If the replace argument is set to I(line) then the modified lines are
+                             pushed to the device in configuration mode.  If the replace argument is
+                             set to I(block) then the entire command block is pushed to the device in
+                             configuration mode if any line is not correct.
+        :return: Configuration diff in json format.
+                 {
+                     'config_diff': '',
+                     'banner_diff': {}
+                 }
         """
         diff = {}
         device_operations = self.get_device_operations()
@@ -275,45 +198,11 @@ class Cliconf(CliconfBase):
     @enable_mode
     def configure(self):
         """
-        Enter global configuration mode based on the
-        status of commit_confirm
+        Enter global configuration mode
         :return: None
         """
-        if self.get_option("commit_confirm_timeout") or self.get_option("commit_confirm_immediate"):
-            commit_timeout = (
-                self.get_option("commit_confirm_timeout")
-                if self.get_option("commit_confirm_timeout")
-                else 1
-            )  # add default timeout not default: 1 to support above or operation
-
-            persistent_command_timeout = self._connection.get_option("persistent_command_timeout")
-            # check archive state
-            archive_state = self.send_command("show archive")
-            rollback_state = self.send_command("show archive config rollback timer")
-
-            if persistent_command_timeout > commit_timeout * 60:
-                raise ValueError(
-                    "ansible_command_timeout can't be greater than commit_confirm_timeout "
-                    "Please adjust and try again",
-                )
-
-            if re.search(r"Archive.*not.enabled", archive_state):
-                raise ValueError(
-                    "commit_confirm_immediate option set, but archiving "
-                    "not enabled on device. "
-                    "Please set up archiving and try again",
-                )
-
-            if not re.search(r"%No Rollback Confirmed Change pending", rollback_state):
-                raise ValueError(
-                    "Existing rollback change already pending. "
-                    "Please resolve by issuing 'configure confirm' "
-                    "or 'configure revert now'",
-                )
-
-            self.send_command(f"configure terminal revert timer {commit_timeout}")
-        else:
-            self.send_command("configure terminal")
+        # Enter configuration mode on Eltex MES
+        self.send_command("configure terminal")
 
     @enable_mode
     def edit_config(self, candidate=None, commit=True, replace=None, comment=None):
@@ -323,23 +212,21 @@ class Cliconf(CliconfBase):
 
         results = []
         requests = []
-        # commit confirm specific attributes
-        commit_confirm = self.get_option("commit_confirm_immediate")
         if commit:
             self.configure()
-            for line in to_list(candidate):
-                if not isinstance(line, Mapping):
-                    line = {"command": line}
+            try:
+                for line in to_list(candidate):
+                    if not isinstance(line, Mapping):
+                        line = {"command": line}
 
-                cmd = line["command"]
-                if cmd != "end" and cmd[0] != "!":
-                    results.append(self.send_command(**line))
-                    requests.append(cmd)
+                    cmd = line["command"]
+                    if cmd != "end" and cmd[0] != "!":
+                        results.append(self.send_command(**line))
+                        requests.append(cmd)
 
-            self.send_command("end")
-            if commit_confirm:
-                self.send_command("configure confirm")
-
+            finally:
+                # guaranteed exit from configuration mode
+                self.send_command("end")
         else:
             raise ValueError("check mode is not supported")
 
@@ -349,7 +236,7 @@ class Cliconf(CliconfBase):
 
     def edit_macro(self, candidate=None, commit=True, replace=None, comment=None):
         """
-        ios_config:
+        mes_config:
           lines: "{{ macro_lines }}"
           parents: "macro name {{ macro_name }}"
           after: '@'
@@ -364,7 +251,7 @@ class Cliconf(CliconfBase):
         requests = []
         if commit:
             commands = ""
-            self.send_command("config terminal")
+            self.send_command("configure terminal")
             time.sleep(0.1)
             # first item: macro command
             commands += candidate.pop(0) + "\n"
@@ -420,35 +307,49 @@ class Cliconf(CliconfBase):
 
     def get_device_info(self):
         if not self._device_info:
-            device_info = {}
+            device_info = {"network_os": "mes"}
 
-            device_info["network_os"] = "ios"
             # Ensure we are not in config mode
             self._update_cli_prompt_context(config_context=")#", exit_command="end")
+
+            # Get information about software versions
             reply = self.get(command="show version")
             data = to_text(reply, errors="surrogate_or_strict").strip()
-            match = re.search(r"Version (\S+)", data)
-            if match:
-                device_info["network_os_version"] = match.group(1).strip(",")
 
-            model_search_strs = [
-                r"^[Cc]isco (.+) \(revision",
-                r"^[Cc]isco (\S+).+bytes of .*memory",
-            ]
-            for item in model_search_strs:
-                match = re.search(item, data, re.M)
-                if match:
-                    version = match.group(1).split(" ")
-                    device_info["network_os_model"] = version[0]
-                    break
+            # Search an active image (path and version)
+            active_match = re.search(
+                r"Active-image:\s+(\S+)\n\s+Version:\s+(\S+)",
+                data,
+                re.S | re.I,
+            )
+            if active_match:
+                device_info["network_os_image"] = active_match.group(1)
+                device_info["network_os_version"] = active_match.group(2)
 
-            match = re.search(r"^(.+) uptime", data, re.M)
-            if match:
-                device_info["network_os_hostname"] = match.group(1)
+            # Search an inactive image (path and version)
+            inactive_match = re.search(
+                r"Inactive-image:\s+(\S+)\n\s+Version:\s+(\S+)",
+                data,
+                re.S | re.I,
+            )
+            if inactive_match:
+                device_info["network_os_inactive_image"] = inactive_match.group(1)
+                device_info["network_os_inactive_version"] = inactive_match.group(2)
 
-            match = re.search(r'image file is "(.+)"', data)
-            if match:
-                device_info["network_os_image"] = match.group(1)
+            # Get information about a device
+            reply = self.get(command="show system")
+            data = to_text(reply, errors="surrogate_or_strict").strip()
+
+            # Search a model name and hostname
+            device_match = re.search(
+                r"System Description:\s+(MES\S+)[\s\S]*?System Name:\s+(\S+)",
+                data,
+                re.M | re.I,
+            )
+            if device_match:
+                device_info["network_os_model"] = device_match.group(1).strip(",")
+                device_info["network_os_hostname"] = device_match.group(2).strip(",")
+
             device_info["network_os_type"] = self.check_device_type()
             self._device_info = device_info
 
@@ -491,10 +392,10 @@ class Cliconf(CliconfBase):
         :param multiline_delimiter: Line delimiter for banner
         :param commit: Boolean value that indicates if the device candidate
                configuration should be  pushed in the running configuration or discarded.
-        :param diff: Boolean flag to indicate if configuration that is applied on remote host should
-                     generated and returned in response or not
+        :param diff: Boolean flag to indicate if configuration applied on remote host should be
+               generated and returned in response or not
         :return: Returns response of executing the configuration command received
-             from remote host
+                 from remote host
         """
         resp = {}
         banners_obj = json.loads(candidate)
@@ -547,7 +448,7 @@ class Cliconf(CliconfBase):
         """
         The method identifies the filter that should be used to fetch running-configuration
         with defaults.
-        :return: valid default filter
+        :return: Valid default filter
         """
         out = self.get("show running-config ?")
         out = to_text(out, errors="surrogate_then_replace")

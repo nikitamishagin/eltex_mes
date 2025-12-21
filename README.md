@@ -157,7 +157,7 @@ PEP440 is the schema used to describe the versions of Ansible.
 ### Cliconf plugins
 Name | Description
 --- | ---
-[nikitamishagin.eltex_mes.ios](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.ios_cliconf.rst)|Use ios cliconf to run command on Cisco IOS platform
+[nikitamishagin.eltex_mes.mes](https://github.com/nikitamishagin/eltex_mes/blob/main/docs/nikitamishagin.eltex_mes.mes_cliconf.rst)|Use mes cliconf to run commands on Eltex MES platform
 
 ### Modules
 Name | Description
