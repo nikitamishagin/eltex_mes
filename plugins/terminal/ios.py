@@ -16,6 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Copyright 2025 Nikita Mishagin
+# Modified from cisco.ios to Eltex MES
+#
 from __future__ import absolute_import, division, print_function
 
 
@@ -32,7 +35,7 @@ from ansible_collections.ansible.netcommon.plugins.plugin_utils.terminal_base im
 
 display = Display()
 
-# TODO: Request prompts to validate it
+
 class TerminalModule(TerminalBase):
     terminal_stdout_re = [
         re.compile(rb"[\r\n]?[\w\+\-\.:\/\[\]]+(?:\([^\)]+\)){0,3}(?:[>#]) ?$"),
@@ -72,7 +75,6 @@ class TerminalModule(TerminalBase):
 
     terminal_config_prompt = re.compile(r"^.+\(config(-.*)?\)#$")
 
-    # TODO: Request 'show privilege' command output to validate it
     def get_privilege_level(self):
         try:
             cmd = {"command": "show privilege"}
@@ -102,7 +104,6 @@ class TerminalModule(TerminalBase):
                 "WARNING: Unable to set terminal datadump, command responses may be truncated",
             )
 
-    # TODO: Check password prompt in MES devices
     def on_become(self, passwd=None):
         if self._get_prompt().endswith(b"#") and self.get_privilege_level() == 15:
             return
