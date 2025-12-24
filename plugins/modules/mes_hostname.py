@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_hostname
+The module file for mes_hostname
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_hostname
+module: mes_hostname
 short_description: Resource module to configure hostname.
 description:
   - This module provides declarative management of hostname on Cisco IOS devices.
@@ -79,14 +79,14 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname Router
 
 # Merged play:
 # ------------
 
 - name: Apply the provided configuration
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     config:
       hostname: Router1
     state: merged
@@ -101,7 +101,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname Router1
 
 # Using state: deleted
@@ -109,14 +109,14 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname RouterTest
 
 # Deleted play:
 # -------------
 
 - name: Remove all existing configuration
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     state: deleted
 
 # Commands Fired:
@@ -129,7 +129,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname Router
 
 # Using state: overridden
@@ -137,14 +137,14 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname Router
 
 # Overridden play:
 # ----------------
 
 - name: Override commands with provided configuration
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     config:
       hostname: RouterTest
     state: overridden
@@ -158,7 +158,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname RouterTest
 
 # Using state: replaced
@@ -166,14 +166,14 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname RouterTest
 
 # Replaced play:
 # --------------
 
 - name: Replace commands with provided configuration
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     config:
       hostname: RouterTest
     state: replaced
@@ -186,7 +186,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname RouterTest
 
 # Using state: gathered
@@ -194,14 +194,14 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config | section ^hostname
+# router-mes#show running-config | section ^hostname
 # hostname RouterTest
 
 # Gathered play:
 # --------------
 
 - name: Gather listed hostname config
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     state: gathered
 
 # Module Execution Result:
@@ -217,7 +217,7 @@ EXAMPLES = """
 # --------------
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     config:
       hostname: RouterTest
     state: rendered
@@ -240,7 +240,7 @@ EXAMPLES = """
 # ------------
 
 - name: Parse the provided configuration with the existing running configuration
-  cisco.ios.ios_hostname:
+  nikitamishagin.eltex_mes.mes_hostname:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 

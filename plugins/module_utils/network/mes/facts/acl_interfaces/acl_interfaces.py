@@ -4,7 +4,7 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
-The ios_acl_interfaces fact class
+The mes acl_interfaces fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -16,16 +16,16 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.acl_interfaces.acl_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.acl_interfaces.acl_interfaces import (
     Acl_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.acl_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.acl_interfaces import (
     Acl_interfacesTemplate,
 )
 
 
 class Acl_interfacesFacts(object):
-    """The ios_acl_interfaces fact class"""
+    """The mes acl_interfaces fact class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

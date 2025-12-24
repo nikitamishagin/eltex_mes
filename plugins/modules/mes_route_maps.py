@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for cisco.ios_route_maps
+The module file for mes_route_maps
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_route_maps
+module: mes_route_maps
 short_description: Resource module to configure route maps.
 description:
   - This module configures and manages the attributes of Route maps on Cisco IOS.
@@ -1072,7 +1072,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1105,7 +1105,7 @@ EXAMPLES = """
 #  set ip next-hop recursive global 198.51.110.1
 
 - name: Delete provided Route maps config
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     config:
       - route_map: test_1
     state: deleted
@@ -1119,7 +1119,7 @@ EXAMPLES = """
 
 # After state:
 # -------------
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_2 deny 10
 #  match security-group source tag 10 20
 #  match local-preference 55 105
@@ -1141,7 +1141,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1174,7 +1174,7 @@ EXAMPLES = """
 #  set ip next-hop recursive global 198.51.110.1
 
 - name: Delete all Route maps config
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     state: deleted
 
 # Commands Fired:
@@ -1187,19 +1187,19 @@ EXAMPLES = """
 
 # After state:
 # -------------
-# router-ios#sh running-config | section ^route-map
-# router-ios#
+# router-mes#sh running-config | section ^route-map
+# router-mes#
 
 # Using merged
 
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
-# router-ios#
+# router-mes#sh running-config | section ^route-map
+# router-mes#
 
 - name: Merge provided Route maps configuration
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     config:
       - route_map: test_1
         entries:
@@ -1329,7 +1329,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1366,7 +1366,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1399,7 +1399,7 @@ EXAMPLES = """
 #  set ip next-hop recursive global 198.51.110.1
 
 - name: Override provided Route maps configuration
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     config:
       - route_map: test_1
         entries:
@@ -1523,7 +1523,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_override deny 10
 #  match security-group source tag 15 20
 #  match local-preference 110 105
@@ -1555,7 +1555,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1588,7 +1588,7 @@ EXAMPLES = """
 #  set ip next-hop recursive global 198.51.110.1
 
 - name: Replaced provided Route maps configuration
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     config:
       - route_map: test_1
         entries:
@@ -1710,7 +1710,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_replaced deny 10
 #  match security-group source tag 15 20
 #  match local-preference 110 105
@@ -1757,7 +1757,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1790,7 +1790,7 @@ EXAMPLES = """
 #  set ip next-hop recursive global 198.51.110.1
 
 - name: Gather Route maps provided configurations
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     config:
     state: gathered
 
@@ -1946,7 +1946,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#sh running-config | section ^route-map
+# router-mes#sh running-config | section ^route-map
 # route-map test_1 deny 10
 #  description this is test route
 #  match ip next-hop prefix-list test_2_new test_1_new
@@ -1981,7 +1981,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     config:
       - route_map: test_1
         entries:
@@ -2145,7 +2145,7 @@ EXAMPLES = """
 #  set ip next-hop recursive global 198.51.110.1
 
 - name: Parse the provided configuration with the existing running configuration
-  cisco.ios.ios_route_maps:
+  nikitamishagin.eltex_mes.mes_route_maps:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -2322,10 +2322,10 @@ commands:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.route_maps.route_maps import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.route_maps.route_maps import (
     Route_mapsArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.route_maps.route_maps import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.route_maps.route_maps import (
     Route_maps,
 )
 

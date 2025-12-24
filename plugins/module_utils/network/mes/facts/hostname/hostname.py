@@ -9,23 +9,23 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios hostname fact class
+The mes hostname fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.hostname.hostname import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.hostname.hostname import (
     HostnameArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.hostname import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.hostname import (
     HostnameTemplate,
 )
 
 
 class HostnameFacts(object):
-    """The ios hostname facts class"""
+    """The mes hostname facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

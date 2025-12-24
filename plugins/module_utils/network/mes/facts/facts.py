@@ -20,107 +20,107 @@ __metaclass__ = type
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.facts.facts import (
     FactsBase,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.acl_interfaces.acl_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.acl_interfaces.acl_interfaces import (
     Acl_interfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.acls.acls import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.acls.acls import (
     AclsFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.bgp_address_family.bgp_address_family import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.bgp_address_family.bgp_address_family import (
     Bgp_address_familyFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.bgp_global.bgp_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.bgp_global.bgp_global import (
     Bgp_globalFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.evpn_ethernet.evpn_ethernet import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.evpn_ethernet.evpn_ethernet import (
     Evpn_ethernetFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.evpn_evi.evpn_evi import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.evpn_evi.evpn_evi import (
     Evpn_eviFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.evpn_global.evpn_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.evpn_global.evpn_global import (
     Evpn_globalFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.hostname.hostname import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.hostname.hostname import (
     HostnameFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.hsrp_interfaces.hsrp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.hsrp_interfaces.hsrp_interfaces import (
     Hsrp_interfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.interfaces.interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.interfaces.interfaces import (
     InterfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.l2_interfaces.l2_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.l2_interfaces.l2_interfaces import (
     L2_interfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.l3_interfaces.l3_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.l3_interfaces.l3_interfaces import (
     L3_InterfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lacp.lacp import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lacp.lacp import (
     LacpFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lacp_interfaces.lacp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lacp_interfaces.lacp_interfaces import (
     Lacp_InterfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lag_interfaces.lag_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lag_interfaces.lag_interfaces import (
     Lag_interfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.legacy.base import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.legacy.base import (
     Config,
     Default,
     Hardware,
     Interfaces,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lldp_global.lldp_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lldp_global.lldp_global import (
     Lldp_globalFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lldp_interfaces.lldp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lldp_interfaces.lldp_interfaces import (
     Lldp_InterfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.logging_global.logging_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.logging_global.logging_global import (
     Logging_globalFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ntp_global.ntp_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ntp_global.ntp_global import (
     Ntp_globalFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ospf_interfaces.ospf_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ospf_interfaces.ospf_interfaces import (
     Ospf_interfacesFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ospfv2.ospfv2 import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ospfv2.ospfv2 import (
     Ospfv2Facts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ospfv3.ospfv3 import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ospfv3.ospfv3 import (
     Ospfv3Facts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.prefix_lists.prefix_lists import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.prefix_lists.prefix_lists import (
     Prefix_listsFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.route_maps.route_maps import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.route_maps.route_maps import (
     Route_mapsFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.service.service import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.service.service import (
     ServiceFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.snmp_server.snmp_server import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.snmp_server.snmp_server import (
     Snmp_serverFacts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.static_routes.static_routes import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.static_routes.static_routes import (
     Static_routesFacts,
-)
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.vrf_address_family.vrf_address_family import (
-    Vrf_address_familyFacts,
-)
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.vrf_global.vrf_global import (
-    Vrf_globalFacts,
-)
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.vrf_interfaces.vrf_interfaces import (
-    Vrf_interfacesFacts,
-)
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.vxlan_vtep.vxlan_vtep import (
-    Vxlan_vtepFacts,
 )
 from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vlans.vlans import (
     VlansFacts,
+)
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vrf_address_family.vrf_address_family import (
+    Vrf_address_familyFacts,
+)
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vrf_global.vrf_global import (
+    Vrf_globalFacts,
+)
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vrf_interfaces.vrf_interfaces import (
+    Vrf_interfacesFacts,
+)
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vxlan_vtep.vxlan_vtep import (
+    Vxlan_vtepFacts,
 )
 
 

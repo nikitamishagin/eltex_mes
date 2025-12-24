@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_hsrp_interfaces
+The module file for mes_hsrp_interfaces
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_hsrp_interfaces
+module: mes_hsrp_interfaces
 short_description: Resource module to configure HSRP on interfaces.
 description:
   - >-
@@ -332,7 +332,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     config:
       - name: GigabitEthernet3
         standby_groups:
@@ -434,7 +434,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Replaces device configuration of listed interfaces with provided configuration
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     config:
       - name: GigabitEthernet3
         standby_groups:
@@ -550,7 +550,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Override device configuration of all interfaces with provided configuration
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     config:
       - name: GigabitEthernet4
         standby_groups:
@@ -595,7 +595,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback888
 #  no ip address
 # interface Loopback999
@@ -627,7 +627,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback888
 #  no ip address
 # interface Loopback999
@@ -655,7 +655,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: "Delete attributes of given interfaces (NOTE: This won't delete the interfaces)"
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     config:
       - name: GigabitEthernet4
     state: deleted
@@ -687,7 +687,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback888
 #  no ip address
 # interface Loopback999
@@ -742,7 +742,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: "Delete HSRP config of all interfaces"
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     state: deleted
 
 # Task Output
@@ -832,7 +832,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Gather facts for hsrp interfaces
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     state: gathered
 
 # Task Output
@@ -857,7 +857,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_hsrp_interfaces:
+  nikitamishagin.eltex_mes.mes_hsrp_interfaces:
     config:
       - name: GigabitEthernet3
         standby_groups:
@@ -891,7 +891,7 @@ EXAMPLES = """
 #  standby 0 priority 5
 
 # - name: Parse the provided configuration
-#   cisco.ios.ios_hsrp_interfaces:
+#   nikitamishagin.eltex_mes.mes_hsrp_interfaces:
 #     running_config: "{{ lookup('file', 'parsed.cfg') }}"
 #     state: parsed
 
@@ -959,10 +959,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.hsrp_interfaces.hsrp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.hsrp_interfaces.hsrp_interfaces import (
     Hsrp_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.hsrp_interfaces.hsrp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.hsrp_interfaces.hsrp_interfaces import (
     Hsrp_interfaces,
 )
 

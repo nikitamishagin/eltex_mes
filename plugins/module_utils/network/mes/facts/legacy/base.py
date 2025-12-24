@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The ios legacy fact class
+The mes legacy fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -21,7 +21,7 @@ import platform
 import re
 
 from ansible.module_utils.six.moves import zip
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.ios import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.mes import (
     get_capabilities,
     normalize_interface,
     run_commands,

@@ -24,12 +24,12 @@ __metaclass__ = type
 #############################################
 
 """
-The arg spec for the ios_acls module
+The arg spec for the mes_acls module
 """
 
 
 class AclsArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_acls module"""
+    """The arg spec for the mes_acls module"""
 
     argument_spec = {
         "config": {

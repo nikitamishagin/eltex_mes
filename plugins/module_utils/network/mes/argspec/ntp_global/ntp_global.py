@@ -24,12 +24,12 @@ __metaclass__ = type
 #############################################
 
 """
-The arg spec for the ios_ntp_global module
+The arg spec for the mes_ntp_global module
 """
 
 
 class Ntp_globalArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_ntp_global module"""
+    """The arg spec for the mes_ntp_global module"""
 
     argument_spec = {
         "config": {

@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_lag_interfaces
+The module file for mes_lag_interfaces
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_lag_interfaces
+module: mes_lag_interfaces
 short_description: Resource module to configure LAG interfaces.
 description:
   This module manages properties of Link Aggregation Group on Cisco IOS
@@ -124,7 +124,7 @@ EXAMPLES = """
 #  shutdown
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     config:
       - name: Port-channel10
         members:
@@ -198,7 +198,7 @@ EXAMPLES = """
 #  channel-group 30 mode active
 
 - name: Override device configuration of all interfaces with provided configuration
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     config:
       - name: Port-channel20
         members:
@@ -264,7 +264,7 @@ EXAMPLES = """
 #  channel-group 30 mode active
 
 - name: Replaces device configuration of listed interfaces with provided configuration
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     config:
       - name: Port-channel30
         members:
@@ -323,7 +323,7 @@ EXAMPLES = """
 #  channel-group 30 mode active
 
 - name: "Delete LAG attributes of given interfaces (Note: This won't delete the interface itself)"
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     config:
       - name: Port-channel10
       - name: Port-channel20
@@ -382,7 +382,7 @@ EXAMPLES = """
 #  channel-group 30 mode active
 
 - name: "Delete all configured LAG attributes for interfaces (Note: This won't delete the interface itself)"
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     state: deleted
 
 # Task Output:
@@ -437,7 +437,7 @@ EXAMPLES = """
 #   channel-group 30 mode active
 
 - name: Gather listed LAG interfaces with provided configurations
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     config:
     state: gathered
 
@@ -501,7 +501,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     config:
       - name: Port-channel11
         members:
@@ -534,7 +534,7 @@ EXAMPLES = """
 # channel-group 22 mode passive
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_lag_interfaces:
+  nikitamishagin.eltex_mes.mes_lag_interfaces:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -611,10 +611,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.lag_interfaces.lag_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.lag_interfaces.lag_interfaces import (
     Lag_InterfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.lag_interfaces.lag_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.lag_interfaces.lag_interfaces import (
     Lag_interfaces,
 )
 

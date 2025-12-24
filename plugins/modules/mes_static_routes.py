@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_static_routes
+The module file for mes_static_routes
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_static_routes
+module: mes_static_routes
 short_description: Resource module to configure static routes.
 description: This module configures and manages the static routes on IOS platforms.
 version_added: 1.0.0
@@ -163,7 +163,7 @@ EXAMPLES = """
 # vios#show running-config | include ip route|ipv6 route
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - vrf: blue
         address_families:
@@ -267,7 +267,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name merged_v6
 
 - name: Replace provided configuration with device configuration
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - address_families:
           - afi: ipv4
@@ -369,7 +369,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name merged_v6
 
 - name: Override provided configuration with device configuration
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - vrf: blue
         address_families:
@@ -448,7 +448,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name test_v6
 
 - name: Delete the exact static routes, with all the static routes explicitly mentioned in want
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - vrf: blue
         address_families:
@@ -546,7 +546,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name test_v6
 
 - name: Delete destination specific static routes
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - address_families:
           - afi: ipv4
@@ -634,7 +634,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name test_v6
 
 - name: Delete vrf specific static routes
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - vrf: blue
     state: deleted
@@ -723,7 +723,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name test_v6
 
 - name: Delete ALL configured static routes
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     state: deleted
 
 # Task Output
@@ -788,7 +788,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name test_v6
 
 - name: Gather facts of static routes
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
     state: gathered
 
@@ -832,7 +832,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     config:
       - vrf: blue
         address_families:
@@ -890,7 +890,7 @@ EXAMPLES = """
 # ipv6 route 2001:DB8:0:3::/64 2001:DB8:0:3::2 tag 105 name test_v6
 
 - name: Parse the provided configuration
-  cisco.ios.ios_static_routes:
+  nikitamishagin.eltex_mes.mes_static_routes:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -977,10 +977,10 @@ parsed:
 
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.static_routes.static_routes import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.static_routes.static_routes import (
     Static_routesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.static_routes.static_routes import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.static_routes.static_routes import (
     Static_routes,
 )
 

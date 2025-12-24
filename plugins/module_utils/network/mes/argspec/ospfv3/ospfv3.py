@@ -27,12 +27,12 @@ __metaclass__ = type
 #############################################
 
 """
-The arg spec for the cisco.ios_ospfv3 module
+The arg spec for the mes_ospfv3 module
 """
 
 
 class Ospfv3Args(object):  # pylint: disable=R0903
-    """The arg spec for the cisco.ios_ospfv3 module"""
+    """The arg spec for the mes_ospfv3 module"""
 
     def __init__(self, **kwargs):
         pass
@@ -257,7 +257,7 @@ class Ospfv3Args(object):  # pylint: disable=R0903
                                 "interface_id": {
                                     "type": "dict",
                                     "options": {
-                                        "ios_if_index": {"type": "bool"},
+                                        "mes_if_index": {"type": "bool"},
                                         "snmp_if_index": {"type": "bool"},
                                     },
                                 },

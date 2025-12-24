@@ -22,7 +22,7 @@
 #
 #############################################
 """
-The arg spec for the ios_lldp_global module
+The arg spec for the mes_lldp_global module
 """
 
 from __future__ import absolute_import, division, print_function

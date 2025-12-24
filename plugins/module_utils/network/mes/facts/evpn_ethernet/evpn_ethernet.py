@@ -9,7 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios evpn_ethernet fact class
+The mes evpn_ethernet fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -18,16 +18,16 @@ based on the configuration.
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
     utils,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.evpn_ethernet.evpn_ethernet import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.evpn_ethernet.evpn_ethernet import (
     Evpn_ethernetArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.evpn_ethernet import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.evpn_ethernet import (
     Evpn_ethernetTemplate,
 )
 
 
 class Evpn_ethernetFacts(object):
-    """The ios evpn_ethernet facts class"""
+    """The mes evpn_ethernet facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module
