@@ -29,7 +29,7 @@ class TestIosEvpnEthernetModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.evpn_ethernet.evpn_ethernet."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.evpn_ethernet.evpn_ethernet."
             "Evpn_ethernetFacts.get_evpn_ethernet_segment_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()
