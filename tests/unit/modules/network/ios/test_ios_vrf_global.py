@@ -8,19 +8,19 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_vrf_global
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_vrf_global
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosVrfGlobalModule(TestIosModule):
-    """Test the ios_vrf_global module."""
+    """Test the mes_vrf_global module."""
 
-    module = ios_vrf_global
+    module = mes_vrf_global
 
     def setUp(self):
-        """Set up for ios_vrf_global module tests."""
+        """Set up for mes_vrf_global module tests."""
         super(TestIosVrfGlobalModule, self).setUp()
 
         self.mock_get_resource_connection_facts = patch(
@@ -30,7 +30,7 @@ class TestIosVrfGlobalModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.vrf_global.vrf_global."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vrf_global.vrf_global."
             "Vrf_globalFacts.get_config",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

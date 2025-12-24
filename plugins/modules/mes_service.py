@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_service
+The module file for mes_service
 """
 
 from __future__ import absolute_import, division, print_function
@@ -15,7 +15,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 ---
-module: ios_service
+module: mes_service
 short_description: Resource module to configure service.
 description:
   - This module configures and manages service attributes on IOS platforms
@@ -236,7 +236,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service timestamps debug datetime msec
 # service timestamps log datetime msec
@@ -248,7 +248,7 @@ EXAMPLES = """
 # service password-recovery
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_service:
+  nikitamishagin.eltex_mes.mes_service:
     config:
       tcp_keepalives_in: true
       tcp_keepalives_out: true
@@ -311,7 +311,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service tcp-keepalives-in
 # service tcp-keepalives-out
@@ -330,7 +330,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service tcp-keepalives-in
 # service tcp-keepalives-out
@@ -345,7 +345,7 @@ EXAMPLES = """
 # service password-recovery
 
 - name: Replaces device configuration of services with provided configuration
-  cisco.ios.ios_service:
+  nikitamishagin.eltex_mes.mes_service:
     config:
       timestamps:
         - msg: log
@@ -416,7 +416,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service timestamps debug datetime
 # service timestamps log datetime msec localtime show-timezone year
@@ -432,7 +432,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service timestamps debug datetime
 # service timestamps log datetime msec localtime show-timezone year
@@ -444,7 +444,7 @@ EXAMPLES = """
 # service password-recovery
 
 - name: "Delete service configuration and restore default configuration for some important service (those with a default value in module)"
-  cisco.ios.ios_service:
+  nikitamishagin.eltex_mes.mes_service:
     state: deleted
 
 # Task Output
@@ -483,7 +483,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service private-config-encryption
 # service prompt config
@@ -496,7 +496,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#show running-config all | section ^service
+# router-mes#show running-config all | section ^service
 # service slave-log
 # service timestamps debug datetime
 # service timestamps log datetime msec localtime show-timezone year
@@ -508,7 +508,7 @@ EXAMPLES = """
 # service password-recovery
 
 - name: Gather facts of interfaces
-  cisco.ios.ios_service:
+  nikitamishagin.eltex_mes.mes_service:
     config:
     state: gathered
 
@@ -537,7 +537,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_service:
+  nikitamishagin.eltex_mes.mes_service:
     config:
       timestamps:
         - msg: log
@@ -581,7 +581,7 @@ EXAMPLES = """
 # service counters max age 5
 
 - name: Parse the provided configuration
-  cisco.ios.ios_service:
+  nikitamishagin.eltex_mes.mes_service:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -664,10 +664,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.service.service import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.service.service import (
     ServiceArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.service.service import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.service.service import (
     Service,
 )
 

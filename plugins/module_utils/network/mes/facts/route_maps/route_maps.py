@@ -9,7 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The cisco.ios route_maps fact class
+The mes route_maps fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -18,16 +18,16 @@ based on the configuration.
 from copy import deepcopy
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.route_maps.route_maps import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.route_maps.route_maps import (
     Route_mapsArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.route_maps import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.route_maps import (
     Route_mapsTemplate,
 )
 
 
 class Route_mapsFacts(object):
-    """The cisco.ios route_maps facts class"""
+    """The mes route_maps facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

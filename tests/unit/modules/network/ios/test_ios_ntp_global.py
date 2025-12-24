@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_ntp_global
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_ntp_global
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosNtpGlobalModule(TestIosModule):
-    module = ios_ntp_global
+    module = mes_ntp_global
 
     def setUp(self):
         super(TestIosNtpGlobalModule, self).setUp()
@@ -29,7 +29,7 @@ class TestIosNtpGlobalModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ntp_global.ntp_global."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ntp_global.ntp_global."
             "Ntp_globalFacts.get_ntp_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

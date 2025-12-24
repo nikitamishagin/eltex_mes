@@ -25,19 +25,19 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_vrf_address_family
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_vrf_address_family
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosVrfAddressFamilyModule(TestIosModule):
-    """Tests the ios_vrf_address_family module."""
+    """Tests the mes_vrf_address_family module."""
 
-    module = ios_vrf_address_family
+    module = mes_vrf_address_family
 
     def setUp(self):
-        """Setup for ios_vrf_address_family module tests."""
+        """Setup for mes_vrf_address_family module tests."""
         super(TestIosVrfAddressFamilyModule, self).setUp()
 
         self.mock_get_resource_connection = patch(
@@ -47,19 +47,19 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.get_resource_connection = self.mock_get_resource_connection.start()
 
         self.mock_get_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.vrf_address_family.vrf_address_family."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.vrf_address_family.vrf_address_family."
             "Vrf_address_familyFacts.get_config",
         )
         self.get_config = self.mock_get_config.start()
 
     def tearDown(self):
-        """Tear down for ios_vrf_address_family module tests."""
+        """Tear down for mes_vrf_address_family module tests."""
         super(TestIosVrfAddressFamilyModule, self).tearDown()
         self.get_resource_connection.stop()
         self.get_config.stop()
 
     def test_ios_vrf_address_family_merged_idempotent(self):
-        """Test the idempotent nature of the ios_vrf_address_family module in merged state."""
+        """Test the idempotent nature of the mes_vrf_address_family module in merged state."""
         run_cfg = dedent(
             """\
             vrf definition test
@@ -131,7 +131,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.execute_module(changed=False, commands=[])
 
     def test_ios_vrf_address_family_merged(self):
-        """Test the merged state of the ios_vrf_address_family module."""
+        """Test the merged state of the mes_vrf_address_family module."""
         set_module_args(
             dict(
                 config=[
@@ -189,7 +189,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.assertEqual(sorted((result["commands"])), sorted((commands)))
 
     def test_ios_vrf_address_family_replaced(self):
-        """Test the replaced state of the ios_vrf_address_family module."""
+        """Test the replaced state of the mes_vrf_address_family module."""
         run_cfg = dedent(
             """\
             vrf definition VRF1
@@ -257,7 +257,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.assertEqual(sorted((result["commands"])), sorted((commands)))
 
     def test_ios_vrf_address_family_replaced_idempotent(self):
-        """Test the idempotent nature of the ios_vrf_address_family module in replaced state."""
+        """Test the idempotent nature of the mes_vrf_address_family module in replaced state."""
         run_cfg = dedent(
             """\
             vrf definition VRF2
@@ -313,7 +313,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.execute_module(changed=False, commands=[])
 
     def test_ios_vrf_address_family_overridden_idempotent(self):
-        """Test the idempotent nature of the ios_vrf_address_family module in overridden state."""
+        """Test the idempotent nature of the mes_vrf_address_family module in overridden state."""
         run_cfg = dedent(
             """\
             vrf definition VRF7
@@ -355,7 +355,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.execute_module(changed=False, commands=[])
 
     def test_ios_vrf_address_family_deleted_idempotent(self):
-        """Test the idempotent nature of the ios_vrf_address_family module in deleted state."""
+        """Test the idempotent nature of the mes_vrf_address_family module in deleted state."""
         run_cfg = dedent(
             """\
             """,
@@ -367,7 +367,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.assertEqual(result["commands"], [])
 
     def test_ios_vrf_address_family_rendered(self):
-        """Test the rendered state of the ios_vrf_address_family module."""
+        """Test the rendered state of the mes_vrf_address_family module."""
         set_module_args(
             dict(
                 config=[
@@ -404,7 +404,7 @@ class TestIosVrfAddressFamilyModule(TestIosModule):
         self.assertEqual(sorted(result["rendered"]), sorted(commands))
 
     def test_ios_vrf_address_family_parsed(self):
-        """Test the parsed state of the ios_vrf_address_family module."""
+        """Test the parsed state of the mes_vrf_address_family module."""
         run_cfg = dedent(
             """\
             vrf definition test

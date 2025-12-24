@@ -23,26 +23,26 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import MagicMock, patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.cliconf.ios import Cliconf
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_config
+from ansible_collections.nikitamishagin.eltex_mes.plugins.cliconf.mes import Cliconf
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_config
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosConfigModule(TestIosModule):
-    module = ios_config
+    module = mes_config
 
     def setUp(self):
         super(TestIosConfigModule, self).setUp()
 
         self.mock_get_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_config.get_config",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_config.get_config",
         )
         self.get_config = self.mock_get_config.start()
 
         self.mock_get_connection = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_config.get_connection",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_config.get_connection",
         )
         self.get_connection = self.mock_get_connection.start()
 
@@ -50,7 +50,7 @@ class TestIosConfigModule(TestIosModule):
         self.conn.edit_config = MagicMock()
 
         self.mock_run_commands = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_config.run_commands",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_config.run_commands",
         )
         self.run_commands = self.mock_run_commands.start()
 
@@ -137,7 +137,7 @@ class TestIosConfigModule(TestIosModule):
         set_module_args(dict(lines=lines, parents=parents))
         module = MagicMock()
         module.params = {"lines": lines, "parents": parents, "src": None}
-        candidate_config = ios_config.get_candidate_config(module)
+        candidate_config = mes_config.get_candidate_config(module)
 
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(
@@ -203,7 +203,7 @@ class TestIosConfigModule(TestIosModule):
 
         module = MagicMock()
         module.params = {"lines": lines, "parents": parents, "src": None}
-        candidate_config = ios_config.get_candidate_config(module)
+        candidate_config = mes_config.get_candidate_config(module)
 
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(
@@ -245,7 +245,7 @@ class TestIosConfigModule(TestIosModule):
 
         module = MagicMock()
         module.params = {"lines": lines, "parents": parents, "src": None}
-        candidate_config = ios_config.get_candidate_config(module)
+        candidate_config = mes_config.get_candidate_config(module)
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(
                 candidate_config,
@@ -269,7 +269,7 @@ class TestIosConfigModule(TestIosModule):
 
         module = MagicMock()
         module.params = {"lines": lines, "parents": parents, "src": None}
-        candidate_config = ios_config.get_candidate_config(module)
+        candidate_config = mes_config.get_candidate_config(module)
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(
                 candidate_config,
@@ -293,7 +293,7 @@ class TestIosConfigModule(TestIosModule):
 
         module = MagicMock()
         module.params = {"lines": lines, "parents": parents, "src": None}
-        candidate_config = ios_config.get_candidate_config(module)
+        candidate_config = mes_config.get_candidate_config(module)
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(
                 candidate_config,

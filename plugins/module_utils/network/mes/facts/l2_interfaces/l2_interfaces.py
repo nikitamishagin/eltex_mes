@@ -9,23 +9,23 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios l2_interfaces fact class
+The mes l2_interfaces fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.l2_interfaces.l2_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.l2_interfaces.l2_interfaces import (
     L2_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.l2_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.l2_interfaces import (
     L2_interfacesTemplate,
 )
 
 
 class L2_interfacesFacts(object):
-    """The ios l2_interfaces facts class"""
+    """The mes l2_interfaces facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

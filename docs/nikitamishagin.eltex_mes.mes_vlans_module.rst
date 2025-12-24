@@ -116,7 +116,7 @@ Parameters
                 <td>
                         <div>VLAN Maximum Transmission Unit.</div>
                         <div>Refer to vendor documentation for valid values.</div>
-                        <div>This option is DEPRECATED use ios_interfaces to configure mtu, this attribute will be removed after 2027-01-01.</div>
+                        <div>This option is DEPRECATED use mes_interfaces to configure mtu, this attribute will be removed after 2027-01-01.</div>
                         <div>mtu is collected as part of facts, but a mtu command wont be fired if the configuration is present in the playbook.</div>
                 </td>
             </tr>
@@ -363,7 +363,7 @@ Examples
     # 1005 trnet 101005     1500  -      -      -        ibm  -        0      0
 
     - name: Merge provided configuration with device configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - name: Vlan_10
             vlan_id: 10
@@ -424,7 +424,7 @@ Examples
 
 
     - name: Merge provided configuration with device configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - vlan_id: 102
             member:
@@ -489,7 +489,7 @@ Examples
 
 
     - name: Override device configuration of all VLANs with provided configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - name: Vlan_2020
             state: active
@@ -666,7 +666,7 @@ Examples
 
 
     - name: Purge all vlans configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
         state: purged
 
@@ -811,7 +811,7 @@ Examples
     # 10
 
     - name: Replaces device configuration of listed VLANs with provided configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - vlan_id: 20
             name: Test_VLAN20
@@ -910,7 +910,7 @@ Examples
     # 10
 
     - name: Delete attributes of given VLANs
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - vlan_id: 10
           - vlan_id: 20
@@ -954,7 +954,7 @@ Examples
     #  member vni 50901
 
     - name: Delete attributes of given VLANs
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - vlan_id: 101
         state: deleted
@@ -1005,7 +1005,7 @@ Examples
     # 10
 
     - name: Delete attributes of ALL VLANs
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         state: deleted
 
     # After state:
@@ -1047,7 +1047,7 @@ Examples
     #  member vni 50901
 
     - name: Delete attributes of ALL VLANs
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         state: deleted
 
     # After state:
@@ -1079,7 +1079,7 @@ Examples
     #  member vni 50901
 
     - name: Gather listed vlans with provided configurations
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         state: gathered
 
     # Module Execution Result:
@@ -1131,7 +1131,7 @@ Examples
     # Using Rendered
 
     - name: Render the commands for provided  configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - name: Vlan_10
             vlan_id: 10
@@ -1172,7 +1172,7 @@ Examples
     # Using Rendered
 
     - name: Render the commands for provided configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         config:
           - vlan_id: 101
             member:
@@ -1222,7 +1222,7 @@ Examples
     # 1005 trnet 101005     1500  -      -      -        ibm  -        0      0
 
     - name: Parse the commands for provided configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         running_config: "{{ lookup('file', './parsed.cfg') }}"
         state: parsed
 
@@ -1301,7 +1301,7 @@ Examples
     #  member vni 50901
 
     - name: Parse the commands for provided configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         running_config: "{{ lookup('file', './parsed.cfg') }}"
         state: parsed
 
@@ -1383,7 +1383,7 @@ Examples
     #   member vni 50901
 
     - name: Parse the commands for provided configuration
-      cisco.ios.ios_vlans:
+      nikitamishagin.eltex_mes.mes_vlans:
         running_config: "{{ lookup('file', './parsed.cfg') }}"
         state: parsed
 

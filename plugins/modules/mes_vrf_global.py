@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_vrf_global
+The module file for mes_vrf_global
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_vrf_global
+module: mes_vrf_global
 short_description: Resource module to configure global VRF definitions.
 description: This module provides declarative management of VRF definitions on Cisco IOS.
 version_added: 8.0.0
@@ -158,7 +158,7 @@ EXAMPLES = """
 # admin#show running-config | section ^vrf
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
       vrfs:
         - name: VRF2
@@ -244,7 +244,7 @@ EXAMPLES = """
 #  route-target import 192.0.2.3:200
 
 - name: Replace the provided configuration with the existing running configuration
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
       vrfs:
         - name: VRF7
@@ -380,7 +380,7 @@ EXAMPLES = """
 #  vpn id 5:45
 
 - name: Override the provided configuration with the existing running configuration
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
       vrfs:
         - name: VRF6
@@ -522,7 +522,7 @@ EXAMPLES = """
 # vrf definition VRF7
 
 - name: Delete the provided configuration when config is given
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
       vrfs:
         - name: VRF2
@@ -597,7 +597,7 @@ EXAMPLES = """
 # vrf definition VRF7
 
 - name: Delete the provided configuration when config is empty
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
     state: deleted
 
@@ -661,7 +661,7 @@ EXAMPLES = """
 # vrf definition VRF7
 
 - name: Purge all the configuration from the device
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     state: purged
 
 # Task Output:
@@ -685,7 +685,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render provided configuration with device configuration
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
       vrfs:
         - name: VRF2
@@ -737,7 +737,7 @@ EXAMPLES = """
 #  route-target import 192.0.2.3:200
 
 - name: Gather existing running configuration
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     config:
     state: gathered
 
@@ -785,7 +785,7 @@ EXAMPLES = """
 #  rd 192.0.2.3:300
 
 - name: Parse the provided configuration
-  cisco.ios.ios_vrf_global:
+  nikitamishagin.eltex_mes.mes_vrf_global:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -874,10 +874,10 @@ parsed:
 
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.vrf_global.vrf_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.vrf_global.vrf_global import (
     Vrf_globalArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.vrf_global.vrf_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.vrf_global.vrf_global import (
     Vrf_global,
 )
 

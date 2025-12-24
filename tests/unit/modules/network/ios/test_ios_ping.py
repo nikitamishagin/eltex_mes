@@ -10,19 +10,19 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_ping
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_ping
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosPingModule(TestIosModule):
-    module = ios_ping
+    module = mes_ping
 
     def setUp(self):
         super(TestIosPingModule, self).setUp()
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.ping.ping.Ping.run_command",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.ping.ping.Ping.run_command",
         )
         self.execute_show_command = self.mock_execute_show_command.start()
 

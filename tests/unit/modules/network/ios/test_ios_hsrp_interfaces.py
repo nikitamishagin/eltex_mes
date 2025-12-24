@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_hsrp_interfaces
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_hsrp_interfaces
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosHSRPInterfaceModule(TestIosModule):
-    module = ios_hsrp_interfaces
+    module = mes_hsrp_interfaces
 
     def setUp(self):
         super(TestIosHSRPInterfaceModule, self).setUp()
@@ -29,7 +29,7 @@ class TestIosHSRPInterfaceModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.hsrp_interfaces.hsrp_interfaces."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.hsrp_interfaces.hsrp_interfaces."
             "Hsrp_interfacesFacts.get_hsrp_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

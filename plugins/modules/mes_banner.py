@@ -20,7 +20,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 DOCUMENTATION = """
-module: ios_banner
+module: mes_banner
 author: Ricardo Carrillo Cruz (@rcarrillocruz)
 short_description: Module to configure multiline banners.
 description:
@@ -67,7 +67,7 @@ options:
 
 EXAMPLES = """
 - name: Configure the login banner
-  cisco.ios.ios_banner:
+  nikitamishagin.eltex_mes.mes_banner:
     banner: login
     text: |
       this is my login banner
@@ -76,18 +76,18 @@ EXAMPLES = """
     state: present
 
 - name: Remove the motd banner
-  cisco.ios.ios_banner:
+  nikitamishagin.eltex_mes.mes_banner:
     banner: motd
     state: absent
 
 - name: Configure banner from file
-  cisco.ios.ios_banner:
+  nikitamishagin.eltex_mes.mes_banner:
     banner: motd
     text: "{{ lookup('file', './config_partial/raw_banner.cfg') }}"  # Use unix formatted text files (LF not CRLF) to avoid idempotency issues.
     state: present
 
 - name: Configure the login banner using delimiter
-  cisco.ios.ios_banner:
+  nikitamishagin.eltex_mes.mes_banner:
     banner: login
     multiline_delimiter: x
     text: this is my login banner
@@ -108,7 +108,7 @@ commands:
 from re import M, search
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.ios import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.mes import (
     get_config,
     load_config,
 )

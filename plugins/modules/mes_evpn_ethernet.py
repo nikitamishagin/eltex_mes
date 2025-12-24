@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_evpn_ethernet
+The module file for mes_evpn_ethernet
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_evpn_ethernet
+module: mes_evpn_ethernet
 short_description: Resource module to configure L2VPN EVPN Ethernet Segment.
 description: This module manages the L2VPN EVPN Ethernet Segment attributes of Cisco IOS network devices.
 version_added: 9.2.0
@@ -145,7 +145,7 @@ EXAMPLES = """
 # !
 
 - name: Gather facts of evpn ethernet segment
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
       - identifier:
           identifier_type: '0'
@@ -314,7 +314,7 @@ EXAMPLES = """
 # !
 
 - name: Gather facts of evpn ethernet segment
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
       - df_election:
           wait_time: 1
@@ -465,7 +465,7 @@ EXAMPLES = """
 # !
 
 - name: Gather facts of evpn ethernet segment
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
       - df_election:
           wait_time: 1
@@ -526,7 +526,7 @@ EXAMPLES = """
 # !
 
 - name: Gather facts of evpn ethernet segment
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
       - identifier:
           identifier_type: '0'
@@ -659,7 +659,7 @@ EXAMPLES = """
 # !
 
 - name: Gather facts of evpn ethernet segment
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
       - segment: '1'
       - segment: '2'
@@ -769,7 +769,7 @@ EXAMPLES = """
 # !
 
 - name: Gather facts of evpn ethernet segment
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
     state: gathered
 
@@ -809,7 +809,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render commands with provided configuration
-  cisco.ios.ios_evpn_ethernet:
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
     config:
       - identifier:
           identifier_type: '0'
@@ -885,8 +885,8 @@ EXAMPLES = """
 # !
 
 - name: Parse the provided configuration
-  cisco.ios.ios_evpn_ethernet:
-    running_config: "{{ lookup('file', 'ios_ethernet_segment_parsed.cfg') }}"
+  nikitamishagin.eltex_mes.mes_evpn_ethernet:
+    running_config: "{{ lookup('file', 'mes_ethernet_segment_parsed.cfg') }}"
     state: parsed
 
 # Task Output
@@ -971,10 +971,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.evpn_ethernet.evpn_ethernet import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.evpn_ethernet.evpn_ethernet import (
     Evpn_ethernetArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.evpn_ethernet.evpn_ethernet import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.evpn_ethernet.evpn_ethernet import (
     Evpn_ethernet,
 )
 

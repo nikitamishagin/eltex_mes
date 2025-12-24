@@ -24,20 +24,20 @@ import json
 
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_command
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_command
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosCommandModule(TestIosModule):
-    module = ios_command
+    module = mes_command
 
     def setUp(self):
         super(TestIosCommandModule, self).setUp()
 
         self.mock_run_commands = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_command.run_commands",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_command.run_commands",
         )
         self.run_commands = self.mock_run_commands.start()
 

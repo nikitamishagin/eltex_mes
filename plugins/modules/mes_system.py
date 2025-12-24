@@ -21,7 +21,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_system
+module: mes_system
 author: Peter Sprygada (@privateip)
 short_description: Module to manage the system attributes.
 description:
@@ -84,8 +84,8 @@ options:
 
 EXAMPLES = """
 - name: Configure hostname and domain name
-  cisco.ios.ios_system:
-    hostname: ios01
+  nikitamishagin.eltex_mes.mes_system:
+    hostname: mes01
     domain_name: test.example.com
     domain_search:
       - ansible.com
@@ -93,16 +93,16 @@ EXAMPLES = """
       - cisco.com
 
 - name: Remove configuration
-  cisco.ios.ios_system:
+  nikitamishagin.eltex_mes.mes_system:
     state: absent
 
 - name: Configure DNS lookup sources
-  cisco.ios.ios_system:
+  nikitamishagin.eltex_mes.mes_system:
     lookup_source: MgmtEth0/0/CPU0/0
     lookup_enabled: true
 
 - name: Configure name servers
-  cisco.ios.ios_system:
+  nikitamishagin.eltex_mes.mes_system:
     name_servers:
       - 8.8.8.8
       - 8.8.4.4
@@ -114,7 +114,7 @@ commands:
   returned: always
   type: list
   sample:
-    - hostname ios01
+    - hostname mes01
     - ip domain name test.example.com
 """
 import re
@@ -123,7 +123,7 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     ComplexList,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.ios import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.mes import (
     get_config,
     load_config,
 )

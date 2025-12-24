@@ -20,7 +20,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 DOCUMENTATION = """
-module: ios_facts
+module: mes_facts
 author:
   - Peter Sprygada (@privateip)
   - Sumit Jaiswal (@justjais)
@@ -70,26 +70,26 @@ options:
 
 EXAMPLES = """
 - name: Gather all legacy facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset: all
 
 - name: Gather only the config and default facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset:
       - config
 
 - name: Do not gather hardware facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset:
       - "!hardware"
 
 - name: Gather legacy and resource facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset: all
     gather_network_resources: all
 
 - name: Gather only the interfaces resource facts and no legacy facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset:
       - "!all"
       - "!min"
@@ -97,17 +97,17 @@ EXAMPLES = """
       - interfaces
 
 - name: Gather interfaces resource and minimal legacy facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset: min
     gather_network_resources: interfaces
 
 - name: Gather L2 interfaces resource and minimal legacy facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset: min
     gather_network_resources: l2_interfaces
 
 - name: Gather L3 interfaces resource and minimal legacy facts
-  cisco.ios.ios_facts:
+  nikitamishagin.eltex_mes.mes_facts:
     gather_subset: min
     gather_network_resources: l3_interfaces
 """
@@ -136,7 +136,7 @@ ansible_net_version:
   description: The operating system version running on the remote device
   returned: always
   type: str
-ansible_net_iostype:
+ansible_net_mestype:
   description: The operating system type (IOS or IOS-XE) running on the remote device
   returned: always
   type: str
@@ -214,10 +214,10 @@ ansible_net_neighbors:
   type: dict
 """
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.facts.facts import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.facts.facts import (
     FactsArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.facts import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.facts import (
     FACT_RESOURCE_SUBSETS,
     Facts,
 )

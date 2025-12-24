@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_service
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_service
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosServiceModule(TestIosModule):
-    module = ios_service
+    module = mes_service
 
     def setUp(self):
         super(TestIosServiceModule, self).setUp()
@@ -29,7 +29,7 @@ class TestIosServiceModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.service.service."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.service.service."
             "ServiceFacts.get_service_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

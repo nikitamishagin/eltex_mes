@@ -4,7 +4,7 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
-The ios_l3_interfaces fact class
+The mes l3_interfaces fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -17,19 +17,19 @@ __metaclass__ = type
 
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.l3_interfaces.l3_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.l3_interfaces.l3_interfaces import (
     L3_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.l3_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.l3_interfaces import (
     L3_interfacesTemplate,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.utils.utils import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.utils.utils import (
     netmask_to_cidr,
 )
 
 
 class L3_InterfacesFacts(object):
-    """The ios l3 interfaces fact class"""
+    """The mes l3 interfaces fact class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

@@ -24,7 +24,7 @@
 #############################################
 
 """
-The module file for ios_ospfv2
+The module file for mes_ospfv2
 """
 
 from __future__ import absolute_import, division, print_function
@@ -34,7 +34,7 @@ __metaclass__ = type
 
 
 DOCUMENTATION = """
-module: ios_ospfv2
+module: mes_ospfv2
 short_description: Resource module to configure OSPFv2.
 description:
   This module configures and manages the Open Shortest Path First (OSPF)
@@ -977,11 +977,11 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^router ospf
-# router-ios#
+# router-mes#sh running-config | section ^router ospf
+# router-mes#
 
 - name: Merge provided OSPF V2 configuration
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     config:
       processes:
         - process_id: 1
@@ -1130,7 +1130,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1158,7 +1158,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1182,7 +1182,7 @@ EXAMPLES = """
 #  default-information originate
 
 - name: Replace running config with provided OSPF V2 configuration
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     config:
       processes:
         - process_id: 200
@@ -1367,7 +1367,7 @@ EXAMPLES = """
 
 # After state:
 # -------------
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.4.1
 #  max-metric router-lsa on-startup 200
@@ -1399,7 +1399,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1418,7 +1418,7 @@ EXAMPLES = """
 #  default-information originate
 
 - name: Override provided OSPF V2 configuration
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     config:
       processes:
         - process_id: 200
@@ -1564,7 +1564,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.4.1
 #  max-metric router-lsa on-startup 200
@@ -1584,7 +1584,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1603,7 +1603,7 @@ EXAMPLES = """
 #  default-information originate
 
 - name: Delete provided OSPF V2 processes
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     config:
       processes:
         - process_id: 1
@@ -1689,7 +1689,7 @@ EXAMPLES = """
 #
 # After state:
 # ------------
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1703,7 +1703,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1722,7 +1722,7 @@ EXAMPLES = """
 #  default-information originate
 
 - name: Delete all OSPF processes
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     state: deleted
 
 # Task Output:
@@ -1783,15 +1783,15 @@ EXAMPLES = """
 #
 # After state:
 # ------------
-# router-ios#sh running-config | section ^router ospf
-# router-ios#
+# router-mes#sh running-config | section ^router ospf
+# router-mes#
 
 # Using Gathered
 
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1810,7 +1810,7 @@ EXAMPLES = """
 #  default-information originate
 
 - name: Gather OSPFV2 running configurations
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     config:
     state: gathered
 
@@ -1868,7 +1868,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#sh running-config | section ^router ospf
+# router-mes#sh running-config | section ^router ospf
 # router ospf 200 vrf blue
 #  domain-id 192.0.3.1
 #  max-metric router-lsa on-startup 100
@@ -1889,7 +1889,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     config:
       processes:
         - process_id: 1
@@ -1981,7 +1981,7 @@ EXAMPLES = """
 #  area 5 nssa default-information-originate metric 10
 
 - name: Parse the provided configuration with the existing running configuration
-  cisco.ios.ios_ospfv2:
+  nikitamishagin.eltex_mes.mes_ospfv2:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -2053,10 +2053,10 @@ parsed:
 
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.ospfv2.ospfv2 import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.ospfv2.ospfv2 import (
     Ospfv2Args,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.ospfv2.ospfv2 import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.ospfv2.ospfv2 import (
     Ospfv2,
 )
 

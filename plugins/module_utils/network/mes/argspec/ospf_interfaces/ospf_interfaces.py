@@ -25,12 +25,12 @@ __metaclass__ = type
 ##############################################
 
 """
-The arg spec for the ios_ospf_interfaces module
+The arg spec for the mes_ospf_interfaces module
 """
 
 
 class Ospf_interfacesArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_ospf_interfaces module"""
+    """The arg spec for the mes_ospf_interfaces module"""
 
     argument_spec = {
         "config": {

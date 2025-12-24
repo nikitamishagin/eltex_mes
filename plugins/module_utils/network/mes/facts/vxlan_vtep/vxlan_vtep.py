@@ -9,23 +9,23 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios vxlan_vtep fact class
+The mes vxlan_vtep fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.vxlan_vtep.vxlan_vtep import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.vxlan_vtep.vxlan_vtep import (
     Vxlan_vtepArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.vxlan_vtep import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.vxlan_vtep import (
     Vxlan_vtepTemplate,
 )
 
 
 class Vxlan_vtepFacts(object):
-    """The ios vxlan_vtep facts class"""
+    """The mes vxlan_vtep facts class"""
 
     def __init__(self, module):
         self._module = module

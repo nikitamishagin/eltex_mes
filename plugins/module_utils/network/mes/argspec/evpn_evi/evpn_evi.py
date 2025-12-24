@@ -25,12 +25,12 @@ __metaclass__ = type
 ##############################################
 
 """
-The arg spec for the ios_evpn_evi module
+The arg spec for the mes_evpn_evi module
 """
 
 
 class Evpn_eviArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_evpn_evi module"""
+    """The arg spec for the mes_evpn_evi module"""
 
     argument_spec = {
         "config": {

@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_bgp_address_family
+The module file for mes_bgp_address_family
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_bgp_address_family
+module: mes_bgp_address_family
 short_description: Resource module to configure BGP Address family.
 description: This module configures and manages the attributes of bgp address family on Cisco IOS.
 version_added: 1.2.0
@@ -1509,7 +1509,7 @@ EXAMPLES = """
 #  bgp nopeerup-delay cold-boot 20
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     config:
       as_number: 65000
       address_family:
@@ -1762,7 +1762,7 @@ EXAMPLES = """
 #  exit-address-family
 
 - name: Replaces device configuration of listed AF BGP with provided configuration
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     config:
       as_number: 65000
       address_family:
@@ -2075,7 +2075,7 @@ EXAMPLES = """
 #  exit-address-family
 
 - name: Override device configuration of all AF BGP with provided configuration
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     config:
       as_number: 65000
       address_family:
@@ -2357,7 +2357,7 @@ EXAMPLES = """
 #  exit-address-family
 
 - name: "Delete AF BGP (Note: This won't delete the all configured AF BGP)"
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     config:
       as_number: 65000
       address_family:
@@ -2554,7 +2554,7 @@ EXAMPLES = """
 #  exit-address-family
 
 - name: "Delete ALL of configured AF BGP"
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     state: deleted
 
 # Task Output:
@@ -2682,7 +2682,7 @@ EXAMPLES = """
 #  exit-address-family
 
 - name: Gather listed AF BGP with provided configurations
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     config:
     state: gathered
 
@@ -2763,7 +2763,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Rendered the provided configuration with the existing running configuration
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     config:
       as_number: 65000
       address_family:
@@ -2868,7 +2868,7 @@ EXAMPLES = """
 #  !
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_bgp_address_family:
+  nikitamishagin.eltex_mes.mes_bgp_address_family:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -3000,10 +3000,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.bgp_address_family.bgp_address_family import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.bgp_address_family.bgp_address_family import (
     Bgp_address_familyArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.bgp_address_family.bgp_address_family import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.bgp_address_family.bgp_address_family import (
     Bgp_address_family,
 )
 

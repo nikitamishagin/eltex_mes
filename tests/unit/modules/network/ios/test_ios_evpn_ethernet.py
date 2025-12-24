@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_evpn_ethernet
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_evpn_ethernet
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosEvpnEthernetModule(TestIosModule):
-    module = ios_evpn_ethernet
+    module = mes_evpn_ethernet
 
     def setUp(self):
         super(TestIosEvpnEthernetModule, self).setUp()

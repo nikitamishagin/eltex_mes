@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_bgp_address_family
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_bgp_address_family
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosBgpAddressFamilyModule(TestIosModule):
-    module = ios_bgp_address_family
+    module = mes_bgp_address_family
 
     def setUp(self):
         super(TestIosBgpAddressFamilyModule, self).setUp()
@@ -29,7 +29,7 @@ class TestIosBgpAddressFamilyModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.bgp_address_family.bgp_address_family."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.bgp_address_family.bgp_address_family."
             "Bgp_address_familyFacts.get_bgp_address_family_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

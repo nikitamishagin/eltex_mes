@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_l2_interfaces
+The module file for mes_l2_interfaces
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_l2_interfaces
+module: mes_l2_interfaces
 short_description: Resource module to configure L2 interfaces.
 description:
   This module provides declarative management of Layer-2 interface on Cisco
@@ -325,7 +325,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_l2_interfaces:
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     config:
       - name: GigabitEthernet0/1
         mode: access
@@ -417,7 +417,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Replaces device configuration with provided configuration
-  cisco.ios.ios_l2_interfaces:
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     config:
       - name: GigabitEthernet0/2
         trunk:
@@ -493,7 +493,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Override device configuration of all l2 interfaces with provided configuration
-  cisco.ios.ios_l2_interfaces:
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     config:
       - name: GigabitEthernet0/2
         access:
@@ -566,8 +566,8 @@ EXAMPLES = """
 #  media-type rj45
 #  negotiation auto
 
-- name: Delete IOS L2 interfaces as in given arguments
-  cisco.ios.ios_l2_interfaces:
+- name: Delete mes L2 interfaces as in given arguments
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     config:
       - name: GigabitEthernet0/1
     state: deleted
@@ -646,8 +646,8 @@ EXAMPLES = """
 #  media-type rj45
 #  negotiation auto
 
-- name: Delete IOS L2 interfaces as in given arguments
-  cisco.ios.ios_l2_interfaces:
+- name: Delete mes L2 interfaces as in given arguments
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     state: deleted
 
 # Task Output
@@ -715,7 +715,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Gather facts for l2 interfaces
-  cisco.ios.ios_l2_interfaces:
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     config:
     state: gathered
 
@@ -742,7 +742,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_l2_interfaces:
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     config:
       - name: GigabitEthernet0/1
         access:
@@ -787,7 +787,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_l2_interfaces:
+  nikitamishagin.eltex_mes.mes_l2_interfaces:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -860,10 +860,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.l2_interfaces.l2_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.l2_interfaces.l2_interfaces import (
     L2_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.l2_interfaces.l2_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.l2_interfaces.l2_interfaces import (
     L2_interfaces,
 )
 

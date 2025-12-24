@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_lag_interfaces
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_lag_interfaces
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosLagInterfacesModule(TestIosModule):
-    module = ios_lag_interfaces
+    module = mes_lag_interfaces
 
     def setUp(self):
         super(TestIosLagInterfacesModule, self).setUp()
@@ -29,7 +29,7 @@ class TestIosLagInterfacesModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lag_interfaces.lag_interfaces."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lag_interfaces.lag_interfaces."
             "Lag_interfacesFacts.get_lag_interfaces_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

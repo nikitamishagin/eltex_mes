@@ -9,14 +9,14 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_ospfv3
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_ospfv3
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosOspfV3Module(TestIosModule):
-    module = ios_ospfv3
+    module = mes_ospfv3
 
     def setUp(self):
         super(TestIosOspfV3Module, self).setUp()
@@ -28,7 +28,7 @@ class TestIosOspfV3Module(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ospfv3.ospfv3."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ospfv3.ospfv3."
             "Ospfv3Facts.get_ospfv3_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

@@ -21,19 +21,19 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_facts
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_facts
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosFactsModule(TestIosModule):
-    module = ios_facts
+    module = mes_facts
 
     def setUp(self):
         super(TestIosFactsModule, self).setUp()
         self.mock_run_commands = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.legacy.base.run_commands",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.legacy.base.run_commands",
         )
         self.run_commands = self.mock_run_commands.start()
 
@@ -43,12 +43,12 @@ class TestIosFactsModule(TestIosModule):
         self.get_resource_connection = self.mock_get_resource_connection.start()
 
         self.mock_get_capabilities = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.legacy.base.get_capabilities",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.legacy.base.get_capabilities",
         )
         self.get_capabilities = self.mock_get_capabilities.start()
         self.get_capabilities.return_value = {
             "device_info": {
-                "network_os": "ios",
+                "network_os": "mes",
                 "network_os_hostname": "an-ios-01",
                 "network_os_image": "flash0:/vios-adventerprisek9-m",
                 "network_os_model": "WS-C3750-24TS",

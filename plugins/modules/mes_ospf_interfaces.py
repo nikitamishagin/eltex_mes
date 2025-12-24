@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_ospf_interfaces
+The module file for mes_ospf_interfaces
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_ospf_interfaces
+module: mes_ospf_interfaces
 short_description: Resource module to configure OSPF interfaces.
 description:
   This module configures and manages the Open Shortest Path First (OSPF)
@@ -388,7 +388,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ipv6 ospf 55 area 105
@@ -403,7 +403,7 @@ EXAMPLES = """
 #  ip ospf cost 30
 
 - name: Delete provided OSPF Interface config
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     config:
       - name: GigabitEthernet0/1
     state: deleted
@@ -462,7 +462,7 @@ EXAMPLES = """
 #
 # After state:
 # ------------
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 # interface GigabitEthernet0/2
@@ -477,7 +477,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ipv6 ospf 55 area 105
@@ -492,7 +492,7 @@ EXAMPLES = """
 #  ip ospf cost 30
 
 - name: Delete all OSPF config from interfaces
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     state: deleted
 
 # Task Output:
@@ -543,7 +543,7 @@ EXAMPLES = """
 
 # After state:
 # -------------
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 # interface GigabitEthernet0/2
@@ -553,11 +553,11 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
-# router-ios#
+# router-mes#sh running-config | section ^interface
+# router-mes#
 
 - name: Merge provided OSPF Interfaces configuration
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     config:
       - name: GigabitEthernet0/1
         address_family:
@@ -658,7 +658,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ip ospf network broadcast
@@ -685,7 +685,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ip ospf network broadcast
@@ -708,7 +708,7 @@ EXAMPLES = """
 # interface GigabitEthernet0/2
 
 - name: Override running config with provided OSPF Interfaces configuration
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     config:
       - name: GigabitEthernet0/1
         address_family:
@@ -827,7 +827,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ipv6 ospf 55 area 105
@@ -846,7 +846,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ip ospf network broadcast
@@ -869,7 +869,7 @@ EXAMPLES = """
 # interface GigabitEthernet0/2
 
 - name: Replaced provided OSPF Interfaces configuration
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     config:
       - name: GigabitEthernet0/2
         address_family:
@@ -978,7 +978,7 @@ EXAMPLES = """
 
 # After state:
 # ------------
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ip ospf network broadcast
@@ -1009,7 +1009,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ip ospf network broadcast
@@ -1032,7 +1032,7 @@ EXAMPLES = """
 # interface GigabitEthernet0/2
 
 - name: Gather OSPF Interfaces provided configurations
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     config:
     state: gathered
 
@@ -1080,7 +1080,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#sh running-config | section ^interface
+# router-mes#sh running-config | section ^interface
 # interface GigabitEthernet0/0
 # interface GigabitEthernet0/1
 #  ip ospf network broadcast
@@ -1105,7 +1105,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     config:
       - name: GigabitEthernet0/1
         address_family:
@@ -1192,7 +1192,7 @@ EXAMPLES = """
 # interface GigabitEthernet0/0
 
 - name: Parse the provided configuration with the existing running configuration
-  cisco.ios.ios_ospf_interfaces:
+  nikitamishagin.eltex_mes.mes_ospf_interfaces:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -1286,10 +1286,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.ospf_interfaces.ospf_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.ospf_interfaces.ospf_interfaces import (
     Ospf_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.ospf_interfaces.ospf_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.ospf_interfaces.ospf_interfaces import (
     Ospf_interfaces,
 )
 

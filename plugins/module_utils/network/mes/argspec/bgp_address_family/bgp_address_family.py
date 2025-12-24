@@ -24,12 +24,12 @@ __metaclass__ = type
 #############################################
 
 """
-The arg spec for the ios_bgp_address_family module
+The arg spec for the mes_bgp_address_family module
 """
 
 
 class Bgp_address_familyArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_bgp_address_family module"""
+    """The arg spec for the mes_bgp_address_family module"""
 
     argument_spec = {
         "config": {

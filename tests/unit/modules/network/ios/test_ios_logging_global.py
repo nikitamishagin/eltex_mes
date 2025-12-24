@@ -10,16 +10,16 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import MagicMock, patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_logging_global
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_logging_global
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from plugins.module_utils.network.ios.facts.logging_global.logging_global import Logging_globalFacts
+from plugins.module_utils.network.mes.facts.logging_global.logging_global import Logging_globalFacts
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosLoggingGlobalModule(TestIosModule):
-    module = ios_logging_global
+    module = mes_logging_global
 
     def setUp(self):
         super(TestIosLoggingGlobalModule, self).setUp()
@@ -31,7 +31,7 @@ class TestIosLoggingGlobalModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.logging_global.logging_global."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.logging_global.logging_global."
             "Logging_globalFacts.get_logging_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

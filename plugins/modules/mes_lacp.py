@@ -16,7 +16,7 @@
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-The module file for ios_lacp
+The module file for mes_lacp
 """
 from __future__ import absolute_import, division, print_function
 
@@ -25,7 +25,7 @@ __metaclass__ = type
 
 
 DOCUMENTATION = """
-module: ios_lacp
+module: mes_lacp
 short_description: Resource module to configure LACP.
 description:
   This module provides declarative management of Global LACP on Cisco IOS
@@ -101,7 +101,7 @@ EXAMPLES = """
 # 32768, 5e00.0000.8000
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_lacp:
+  nikitamishagin.eltex_mes.mes_lacp:
     config:
       system:
         priority: 123
@@ -122,7 +122,7 @@ EXAMPLES = """
 # 500, 5e00.0000.8000
 
 - name: Replaces Global LACP configuration
-  cisco.ios.ios_lacp:
+  nikitamishagin.eltex_mes.mes_lacp:
     config:
       system:
         priority: 123
@@ -143,7 +143,7 @@ EXAMPLES = """
 # 500, 5e00.0000.8000
 
 - name: Delete Global LACP attribute
-  cisco.ios.ios_lacp:
+  nikitamishagin.eltex_mes.mes_lacp:
     state: deleted
 
 # After state:
@@ -161,7 +161,7 @@ EXAMPLES = """
 # 123, 5e00.0000.8000
 
 - name: Gather listed LACP with provided configurations
-  cisco.ios.ios_lacp:
+  nikitamishagin.eltex_mes.mes_lacp:
     config:
     state: gathered
 
@@ -183,7 +183,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_lacp:
+  nikitamishagin.eltex_mes.mes_lacp:
     config:
       system:
         priority: 123
@@ -204,7 +204,7 @@ EXAMPLES = """
 # lacp system-priority 123
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_lacp:
+  nikitamishagin.eltex_mes.mes_lacp:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -241,10 +241,10 @@ commands:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.lacp.lacp import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.lacp.lacp import (
     LacpArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.lacp.lacp import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.lacp.lacp import (
     Lacp,
 )
 

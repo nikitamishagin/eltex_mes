@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_l3_interfaces
+The module file for mes_l3_interfaces
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_l3_interfaces
+module: mes_l3_interfaces
 short_description: Resource module to configure L3 interfaces.
 description:
   - This module provides declarative management of Layer-3 interface on Cisco IOS devices.
@@ -268,7 +268,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     config:
       - name: GigabitEthernet0/1
         ipv4:
@@ -422,7 +422,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Replaces device configuration of listed interfaces with provided configuration
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     config:
       - name: GigabitEthernet2
         helper_addresses:
@@ -493,7 +493,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback999
 #  no ip address
 #  shutdown
@@ -523,7 +523,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback999
 #  no ip address
 #  shutdown
@@ -549,7 +549,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Override device configuration of all interfaces with provided configuration
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     config:
       - ipv4:
           - dhcp:
@@ -602,7 +602,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback999
 #  no ip address
 #  shutdown
@@ -632,7 +632,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback999
 #  no ip address
 #  shutdown
@@ -658,7 +658,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: "Delete attributes of given interfaces (NOTE: This won't delete the interfaces)"
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     config:
       - name: GigabitEthernet2
       - name: GigabitEthernet3.100
@@ -696,7 +696,7 @@ EXAMPLES = """
 # After state:
 # -------------
 #
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback999
 #  no ip address
 #  shutdown
@@ -726,7 +726,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-ios#show running-config | section ^interface
+# router-mes#show running-config | section ^interface
 # interface Loopback999
 #  no ip address
 #  shutdown
@@ -753,7 +753,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: "Delete L3 config of all interfaces"
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     state: deleted
 
 # Task Output
@@ -844,7 +844,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Gather facts for l3 interfaces
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     state: gathered
 
 # Task Output
@@ -871,7 +871,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     config:
       - name: GigabitEthernet1
         ipv4:
@@ -911,7 +911,7 @@ EXAMPLES = """
 #  ipv6 address 2001:db8:0:3::/64
 
 - name: Parse the provided configuration
-  cisco.ios.ios_l3_interfaces:
+  nikitamishagin.eltex_mes.mes_l3_interfaces:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -981,10 +981,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.l3_interfaces.l3_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.l3_interfaces.l3_interfaces import (
     L3_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.l3_interfaces.l3_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.l3_interfaces.l3_interfaces import (
     L3_interfaces,
 )
 

@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_vrf_address_family
+The module file for mes_vrf_address_family
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_vrf_address_family
+module: mes_vrf_address_family
 short_description: Resource module to configure VRF definitions.
 description: This module provides declarative management of VRF definitions on Cisco IOS.
 version_added: 7.0.0
@@ -569,12 +569,12 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# RP/0/0/CPU0:ios#show running-config | section ^vrf
+# RP/0/0/CPU0:mes#show running-config | section ^vrf
 # vrf defnition test
 #
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     config:
       - name: test1
         address_families:
@@ -653,7 +653,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# RP/0/0/CPU0:ios#show running-config | section ^vrf
+# RP/0/0/CPU0:mes#show running-config | section ^vrf
 # vrf definition test1
 #  address-family ipv4 unicast
 #   bgp next-hop loopback 40
@@ -669,7 +669,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# RP/0/0/CPU0:ios#show running-config | section ^vrf
+# RP/0/0/CPU0:mes#show running-config | section ^vrf
 # vrf definition test1
 #  address-family ipv4 unicast
 #   bgp next-hop loopback 40
@@ -681,7 +681,7 @@ EXAMPLES = """
 #   import ipv4 unicast 12 map "ran-map" allow-evpn
 
 - name: Replace the provided configuration with the existing running configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     config:
       - name: test1
         address_families:
@@ -787,7 +787,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# RP/0/RP0/CPU0:ios(config)#show running-config vrf
+# RP/0/RP0/CPU0:mes(config)#show running-config vrf
 # vrf definition VRF1
 #  address-family ipv4 unicast
 #   bgp next-hop loopback 23
@@ -803,7 +803,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# RP/0/RP0/CPU0:ios(config)#show running-config | section ^vrf
+# RP/0/RP0/CPU0:mes(config)#show running-config | section ^vrf
 # vrf definition test1
 #  address-family ipv4 unicast
 #   bgp next-hop loopback 40
@@ -815,7 +815,7 @@ EXAMPLES = """
 #   import ipv4 unicast 12 map "ran-map" allow-evpn
 
 - name: Override the provided configuration with the existing running configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     state: overridden
     config:
       - name: VRF7
@@ -891,7 +891,7 @@ EXAMPLES = """
 #
 # After state:
 # -------------
-# RP/0/RP0/CPU0:ios(config)#show running-config vrf
+# RP/0/RP0/CPU0:mes(config)#show running-config vrf
 # vrf definition VRF4
 # vrf definition VRF7
 #  address-family ipv4 unicast
@@ -908,7 +908,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# RP/0/RP0/CPU0:ios(config)#show running-config | section ^vrf
+# RP/0/RP0/CPU0:mes(config)#show running-config | section ^vrf
 # vrf definition VRF4
 # vrf definition VRF6
 # address-family ipv4 unicast
@@ -922,7 +922,7 @@ EXAMPLES = """
 # vrf definition VRF7
 
 - name: Delete the provided configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     config:
     state: deleted
 
@@ -974,7 +974,7 @@ EXAMPLES = """
 # After state:
 # ------------
 #
-# RP/0/RP0/CPU0:ios(config)#show running-config | section ^vrf
+# RP/0/RP0/CPU0:mes(config)#show running-config | section ^vrf
 # vrf definition VRF4
 # vrf definition VRF6
 # vrf definition VRF7
@@ -982,7 +982,7 @@ EXAMPLES = """
 # Using rendered
 #
 - name: Render provided configuration with device configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     config:
       - name: test
         address_families:
@@ -1032,7 +1032,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 #
-# RP/0/RP0/CPU0:ios(config)#show running-config | section ^vrf
+# RP/0/RP0/CPU0:mes(config)#show running-config | section ^vrf
 # vrf definition test1
 # address-family ipv4 unicast
 #  bgp next-hop loopback 40
@@ -1044,7 +1044,7 @@ EXAMPLES = """
 #  export ipv4 unicast 67 map "test-map" allow-evpn
 
 - name: Gather existing running configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     state: gathered
 
 # Task Output:
@@ -1095,7 +1095,7 @@ EXAMPLES = """
 #  export ipv4 unicast 67 map "test-map" allow-evpn
 
 - name: Parse the provided configuration
-  cisco.ios.ios_vrf_address_family:
+  nikitamishagin.eltex_mes.mes_vrf_address_family:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -1183,10 +1183,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.vrf_address_family.vrf_address_family import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.vrf_address_family.vrf_address_family import (
     Vrf_address_familyArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.vrf_address_family.vrf_address_family import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.vrf_address_family.vrf_address_family import (
     Vrf_address_family,
 )
 

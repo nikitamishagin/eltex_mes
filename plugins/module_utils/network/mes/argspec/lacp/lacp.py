@@ -23,7 +23,7 @@
 #############################################
 
 """
-The arg spec for the ios_lacp module
+The arg spec for the mes_lacp module
 """
 
 from __future__ import absolute_import, division, print_function
@@ -33,7 +33,7 @@ __metaclass__ = type
 
 
 class LacpArgs(object):
-    """The arg spec for the ios_lacp module"""
+    """The arg spec for the mes_lacp module"""
 
     def __init__(self, **kwargs):
         pass

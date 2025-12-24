@@ -9,23 +9,23 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios_service fact class
+The mes_service fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
 """
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.service.service import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.service.service import (
     ServiceArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.service import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.service import (
     ServiceTemplate,
 )
 
 
 class ServiceFacts(object):
-    """The ios service facts class"""
+    """The mes_service facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

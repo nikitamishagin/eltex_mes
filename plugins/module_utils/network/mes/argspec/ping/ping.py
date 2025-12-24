@@ -24,12 +24,12 @@ __metaclass__ = type
 #############################################
 
 """
-The arg spec for the ios_ping module
+The arg spec for the mes_ping module
 """
 
 
 class PingArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_ping module"""
+    """The arg spec for the mes_ping module"""
 
     argument_spec = {
         "count": {"type": "int"},

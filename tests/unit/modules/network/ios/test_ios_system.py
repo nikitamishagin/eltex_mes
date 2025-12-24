@@ -23,25 +23,25 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_system
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_system
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosSystemModule(TestIosModule):
-    module = ios_system
+    module = mes_system
 
     def setUp(self):
         super(TestIosSystemModule, self).setUp()
 
         self.mock_get_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_system.get_config",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_system.get_config",
         )
         self.get_config = self.mock_get_config.start()
 
         self.mock_load_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_system.load_config",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_system.load_config",
         )
         self.load_config = self.mock_load_config.start()
 

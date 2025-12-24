@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_vrf_interfaces
+The module file for mes_vrf_interfaces
 """
 
 from __future__ import absolute_import, division, print_function
@@ -15,7 +15,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 ---
-module: ios_vrf_interfaces
+module: mes_vrf_interfaces
 short_description: Manages VRF configuration on interfaces.
 description:
   - Manages Virtual Routing and Forwarding (VRF) configuration on interfaces of Cisco IOS devices.
@@ -91,7 +91,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     config:
       - name: GigabitEthernet1
       - name: GigabitEthernet2
@@ -169,7 +169,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Override device configuration with provided configuration
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     config:
       - name: GigabitEthernet1
       - name: GigabitEthernet2
@@ -245,7 +245,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Gather listed VRF interfaces
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     state: gathered
 
 # Task Output:
@@ -262,7 +262,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render VRF configuration
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     config:
       - name: GigabitEthernet1
       - name: GigabitEthernet2
@@ -299,7 +299,7 @@ EXAMPLES = """
 # !
 
 - name: Parse configuration from device running config
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -341,7 +341,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Replace device configuration of listed VRF interfaces with provided configuration
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     config:
       - name: GigabitEthernet1
         vrf_name: vrf_D
@@ -407,7 +407,7 @@ EXAMPLES = """
 #  negotiation auto
 
 - name: Delete VRF configuration of specified interfaces
-  cisco.ios.ios_vrf_interfaces:
+  nikitamishagin.eltex_mes.mes_vrf_interfaces:
     config:
       - name: GigabitEthernet1
       - name: GigabitEthernet2
@@ -579,10 +579,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.vrf_interfaces.vrf_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.vrf_interfaces.vrf_interfaces import (
     Vrf_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.vrf_interfaces.vrf_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.vrf_interfaces.vrf_interfaces import (
     Vrf_interfaces,
 )
 

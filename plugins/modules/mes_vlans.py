@@ -61,7 +61,7 @@ options:
         description:
           - VLAN Maximum Transmission Unit.
           - Refer to vendor documentation for valid values.
-          - This option is DEPRECATED use ios_interfaces to configure mtu,
+          - This option is DEPRECATED use mes_interfaces to configure mtu,
             this attribute will be removed after 2027-01-01.
           - mtu is collected as part of facts,
             but a mtu command wont be fired if the configuration
@@ -185,7 +185,7 @@ EXAMPLES = """
 # 1005 trnet 101005     1500  -      -      -        ibm  -        0      0
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - name: Vlan_10
         vlan_id: 10
@@ -246,7 +246,7 @@ EXAMPLES = """
 
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - vlan_id: 102
         member:
@@ -311,7 +311,7 @@ EXAMPLES = """
 
 
 - name: Override device configuration of all VLANs with provided configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - name: Vlan_2020
         state: active
@@ -488,7 +488,7 @@ EXAMPLES = """
 
 
 - name: Purge all vlans configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
     state: purged
 
@@ -633,7 +633,7 @@ EXAMPLES = """
 # 10
 
 - name: Replaces device configuration of listed VLANs with provided configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - vlan_id: 20
         name: Test_VLAN20
@@ -732,7 +732,7 @@ EXAMPLES = """
 # 10
 
 - name: Delete attributes of given VLANs
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - vlan_id: 10
       - vlan_id: 20
@@ -776,7 +776,7 @@ EXAMPLES = """
 #  member vni 50901
 
 - name: Delete attributes of given VLANs
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - vlan_id: 101
     state: deleted
@@ -827,7 +827,7 @@ EXAMPLES = """
 # 10
 
 - name: Delete attributes of ALL VLANs
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     state: deleted
 
 # After state:
@@ -869,7 +869,7 @@ EXAMPLES = """
 #  member vni 50901
 
 - name: Delete attributes of ALL VLANs
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     state: deleted
 
 # After state:
@@ -901,7 +901,7 @@ EXAMPLES = """
 #  member vni 50901
 
 - name: Gather listed vlans with provided configurations
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     state: gathered
 
 # Module Execution Result:
@@ -953,7 +953,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - name: Vlan_10
         vlan_id: 10
@@ -994,7 +994,7 @@ EXAMPLES = """
 # Using Rendered
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     config:
       - vlan_id: 101
         member:
@@ -1044,7 +1044,7 @@ EXAMPLES = """
 # 1005 trnet 101005     1500  -      -      -        ibm  -        0      0
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     running_config: "{{ lookup('file', './parsed.cfg') }}"
     state: parsed
 
@@ -1123,7 +1123,7 @@ EXAMPLES = """
 #  member vni 50901
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     running_config: "{{ lookup('file', './parsed.cfg') }}"
     state: parsed
 
@@ -1205,7 +1205,7 @@ EXAMPLES = """
 #   member vni 50901
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_vlans:
+  nikitamishagin.eltex_mes.mes_vlans:
     running_config: "{{ lookup('file', './parsed.cfg') }}"
     state: parsed
 
@@ -1330,7 +1330,7 @@ from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.m
 from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.vlans.vlans import (
     Vlans,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.ios import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.mes import (
     get_connection,
 )
 

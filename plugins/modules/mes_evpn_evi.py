@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_evpn_evi
+The module file for mes_evpn_evi
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_evpn_evi
+module: mes_evpn_evi
 short_description: Resource module to configure L2VPN EVPN EVI.
 description: This module provides declarative management of L2VPN EVPN EVI on Cisco IOS network
   devices.
@@ -125,7 +125,7 @@ EXAMPLES = """
 #  replication-type ingress
 
 # - name: Merge provided configuration with device configuration
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     config:
 #       - evi: 101
 #         replication_type: ingress
@@ -208,7 +208,7 @@ EXAMPLES = """
 #  default-gateway advertise enable
 
 # - name: Replaces the device configuration with the provided configuration
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     config:
 #       - evi: 101
 #         replication_type: ingress
@@ -273,7 +273,7 @@ EXAMPLES = """
 #  replication-type ingress
 
 # - name: Override the device configuration with provided configuration
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     config:
 #       - evi: 101
 #         replication_type: ingress
@@ -327,7 +327,7 @@ EXAMPLES = """
 #  default-gateway advertise enable
 
 # - name: "Delete the given EVI(s)"
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     config:
 #       - evi: 101
 #     state: deleted
@@ -361,7 +361,7 @@ EXAMPLES = """
 #  default-gateway advertise enable
 
 # - name: "Delete ALL EVIs"
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     state: deleted
 
 # Commands Fired:
@@ -397,7 +397,7 @@ EXAMPLES = """
 #  replication-type ingress
 
 # - name: Gather facts for evpn_evi
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     config:
 #     state: gathered
 
@@ -421,7 +421,7 @@ EXAMPLES = """
 # Using Rendered
 
 # - name: Rendered the provided configuration with the existing running configuration
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     config:
 #       - evi: 101
 #         replication_type: ingress
@@ -459,7 +459,7 @@ EXAMPLES = """
 # !
 
 # - name: Parse the commands for provided configuration
-#   cisco.ios.ios_evpn_evi:
+#   nikitamishagin.eltex_mes.mes_evpn_evi:
 #     running_config: "{{ lookup('file', 'parsed.cfg') }}"
 #     state: parsed
 
@@ -504,10 +504,10 @@ commands:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.evpn_evi.evpn_evi import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.evpn_evi.evpn_evi import (
     Evpn_eviArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.evpn_evi.evpn_evi import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.evpn_evi.evpn_evi import (
     Evpn_evi,
 )
 

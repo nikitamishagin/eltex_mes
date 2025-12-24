@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_ospfv2
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_ospfv2
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosOspfV2Module(TestIosModule):
-    module = ios_ospfv2
+    module = mes_ospfv2
 
     def setUp(self):
         super(TestIosOspfV2Module, self).setUp()
@@ -29,7 +29,7 @@ class TestIosOspfV2Module(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.ospfv2.ospfv2."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.ospfv2.ospfv2."
             "Ospfv2Facts.get_ospfv2_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

@@ -9,14 +9,14 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_prefix_lists
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_prefix_lists
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosPrefixListsModule(TestIosModule):
-    module = ios_prefix_lists
+    module = mes_prefix_lists
 
     def setUp(self):
         super(TestIosPrefixListsModule, self).setUp()
@@ -28,7 +28,7 @@ class TestIosPrefixListsModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.prefix_lists.prefix_lists."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.prefix_lists.prefix_lists."
             "Prefix_listsFacts.get_prefix_list_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

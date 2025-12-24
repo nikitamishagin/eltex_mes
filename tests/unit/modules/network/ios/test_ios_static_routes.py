@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_static_routes
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_static_routes
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosStaticRoutesModule(TestIosModule):
-    module = ios_static_routes
+    module = mes_static_routes
 
     def setUp(self):
         super(TestIosStaticRoutesModule, self).setUp()
@@ -29,7 +29,7 @@ class TestIosStaticRoutesModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.static_routes.static_routes."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.static_routes.static_routes."
             "Static_routesFacts.get_static_routes_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

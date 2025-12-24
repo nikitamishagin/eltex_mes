@@ -9,7 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios vrf_global fact class
+The mes vrf_global fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -18,16 +18,16 @@ based on the configuration.
 import re
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.vrf_global.vrf_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.vrf_global.vrf_global import (
     Vrf_globalArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.vrf_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.vrf_global import (
     Vrf_globalTemplate,
 )
 
 
 class Vrf_globalFacts(object):
-    """The ios vrf_global facts class"""
+    """The mes vrf_global facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

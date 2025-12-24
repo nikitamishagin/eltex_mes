@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_lacp_interfaces
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_lacp_interfaces
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosLacpInterfaceModule(TestIosModule):
-    module = ios_lacp_interfaces
+    module = mes_lacp_interfaces
 
     def setUp(self):
         super(TestIosLacpInterfaceModule, self).setUp()
@@ -45,11 +45,11 @@ class TestIosLacpInterfaceModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_edit_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.providers.providers.CliProvider.edit_config",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.providers.providers.CliProvider.edit_config",
         )
         self.edit_config = self.mock_edit_config.start()
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.lacp_interfaces.lacp_interfaces."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.lacp_interfaces.lacp_interfaces."
             "Lacp_InterfacesFacts.get_lacp_interface_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()

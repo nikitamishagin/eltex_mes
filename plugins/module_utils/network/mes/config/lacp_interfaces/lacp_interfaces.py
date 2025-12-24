@@ -4,7 +4,7 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
-The ios_lacp_interfaces class
+The mes lacp_interfaces class
 It is in this file where the current configuration (as dict)
 is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to it's desired end-state is
@@ -21,10 +21,10 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.c
     ConfigBase,
 )
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import to_list
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.facts import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.facts import (
     Facts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.utils.utils import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.utils.utils import (
     add_command_to_config_list,
     dict_to_set,
     filter_dict_having_none_value,
@@ -36,7 +36,7 @@ from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.i
 
 class Lacp_Interfaces(ConfigBase):
     """
-    The ios_lacp_interfaces class
+    The mes lacp_interfaces class
     """
 
     gather_subset = ["!all", "!min"]

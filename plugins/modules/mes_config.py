@@ -21,7 +21,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_config
+module: mes_config
 author: Peter Sprygada (@privateip)
 short_description: Module to manage configuration sections.
 description:
@@ -225,18 +225,18 @@ options:
 
 EXAMPLES = """
 - name: Configure top level configuration
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines: hostname {{ inventory_hostname }}
 
 - name: Configure interface settings
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines:
       - description test interface
       - ip address 172.31.1.1 255.255.255.0
     parents: interface Ethernet1
 
 - name: Configure ip helpers on multiple interfaces
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines:
       - ip helper-address 172.26.1.10
       - ip helper-address 172.26.3.8
@@ -247,7 +247,7 @@ EXAMPLES = """
     - interface GigabitEthernet1
 
 - name: Configure policer in Scavenger class
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines:
       - conform-action transmit
       - exceed-action drop
@@ -257,7 +257,7 @@ EXAMPLES = """
       - police cir 64000
 
 - name: Load new acl into device
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines:
       - 10 permit ip host 192.0.2.1 any log
       - 20 permit ip host 192.0.2.2 any log
@@ -269,22 +269,22 @@ EXAMPLES = """
     match: exact
 
 - name: Check the running-config against master config
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     diff_against: intended
     intended_config: "{{ lookup('file', 'master.cfg') }}"
 
 - name: Check the startup-config against the running-config
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     diff_against: startup
     diff_ignore_lines:
       - ntp clock .*
 
 - name: Save running to startup when modified
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     save_when: modified
 
 - name: For idempotency, use full-form commands
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines:
       # - shut
       - shutdown
@@ -292,9 +292,9 @@ EXAMPLES = """
     parents: interface GigabitEthernet1/0/11
 
 # Set boot image based on comparison to a group_var (version) and the version
-# that is returned from the `ios_facts` module
+# that is returned from the `mes_facts` module
 - name: Setting boot image
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     lines:
       - no boot system
       - boot system flash bootflash:{{new_image}}
@@ -302,19 +302,19 @@ EXAMPLES = """
   when: ansible_net_version != version
 
 - name: Render a Jinja2 template onto an IOS device
-  cisco.ios.ios_config:
+  nikitamishagin.eltex_mes.mes_config:
     backup: true
-    src: ios_template.j2
+    src: mes_template.j2
 
 - name: Configurable backup path
-  cisco.ios.ios_config:
-    src: ios_template.j2
+  nikitamishagin.eltex_mes.mes_config:
+    src: mes_template.j2
     backup: true
     backup_options:
       filename: backup.cfg
       dir_path: /home/user
 
-# Example ios_template.j2
+# Example mes_template.j2
 # ip access-list extended test
 #  permit ip host 192.0.2.1 any log
 #  permit ip host 192.0.2.2 any log
@@ -368,7 +368,7 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.c
     NetworkConfig,
     dumps,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.ios import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.mes import (
     get_config,
     get_connection,
     get_defaults_flag,

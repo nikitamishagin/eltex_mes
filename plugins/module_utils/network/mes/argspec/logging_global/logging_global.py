@@ -24,12 +24,12 @@ __metaclass__ = type
 #############################################
 
 """
-The arg spec for the ios_logging_global module
+The arg spec for the mes_logging_global module
 """
 
 
 class Logging_globalArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_logging_global module"""
+    """The arg spec for the mes_logging_global module"""
 
     argument_spec = {
         "config": {

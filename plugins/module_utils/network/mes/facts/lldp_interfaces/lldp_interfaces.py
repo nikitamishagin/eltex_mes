@@ -4,7 +4,7 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 """
-The ios_lldp_interfaces fact class
+The mes lldp_interfaces fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -21,17 +21,17 @@ import re
 from copy import deepcopy
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import utils
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.lldp_interfaces.lldp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.lldp_interfaces.lldp_interfaces import (
     Lldp_InterfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.utils.utils import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.utils.utils import (
     get_interface_type,
     normalize_interface,
 )
 
 
 class Lldp_InterfacesFacts(object):
-    """The ios_lldp_interfaces fact class"""
+    """The mes lldp_interfaces fact class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

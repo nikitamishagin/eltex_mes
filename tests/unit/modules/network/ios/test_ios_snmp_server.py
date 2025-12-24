@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_snmp_server
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_snmp_server
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosSnmpServerModule(TestIosModule):
-    module = ios_snmp_server
+    module = mes_snmp_server
 
     def setUp(self):
         super(TestIosSnmpServerModule, self).setUp()
@@ -28,13 +28,13 @@ class TestIosSnmpServerModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.snmp_server.snmp_server."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.snmp_server.snmp_server."
             "Snmp_serverFacts.get_snmp_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()
 
         self.mock_execute_show_command_user = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.snmp_server.snmp_server."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.snmp_server.snmp_server."
             "Snmp_serverFacts.get_snmpv3_user_data",
         )
 

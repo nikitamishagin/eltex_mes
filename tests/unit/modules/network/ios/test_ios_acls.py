@@ -10,14 +10,14 @@ __metaclass__ = type
 from textwrap import dedent
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_acls
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_acls
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule
+from .mes_module import TestIosModule
 
 
 class TestIosAclsModule(TestIosModule):
-    module = ios_acls
+    module = mes_acls
 
     def setUp(self):
         super(TestIosAclsModule, self).setUp()
@@ -29,12 +29,12 @@ class TestIosAclsModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.acls.acls."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.acls.acls."
             "AclsFacts.get_acl_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()
         self.mock_execute_show_command_name_specific = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.acls.acls."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.acls.acls."
             "AclsFacts.get_acl_names",
         )
         self.execute_show_command_name = self.mock_execute_show_command_name_specific.start()

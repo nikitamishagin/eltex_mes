@@ -25,12 +25,12 @@ __metaclass__ = type
 ##############################################
 
 """
-The arg spec for the ios_static_routes module
+The arg spec for the mes_static_routes module
 """
 
 
 class Static_routesArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_static_routes module"""
+    """The arg spec for the mes_static_routes module"""
 
     argument_spec = {
         "config": {

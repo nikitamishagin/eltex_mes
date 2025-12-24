@@ -23,30 +23,30 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_vrf
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_vrf
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosVrfModule(TestIosModule):
-    module = ios_vrf
+    module = mes_vrf
 
     def setUp(self):
         super(TestIosVrfModule, self).setUp()
 
         self.mock_get_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_vrf.get_config",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_vrf.get_config",
         )
         self.get_config = self.mock_get_config.start()
 
         self.mock_load_config = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_vrf.load_config",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_vrf.load_config",
         )
         self.load_config = self.mock_load_config.start()
 
         self.mock_exec_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.ios_vrf.exec_command",
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_vrf.exec_command",
         )
         self.exec_command = self.mock_exec_command.start()
 

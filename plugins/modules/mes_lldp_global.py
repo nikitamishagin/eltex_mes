@@ -16,7 +16,7 @@
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
 """
-The module file for ios_lldp_global
+The module file for mes_lldp_global
 """
 from __future__ import absolute_import, division, print_function
 
@@ -24,7 +24,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_lldp_global
+module: mes_lldp_global
 short_description: Resource module to configure LLDP.
 description:
   This module configures and manages the Link Layer Discovery Protocol(LLDP)
@@ -161,7 +161,7 @@ EXAMPLES = """
 # vios1#
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_lldp_global:
+  nikitamishagin.eltex_mes.mes_lldp_global:
     config:
       holdtime: 10
       enabled: true
@@ -188,7 +188,7 @@ EXAMPLES = """
 #  lldp run
 
 - name: Replaces LLDP device configuration with provided configuration
-  cisco.ios.ios_lldp_global:
+  nikitamishagin.eltex_mes.mes_lldp_global:
     config:
       holdtime: 20
       reinit: 5
@@ -212,7 +212,7 @@ EXAMPLES = """
 #  lldp run
 
 - name: Delete LLDP attributes
-  cisco.ios.ios_lldp_global:
+  nikitamishagin.eltex_mes.mes_lldp_global:
     state: deleted
 
 # After state:
@@ -232,7 +232,7 @@ EXAMPLES = """
 #  lldp run
 
 - name: Gather listed interfaces with provided configurations
-  cisco.ios.ios_lldp_global:
+  nikitamishagin.eltex_mes.mes_lldp_global:
     config:
     state: gathered
 
@@ -257,7 +257,7 @@ EXAMPLES = """
 
 # Using Rendered
 - name: Render the commands for provided  configuration
-  cisco.ios.ios_lldp_global:
+  nikitamishagin.eltex_mes.mes_lldp_global:
     config:
       holdtime: 10
       enabled: true
@@ -286,7 +286,7 @@ EXAMPLES = """
 # lldp run
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_lldp_global:
+  nikitamishagin.eltex_mes.mes_lldp_global:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -320,10 +320,10 @@ commands:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.lldp_global.lldp_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.lldp_global.lldp_global import (
     Lldp_globalArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.lldp_global.lldp_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.lldp_global.lldp_global import (
     Lldp_global,
 )
 

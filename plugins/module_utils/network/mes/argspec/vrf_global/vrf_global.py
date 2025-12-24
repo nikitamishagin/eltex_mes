@@ -25,12 +25,12 @@ __metaclass__ = type
 ##############################################
 
 """
-The arg spec for the ios_vrf_global module
+The arg spec for the mes_vrf_global module
 """
 
 
 class Vrf_globalArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_vrf_global module"""
+    """The arg spec for the mes_vrf_global module"""
 
     argument_spec = {
         "config": {

@@ -11,7 +11,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios_evpn_global config file.
+The mes evpn_global config file.
 It is in this file where the current configuration (as dict)
 is compared to the provided configuration (as dict) and the command set
 necessary to bring the current configuration to its desired end-state is
@@ -24,10 +24,10 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.r
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     dict_merge,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.facts import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.facts import (
     Facts,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.evpn_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.evpn_global import (
     Evpn_globalTemplate,
 )
 
@@ -37,7 +37,7 @@ EVPN_GLOBAL_PARENT = "l2vpn evpn"
 
 class Evpn_global(ResourceModule):
     """
-    The ios_evpn_global config class
+    The mes evpn_global config class
     """
 
     def __init__(self, module):

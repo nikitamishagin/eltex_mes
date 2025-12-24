@@ -9,14 +9,14 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 from unittest.mock import patch
 
-from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import ios_route_maps
+from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_route_maps
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .ios_module import TestIosModule, load_fixture
+from .mes_module import TestIosModule, load_fixture
 
 
 class TestIosRouteMapsModule(TestIosModule):
-    module = ios_route_maps
+    module = mes_route_maps
 
     def setUp(self):
         super(TestIosRouteMapsModule, self).setUp()
@@ -28,7 +28,7 @@ class TestIosRouteMapsModule(TestIosModule):
         self.get_resource_connection_facts = self.mock_get_resource_connection_facts.start()
 
         self.mock_execute_show_command = patch(
-            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.facts.route_maps.route_maps."
+            "ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.facts.route_maps.route_maps."
             "Route_mapsFacts.get_route_maps_data",
         )
         self.execute_show_command = self.mock_execute_show_command.start()
