@@ -28,7 +28,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 author:
 - Ansible Networking Team (@ansible-network)
-- Nikita Mishagin
+- Nikita Mishagin (@nikitamishagin)
 name: mes
 short_description: Use mes cliconf to run commands on Eltex MES platform
 description:

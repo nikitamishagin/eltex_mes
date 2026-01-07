@@ -86,7 +86,7 @@ Authors
 ~~~~~~~
 
 - Ansible Networking Team (@ansible-network)
-- Nikita Mishagin
+- Nikita Mishagin (@nikitamishagin)
 
 
 .. hint::
