@@ -1,5 +1,2 @@
 ancestor: null
-releases:
-  0.0.1:
-    fragments:
-      - initial-mes-adaptation.yml
+releases: []
