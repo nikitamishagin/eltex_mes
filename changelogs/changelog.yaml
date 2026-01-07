@@ -1,5 +1,23 @@
 ancestor: null
 releases:
   0.0.1:
+    changes:
+      doc_changes:
+        - Documentation restructured under `docs/nikitamishagin.eltex_mes.*`.
+        - Updated README and CONTRIBUTING to reflect MES usage and development workflow.
+      major_changes:
+        - Cliconf and terminal plugins updated for MES CLI detection and command execution.
+        - Galaxy metadata adjusted to reflect the new collection name and platform.
+        - Plugins, modules, argspecs, facts, config handlers, rm_templates migrated
+          to `mes/*`.
+      minor_changes:
+        - Added repository templates (issues, PR) and contributor docs tailored for
+          MES.
+        - Updated unit tests and fixtures to MES equivalents to maintain coverage.
+      release_summary: >
+        This is the zeroth version of the Cisco IOS package adaptation
+        for Eltex MES devices. It contains the minimum necessary changes for working
+        with the MES command-line interface.
     fragments:
       - initial-mes-adaptation.yml
+    release_date: "2026-01-08"

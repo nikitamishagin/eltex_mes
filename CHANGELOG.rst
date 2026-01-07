@@ -5,7 +5,7 @@ Eltex MES Collection Release Notes
 .. contents:: Topics
 
 v0.0.1
-=======
+======
 
 Release Summary
 ---------------
@@ -16,14 +16,14 @@ Major Changes
 -------------
 
 - Cliconf and terminal plugins updated for MES CLI detection and command execution.
-- Plugins, modules, argspecs, facts, config handlers, rm_templates migrated to `mes/*`.
 - Galaxy metadata adjusted to reflect the new collection name and platform.
+- Plugins, modules, argspecs, facts, config handlers, rm_templates migrated to `mes/*`.
 
 Minor Changes
 -------------
 
-- Updated unit tests and fixtures to MES equivalents to maintain coverage.
 - Added repository templates (issues, PR) and contributor docs tailored for MES.
+- Updated unit tests and fixtures to MES equivalents to maintain coverage.
 
 Documentation Changes
 ---------------------
