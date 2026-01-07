@@ -25,12 +25,12 @@ __metaclass__ = type
 ##############################################
 
 """
-The arg spec for the ios_l2_interfaces module
+The arg spec for the mes_l2_interfaces module
 """
 
 
 class L2_interfacesArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_l2_interfaces module"""
+    """The arg spec for the mes_l2_interfaces module"""
 
     argument_spec = {
         "config": {

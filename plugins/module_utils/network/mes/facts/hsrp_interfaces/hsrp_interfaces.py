@@ -9,7 +9,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 """
-The ios hsrp_interfaces fact class
+The mes hsrp_interfaces fact class
 It is in this file the configuration is collected from the device
 for a given resource, parsed, and the facts tree is populated
 based on the configuration.
@@ -20,16 +20,16 @@ from collections import defaultdict
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
     utils,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.hsrp_interfaces.hsrp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.hsrp_interfaces.hsrp_interfaces import (
     Hsrp_interfacesArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.rm_templates.hsrp_interfaces import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.rm_templates.hsrp_interfaces import (
     Hsrp_interfacesTemplate,
 )
 
 
 class Hsrp_interfacesFacts(object):
-    """The ios hsrp_interfaces facts class"""
+    """The mes hsrp_interfaces facts class"""
 
     def __init__(self, module, subspec="config", options="options"):
         self._module = module

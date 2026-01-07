@@ -25,12 +25,12 @@ __metaclass__ = type
 ##############################################
 
 """
-The arg spec for the ios_vxlan_vtep module
+The arg spec for the mes_vxlan_vtep module
 """
 
 
 class Vxlan_vtepArgs(object):  # pylint: disable=R0903
-    """The arg spec for the ios_vxlan_vtep module"""
+    """The arg spec for the mes_vxlan_vtep module"""
 
     argument_spec = {
         "config": {

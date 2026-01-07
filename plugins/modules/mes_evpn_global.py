@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_evpn_global
+The module file for mes_evpn_global
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_evpn_global
+module: mes_evpn_global
 short_description: Resource module to configure L2VPN EVPN.
 description: This module provides declarative management of L2VPN EVPN on Cisco IOS network
   devices.
@@ -118,7 +118,7 @@ EXAMPLES = """
 #  default-gateway advertise
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_evpn_global:
+  nikitamishagin.eltex_mes.mes_evpn_global:
     config:
       replication_type: ingress
       route_target:
@@ -181,7 +181,7 @@ EXAMPLES = """
 #  route-target auto vni
 
 - name: Replaces device configuration for EVPN global with provided configuration
-  cisco.ios.ios_evpn_global:
+  nikitamishagin.eltex_mes.mes_evpn_global:
     config:
       replication_type: static
       router_id: Loopback2
@@ -244,7 +244,7 @@ EXAMPLES = """
 #  default-gateway advertise
 
 - name: Delete EVPN global
-  cisco.ios.ios_evpn_global:
+  nikitamishagin.eltex_mes.mes_evpn_global:
     config:
     state: deleted
 
@@ -280,7 +280,7 @@ EXAMPLES = """
 #  route-target auto vni
 
 - name: Gather facts of l2vpn evpn
-  cisco.ios.ios_evpn_global:
+  nikitamishagin.eltex_mes.mes_evpn_global:
     config:
     state: gathered
 
@@ -300,7 +300,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the commands for provided configuration
-  cisco.ios.ios_evpn_global:
+  nikitamishagin.eltex_mes.mes_evpn_global:
     config:
       replication_type: static
       route_target:
@@ -328,7 +328,7 @@ EXAMPLES = """
 #  route-target auto vni
 
 - name: Parse the provided configuration
-  cisco.ios.ios_evpn_global:
+  nikitamishagin.eltex_mes.mes_evpn_global:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -393,10 +393,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.evpn_global.evpn_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.evpn_global.evpn_global import (
     Evpn_globalArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.evpn_global.evpn_global import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.evpn_global.evpn_global import (
     Evpn_global,
 )
 

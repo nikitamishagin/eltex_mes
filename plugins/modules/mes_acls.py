@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_acls
+The module file for mes_acls
 """
 
 from __future__ import absolute_import, division, print_function
@@ -18,7 +18,7 @@ author:
   - Sumit Jaiswal (@justjais)
   - Sagar Paul (@KB-perByte)
 description: This module configures and manages the named or numbered ACLs on IOS platforms.
-module: ios_acls
+module: mes_acls
 notes:
   - Tested against Cisco IOSXE Version 17.3 on CML.
   - Module behavior is not idempotent when sequence for aces are not mentioned
@@ -667,7 +667,7 @@ EXAMPLES = """
 #    10 deny icmp 192.0.2.0 0.0.0.255 192.0.3.0 0.0.0.255 echo dscp ef ttl eq 10
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -990,7 +990,7 @@ EXAMPLES = """
 #    10 deny icmp 192.0.2.0 0.0.0.255 192.0.3.0 0.0.0.255 echo dscp ef ttl eq 10
 
 - name: Merge provided configuration with device configuration
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -1030,7 +1030,7 @@ EXAMPLES = """
 #     10 deny tcp 192.0.2.0 0.0.0.255 192.0.3.0 0.0.0.255 eq www fin option traceroute ttl eq 10
 
 - name: Replaces device configuration of listed acls with provided configuration
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -1377,7 +1377,7 @@ EXAMPLES = """
 
 - name: Replace remarks of ace with sequence 10
   # check_mode: true
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     state: replaced
     config:
       - acls:
@@ -1544,7 +1544,7 @@ EXAMPLES = """
 
 - name: Replace remarks of ace with sequence 10
   # check_mode: true
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     state: replaced
     config:
       - acls:
@@ -1708,7 +1708,7 @@ EXAMPLES = """
 #     10 deny tcp 192.0.2.0 0.0.0.255 192.0.3.0 0.0.0.255 eq www fin option traceroute ttl eq 10
 
 - name: Override device configuration of all acls with provided configuration
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -2001,7 +2001,7 @@ EXAMPLES = """
 #  sequence 10 deny tcp any eq www any eq telnet ack dscp af11
 
 - name: Override remarks and ace configurations
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -2326,7 +2326,7 @@ EXAMPLES = """
 #     10 deny tcp 192.0.2.0 0.0.0.255 192.0.3.0 0.0.0.255 eq www fin option traceroute ttl eq 10
 
 - name: "Delete ACLs (Note: This won't delete the all configured ACLs)"
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -2527,7 +2527,7 @@ EXAMPLES = """
 #     sequence 10 deny tcp any eq www any eq telnet ack dscp af11
 
 - name: "Delete ACLs based on AFI (Note: This won't delete the all configured ACLs)"
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
     state: deleted
@@ -2711,7 +2711,7 @@ EXAMPLES = """
 #     sequence 10 deny tcp any eq www any eq telnet ack dscp af11
 
 - name: Delete ALL of configured ACLs
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     state: deleted
 
 # Task Output
@@ -2873,7 +2873,7 @@ EXAMPLES = """
 #    sequence 10 deny tcp any eq www any eq telnet ack dscp af11
 
 - name: Gather ACLs configuration from target device
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     state: gathered
 
 # Module Execution Result:
@@ -3004,7 +3004,7 @@ EXAMPLES = """
 # Using rendered
 
 - name: Render the provided configuration into platform specific configuration lines
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     config:
       - afi: ipv4
         acls:
@@ -3065,7 +3065,7 @@ EXAMPLES = """
 # deny tcp any eq www any eq telnet ack dscp af11
 
 - name: Parse the commands for provided configuration
-  cisco.ios.ios_acls:
+  nikitamishagin.eltex_mes.mes_acls:
     running_config: "{{ lookup('file', 'parsed.cfg') }}"
     state: parsed
 
@@ -3142,10 +3142,10 @@ parsed:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.acls.acls import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.acls.acls import (
     AclsArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.acls.acls import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.acls.acls import (
     Acls,
 )
 

@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 """
-The module file for ios_vxlan_vtep
+The module file for mes_vxlan_vtep
 """
 
 from __future__ import absolute_import, division, print_function
@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-module: ios_vxlan_vtep
+module: mes_vxlan_vtep
 short_description: Resource module to configure VXLAN VTEP interface.
 description: This module provides declarative management of VXLAN VTEP interface on Cisco IOS network
   devices.
@@ -135,7 +135,7 @@ EXAMPLES = """
 #  member vni 50902 vrf blue
 
 # - name: Merge the provided configuration with the device configuration
-#   cisco.ios.ios_vxlan_vtep:
+#   nikitamishagin.eltex_mes.mes_vxlan_vtep:
 #     config:
 #     - interface: nve1
 #       source_interface: loopback2
@@ -197,7 +197,7 @@ EXAMPLES = """
 #  member vni 50901 vrf blue
 
 # - name: Replaces the device configuration with the provided configuration
-#   cisco.ios.ios_vxlan_vtep:
+#   nikitamishagin.eltex_mes.mes_vxlan_vtep:
 #     config:
 #     - interface: nve1
 #       source_interface: Loopback2
@@ -250,7 +250,7 @@ EXAMPLES = """
 #  member vni 10201 mcast-group FF0E:225::102
 
 # - name: "Delete VXLAN VTEP interface"
-#   cisco.ios.ios_vxlan_vtep:
+#   nikitamishagin.eltex_mes.mes_vxlan_vtep:
 #     config:
 #     - interface: nve1
 #     state: deleted
@@ -283,7 +283,7 @@ EXAMPLES = """
 #  member vni 10201 mcast-group 225.0.0.101 FF0E:225::101
 
 # - name: "Delete VXLAN VTEP interface with member VNIs"
-#   cisco.ios.ios_vxlan_vtep:
+#   nikitamishagin.eltex_mes.mes_vxlan_vtep:
 #     config:
 #     - interface: nve1
 #       source_interface: Loopback2
@@ -322,7 +322,7 @@ EXAMPLES = """
 #  member vni 10201 mcast-group FF0E:225::102
 
 # - name: "Delete VXLAN VTEP interface with no config"
-#   cisco.ios.ios_vxlan_vtep:
+#   nikitamishagin.eltex_mes.mes_vxlan_vtep:
 #     state: deleted
 
 # Commands Fired:
@@ -368,10 +368,10 @@ commands:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.argspec.vxlan_vtep.vxlan_vtep import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.argspec.vxlan_vtep.vxlan_vtep import (
     Vxlan_vtepArgs,
 )
-from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.ios.config.vxlan_vtep.vxlan_vtep import (
+from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.config.vxlan_vtep.vxlan_vtep import (
     Vxlan_vtep,
 )
 
