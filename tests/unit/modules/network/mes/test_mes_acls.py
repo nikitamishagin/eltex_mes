@@ -13,10 +13,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_acls
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosAclsModule(TestIosModule):
+class TestIosAclsModule(TestMesModule):
     module = mes_acls
 
     def setUp(self):

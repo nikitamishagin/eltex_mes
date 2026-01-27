@@ -13,10 +13,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_evpn_evi
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosEvpnEviModule(TestIosModule):
+class TestIosEvpnEviModule(TestMesModule):
     module = mes_evpn_evi
 
     def setUp(self):

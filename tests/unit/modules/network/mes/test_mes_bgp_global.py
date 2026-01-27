@@ -16,10 +16,10 @@ from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils impor
     set_module_args,
 )
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosBgpGlobalModule(TestIosModule):
+class TestIosBgpGlobalModule(TestMesModule):
     module = mes_bgp_global
 
     def setUp(self):

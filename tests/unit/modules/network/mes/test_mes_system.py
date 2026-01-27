@@ -26,10 +26,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_system
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule, load_fixture
+from .mes_module import TestMesModule, load_fixture
 
 
-class TestIosSystemModule(TestIosModule):
+class TestIosSystemModule(TestMesModule):
     module = mes_system
 
     def setUp(self):

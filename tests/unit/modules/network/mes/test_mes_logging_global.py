@@ -15,10 +15,10 @@ from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils impor
 
 from plugins.module_utils.network.mes.facts.logging_global.logging_global import Logging_globalFacts
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosLoggingGlobalModule(TestIosModule):
+class TestIosLoggingGlobalModule(TestMesModule):
     module = mes_logging_global
 
     def setUp(self):

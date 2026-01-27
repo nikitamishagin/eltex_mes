@@ -13,10 +13,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_lag_interfaces
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosLagInterfacesModule(TestIosModule):
+class TestIosLagInterfacesModule(TestMesModule):
     module = mes_lag_interfaces
 
     def setUp(self):
