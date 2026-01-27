@@ -8,7 +8,7 @@
 """
 The Hostname parser templates file. This contains
 a list of parser definitions and associated functions that
-facilitates both facts gathering and native command generation for
+facilitate both facts gathering and native command generation for
 the given network resource.
 """
 
