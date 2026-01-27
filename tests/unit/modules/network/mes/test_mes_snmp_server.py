@@ -13,10 +13,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_snmp_server
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosSnmpServerModule(TestIosModule):
+class TestIosSnmpServerModule(TestMesModule):
     module = mes_snmp_server
 
     def setUp(self):

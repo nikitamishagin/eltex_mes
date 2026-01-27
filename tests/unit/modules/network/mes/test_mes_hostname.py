@@ -13,14 +13,14 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_hostname
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosHostnameModule(TestIosModule):
+class TestMesHostnameModule(TestMesModule):
     module = mes_hostname
 
     def setUp(self):
-        super(TestIosHostnameModule, self).setUp()
+        super(TestMesHostnameModule, self).setUp()
 
         self.mock_get_resource_connection_facts = patch(
             "ansible_collections.ansible.netcommon.plugins.module_utils.network.common.rm_base.resource_module_base."
@@ -35,11 +35,11 @@ class TestIosHostnameModule(TestIosModule):
         self.execute_show_command = self.mock_execute_show_command.start()
 
     def tearDown(self):
-        super(TestIosHostnameModule, self).tearDown()
+        super(TestMesHostnameModule, self).tearDown()
         self.mock_get_resource_connection_facts.stop()
         self.mock_execute_show_command.stop()
 
-    def test_ios_hostname_merged_idempotent(self):
+    def test_mes_hostname_merged_idempotent(self):
         self.execute_show_command.return_value = dedent(
             """\
             hostname testname
@@ -50,7 +50,7 @@ class TestIosHostnameModule(TestIosModule):
         result = self.execute_module(changed=False)
         self.assertEqual(sorted(result["commands"]), sorted(commands))
 
-    def test_ios_hostname_merged(self):
+    def test_mes_hostname_merged(self):
         self.execute_show_command.return_value = dedent(
             """\
             hostname testname
@@ -61,7 +61,7 @@ class TestIosHostnameModule(TestIosModule):
         result = self.execute_module(changed=True)
         self.assertEqual(sorted(result["commands"]), sorted(commands))
 
-    def test_ios_hostname_deleted(self):
+    def test_mes_hostname_deleted(self):
         self.execute_show_command.return_value = dedent(
             """\
             hostname testname
@@ -72,7 +72,7 @@ class TestIosHostnameModule(TestIosModule):
         result = self.execute_module(changed=True)
         self.assertEqual(sorted(result["commands"]), sorted(commands))
 
-    def test_ios_hostname_deleted_blank(self):
+    def test_mes_hostname_deleted_blank(self):
         self.execute_show_command.return_value = dedent(
             """\
             """,
@@ -82,8 +82,8 @@ class TestIosHostnameModule(TestIosModule):
         result = self.execute_module(changed=False)
         self.assertEqual(sorted(result["commands"]), sorted(commands))
 
-    def test_ios_hostname_replaced_overridden(self):
-        """both the replaced and overridden states are supported to have same behaviour"""
+    def test_mes_hostname_replaced_overridden(self):
+        """both the replaced and overridden states are supported to have the same behaviour"""
         self.execute_show_command.return_value = dedent(
             """\
             hostname testname

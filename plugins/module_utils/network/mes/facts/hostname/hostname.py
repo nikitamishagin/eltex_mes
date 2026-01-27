@@ -2,6 +2,8 @@
 # Copyright 2022 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+# Copyright 2026 Nikita Mishagin
+# Modified from cisco.ios to Eltex MES
 
 from __future__ import absolute_import, division, print_function
 
@@ -32,7 +34,7 @@ class HostnameFacts(object):
         self.argument_spec = HostnameArgs.argument_spec
 
     def get_hostname_data(self, connection):
-        return connection.get("show running-config | section ^hostname")
+        return connection.get("show running-config | include ^hostname")
 
     def populate_facts(self, connection, ansible_facts, data=None):
         """Populate the facts for Hostname network resource
@@ -45,7 +47,6 @@ class HostnameFacts(object):
         :returns: facts
         """
         facts = {}
-        objs = []
 
         if not data:
             data = self.get_hostname_data(connection)

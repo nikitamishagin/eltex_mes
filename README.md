@@ -1,6 +1,6 @@
 # Eltex MES Collection
 
-[![CI](https://github.com/nikitamishagin/eltex_mes/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/nikitamishagin/eltex_mes/actions/workflows/tests.yml)
+[![CI](https://github.com/nikitamishagin/eltex_mes/actions/workflows/tests.yml/badge.svg?branch=main&event=schedule)](https://github.com/nikitamishagin/eltex_mes/actions/workflows/tests.yml) [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/nikitamishagin/eltex_mes?sort=semver)](https://github.com/nikitamishagin/eltex_mes/releases)
 
 Ansible collection to help automate the management of Eltex MES network devices.
 

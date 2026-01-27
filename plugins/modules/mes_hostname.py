@@ -3,6 +3,9 @@
 # Copyright 2022 Red Hat
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+# Copyright 2026 Nikita Mishagin
+# Modified from cisco.ios to Eltex MES
+#
 
 """
 The module file for mes_hostname
@@ -17,12 +20,11 @@ DOCUMENTATION = """
 module: mes_hostname
 short_description: Resource module to configure hostname.
 description:
-  - This module provides declarative management of hostname on Cisco IOS devices.
+  - This module provides declarative management of hostname on Eltex MES devices.
 version_added: 2.7.0
 author:
   - Sagar Paul (@KB-perByte)
 notes:
-  - Tested against Cisco IOSXE Version 17.3 on CML.
   - This module works with connection C(network_cli).
 options:
   config:
@@ -30,13 +32,13 @@ options:
     type: dict
     suboptions:
       hostname:
-        description: set hostname for IOS
+        description: set hostname for MES
         type: str
   running_config:
     description:
       - This option is used only with state I(parsed).
-      - The value of this option should be the output received from the IOS device
-        by executing the command B(show running-config | section ^hostname).
+      - The value of this option should be the output received from the MES device
+        by executing the command B(show running-config | include ^hostname).
       - The state I(parsed) reads the configuration from C(running_config) option and
         transforms it into Ansible structured data as per the resource module's argspec
         and the value is then returned in the I(parsed) key within the result.
@@ -68,7 +70,7 @@ options:
         transforms it into JSON format as per the resource module parameters and the
         value is returned in the I(parsed) key within the result. The value of C(running_config)
         option should be the same format as the output of command
-        I(show running-config | section ^hostname) executed on device. For state I(parsed) active
+        I(show running-config | include ^hostname) executed on device. For state I(parsed) active
         connection to remote host is not required.
     type: str
 """
@@ -79,7 +81,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname Router
 
 # Merged play:
@@ -101,7 +103,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname Router1
 
 # Using state: deleted
@@ -109,7 +111,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname RouterTest
 
 # Deleted play:
@@ -129,7 +131,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname Router
 
 # Using state: overridden
@@ -137,7 +139,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname Router
 
 # Overridden play:
@@ -158,7 +160,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname RouterTest
 
 # Using state: replaced
@@ -166,7 +168,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname RouterTest
 
 # Replaced play:
@@ -186,7 +188,7 @@ EXAMPLES = """
 # After state:
 # ------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname RouterTest
 
 # Using state: gathered
@@ -194,7 +196,7 @@ EXAMPLES = """
 # Before state:
 # -------------
 
-# router-mes#show running-config | section ^hostname
+# router-mes#show running-config | include ^hostname
 # hostname RouterTest
 
 # Gathered play:

@@ -17,7 +17,7 @@ Version added: 2.7.0
 
 Synopsis
 --------
-- This module provides declarative management of hostname on Cisco IOS devices.
+- This module provides declarative management of hostname on Eltex MES devices.
 
 
 
@@ -61,7 +61,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>set hostname for IOS</div>
+                        <div>set hostname for MES</div>
                 </td>
             </tr>
 
@@ -78,7 +78,7 @@ Parameters
                 </td>
                 <td>
                         <div>This option is used only with state <em>parsed</em>.</div>
-                        <div>The value of this option should be the output received from the IOS device by executing the command <b>show running-config | section ^hostname</b>.</div>
+                        <div>The value of this option should be the output received from the MES device by executing the command <b>show running-config | include ^hostname</b>.</div>
                         <div>The state <em>parsed</em> reads the configuration from <code>running_config</code> option and transforms it into Ansible structured data as per the resource module&#x27;s argspec and the value is then returned in the <em>parsed</em> key within the result.</div>
                 </td>
             </tr>
@@ -108,7 +108,7 @@ Parameters
                         <div>The state <em>rendered</em> will transform the configuration in <code>config</code> option to platform specific CLI commands which will be returned in the <em>rendered</em> key within the result. For state <em>rendered</em> active connection to remote host is not required.</div>
                         <div>The states <em>merged</em>, <em>replaced</em> and <em>overridden</em> have identical behaviour for this module.</div>
                         <div>The state <em>gathered</em> will fetch the running configuration from device and transform it into structured data in the format as per the resource module argspec and the value is returned in the <em>gathered</em> key within the result.</div>
-                        <div>The state <em>parsed</em> reads the configuration from <code>running_config</code> option and transforms it into JSON format as per the resource module parameters and the value is returned in the <em>parsed</em> key within the result. The value of <code>running_config</code> option should be the same format as the output of command <em>show running-config | section ^hostname</em> executed on device. For state <em>parsed</em> active connection to remote host is not required.</div>
+                        <div>The state <em>parsed</em> reads the configuration from <code>running_config</code> option and transforms it into JSON format as per the resource module parameters and the value is returned in the <em>parsed</em> key within the result. The value of <code>running_config</code> option should be the same format as the output of command <em>show running-config | include ^hostname</em> executed on device. For state <em>parsed</em> active connection to remote host is not required.</div>
                 </td>
             </tr>
     </table>
@@ -119,7 +119,6 @@ Notes
 -----
 
 .. note::
-   - Tested against Cisco IOSXE Version 17.3 on CML.
    - This module works with connection ``network_cli``.
 
 
@@ -134,7 +133,7 @@ Examples
     # Before state:
     # -------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname Router
 
     # Merged play:
@@ -156,7 +155,7 @@ Examples
     # After state:
     # ------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname Router1
 
     # Using state: deleted
@@ -164,7 +163,7 @@ Examples
     # Before state:
     # -------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname RouterTest
 
     # Deleted play:
@@ -184,7 +183,7 @@ Examples
     # After state:
     # ------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname Router
 
     # Using state: overridden
@@ -192,7 +191,7 @@ Examples
     # Before state:
     # -------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname Router
 
     # Overridden play:
@@ -213,7 +212,7 @@ Examples
     # After state:
     # ------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname RouterTest
 
     # Using state: replaced
@@ -221,7 +220,7 @@ Examples
     # Before state:
     # -------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname RouterTest
 
     # Replaced play:
@@ -241,7 +240,7 @@ Examples
     # After state:
     # ------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname RouterTest
 
     # Using state: gathered
@@ -249,7 +248,7 @@ Examples
     # Before state:
     # -------------
 
-    # router-mes#show running-config | section ^hostname
+    # router-mes#show running-config | include ^hostname
     # hostname RouterTest
 
     # Gathered play:

@@ -11,10 +11,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_vrf_global
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosVrfGlobalModule(TestIosModule):
+class TestIosVrfGlobalModule(TestMesModule):
     """Test the mes_vrf_global module."""
 
     module = mes_vrf_global

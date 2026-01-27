@@ -28,10 +28,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_vrf_address_family
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule
+from .mes_module import TestMesModule
 
 
-class TestIosVrfAddressFamilyModule(TestIosModule):
+class TestIosVrfAddressFamilyModule(TestMesModule):
     """Tests the mes_vrf_address_family module."""
 
     module = mes_vrf_address_family

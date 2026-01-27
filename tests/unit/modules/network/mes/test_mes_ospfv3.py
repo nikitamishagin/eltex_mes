@@ -12,10 +12,10 @@ from unittest.mock import patch
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_ospfv3
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule, load_fixture
+from .mes_module import TestMesModule, load_fixture
 
 
-class TestIosOspfV3Module(TestIosModule):
+class TestIosOspfV3Module(TestMesModule):
     module = mes_ospfv3
 
     def setUp(self):

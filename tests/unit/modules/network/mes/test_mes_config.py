@@ -27,10 +27,10 @@ from ansible_collections.nikitamishagin.eltex_mes.plugins.cliconf.mes import Cli
 from ansible_collections.nikitamishagin.eltex_mes.plugins.modules import mes_config
 from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils import set_module_args
 
-from .mes_module import TestIosModule, load_fixture
+from .mes_module import TestMesModule, load_fixture
 
 
-class TestIosConfigModule(TestIosModule):
+class TestIosConfigModule(TestMesModule):
     module = mes_config
 
     def setUp(self):
