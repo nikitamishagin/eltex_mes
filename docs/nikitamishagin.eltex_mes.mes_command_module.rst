@@ -18,7 +18,7 @@ Version added: 1.0.0
 Synopsis
 --------
 - Sends arbitrary commands to an ios node and returns the results read from the device. This module includes an argument that will cause the module to wait for a specific condition before returning or timing out if the condition is not met.
-- This module does not support running commands in configuration mode. Please use `ios_config <https://docs.ansible.com/ansible/latest/collections/cisco/ios/ios_config_module.html#ansible-collections-cisco-ios-ios-config-module>`_ to configure IOS devices.
+- This module does not support running commands in configuration mode. Please use mes_config to configure MES devices.
 
 
 
@@ -127,7 +127,6 @@ Notes
 -----
 
 .. note::
-   - Tested against Cisco IOSXE Version 17.3 on CML.
    - This module works with connection ``network_cli``. See https://docs.ansible.com/ansible/latest/network/user_guide/platform_ios.html
 
 
@@ -143,7 +142,7 @@ Examples
 
     # output-
 
-    # ok: [iosxeappliance] => {
+    # ok: [sw1] => {
     #     "changed": false,
     #     "invocation": {
     #         "module_args": {
@@ -157,49 +156,49 @@ Examples
     #         }
     #     },
     #     "stdout": [
-    #         "Cisco IOS XE Software, Version 17.03.04a\nCisco IOS Software [Amsterdam], Virtual XE Software ... register is 0x2102"
+    #         "Active-image: flash://system/images/mes3300-663-8R4.ros\n  Version: 6.6.3.8 ... Time: 12:35:37"
     #     ],
     #     "stdout_lines": [
     #         [
-    #             "Cisco IOS XE Software, Version 17.03.04a",
-    #             "Cisco IOS Software [Amsterdam], Virtual XE Software",
+    #             "Active-image: flash://system/images/mes3300-663-8R4.ros",
+    #             "  Version: 6.6.3.8",
     #             "..."
-    #             "Configuration register is 0x2102"
+    #             "  Time: 12:35:37"
     #         ]
     #     ]
     # }
 
-    - name: Run show version and check to see if output contains IOS
+    - name: Run show system and check to see if output contains MES
       nikitamishagin.eltex_mes.mes_command:
-        commands: show version
-        wait_for: result[0] contains IOS
+        commands: show system
+        wait_for: result[0] contains MES
 
     # output-
 
-    # ok: [iosxeappliance] => {
+    # ok: [sw1] => {
     #     "changed": false,
     #     "invocation": {
     #         "module_args": {
     #             "commands": [
-    #                 "show version"
+    #                 "show system"
     #             ],
     #             "interval": 1,
     #             "match": "all",
     #             "retries": 10,
     #             "wait_for": [
-    #                 "result[0] contains IOS"
+    #                 "result[0] contains MES"
     #             ]
     #         }
     #     },
     #     "stdout": [
-    #         "Cisco IOS XE Software, Version 17.03.04a\nCisco IOS Software [Amsterdam], Virtual XE Software ... register is 0x2102"
+    #         "System Description:                       MES2324P AC 28-port 1G/10G Managed Switch with 24 POE+ ports\nSystem Up Time (days,hour:min:sec):       51,04:18:34 ...  1            43              OK"
     #     ],
     #     "stdout_lines": [
     #         [
-    #             "Cisco IOS XE Software, Version 17.03.04a",
-    #             "Cisco IOS Software [Amsterdam], Virtual XE Software",
+    #             "System Description:                       MES2324P AC 28-port 1G/10G Managed Switch with 24 POE+ ports",
+    #             "System Up Time (days,hour:min:sec):       51,04:18:34",
     #             "..."
-    #             "Configuration register is 0x2102"
+    #             " 1            43              OK"
     #         ]
     #     ]
     # }
@@ -212,7 +211,7 @@ Examples
 
     # output-
 
-    # ok: [iosxeappliance] => {
+    # ok: [sw1] => {
     #     "changed": false,
     #     "invocation": {
     #         "module_args": {
@@ -227,40 +226,21 @@ Examples
     #         }
     #     },
     #     "stdout": [
-    #         "Cisco IOS XE Software, Version 17.03.04a\nCisco IOS Software [Amsterdam], Virtual XE Software Configuration register is 0x2102",
-    #         "Loopback999 is up, line protocol is up ...failures, 0 output buffers swapped out"
+    #         "Active-image: flash://system/images/mes3300-663-8R4.ros\n  Version: 6.6.3.8 ... Time: 12:35:37",
+    #         "GigabitEthernet1/0/1 is down (not connected) ...      8: 0/0"
     #     ],
     #     "stdout_lines": [
     #         [
-    #             "Cisco IOS XE Software, Version 17.03.04a",
-    #             "Cisco IOS Software [Amsterdam], Virtual XE Software",
+    #             "Active-image: flash://system/images/mes3300-663-8R4.ros",
+    #             "  Version: 6.6.3.8",
     #             "..."
-    #             "Configuration register is 0x2102"
+    #             "  Time: 12:35:37"
     #         ],
     #         [
-    #             "Loopback999 is up, line protocol is up ",
-    #             "  Hardware is Loopback",
-    #             "  Description: this is a test",
-    #             "  MTU 1514 bytes, BW 8000000 Kbit/sec, DLY 5000 usec, ",
-    #             "     reliability 255/255, txload 1/255, rxload 1/255",
-    #             "  Encapsulation LOOPBACK, loopback not set",
-    #             "  Keepalive set (10 sec)",
-    #             "  Last input never, output never, output hang never",
-    #             "  Last clearing of \"show interface\" counters never",
-    #             "  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0",
-    #             "  Queueing strategy: fifo",
-    #             "  Output queue: 0/0 (size/max)",
-    #             "  5 minute input rate 0 bits/sec, 0 packets/sec",
-    #             "  5 minute output rate 0 bits/sec, 0 packets/sec",
-    #             "     0 packets input, 0 bytes, 0 no buffer",
-    #             "     Received 0 broadcasts (0 IP multicasts)",
-    #             "     0 runts, 0 giants, 0 throttles ",
-    #             "     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort",
-    #             "     0 packets output, 0 bytes, 0 underruns",
-    #             "     Output 0 broadcasts (0 IP multicasts)",
-    #             "     0 output errors, 0 collisions, 0 interface resets",
-    #             "     0 unknown protocol drops",
-    #             "     0 output buffer failures, 0 output buffers swapped out"
+    #             "GigabitEthernet1/0/1 is down (not connected)",
+    #             "   Interface index is 49",
+    #             "...",
+    #             "      8: 0/0"
     #         ]
     #     ]
     # }
@@ -268,16 +248,16 @@ Examples
     - name: Run multiple commands and evaluate the output
       nikitamishagin.eltex_mes.mes_command:
         commands:
-          - show version
+          - show system
           - show interfaces
         wait_for:
-          - result[0] contains IOS
+          - result[0] contains MES
           - result[1] contains Loopback0
 
     # output-
     # failed play as result[1] contains Loopback0 is false
 
-    # fatal: [iosxeappliance]: FAILED! => {
+    # fatal: [sw1]: FAILED! => {
     #     "changed": false,
     #     "failed_conditions": [
     #         "result[1] contains Loopback0"
@@ -285,14 +265,14 @@ Examples
     #     "invocation": {
     #         "module_args": {
     #             "commands": [
-    #                 "show version",
+    #                 "show system",
     #                 "show interfaces"
     #             ],
     #             "interval": 1,
     #             "match": "all",
     #             "retries": 10,
     #             "wait_for": [
-    #                 "result[0] contains IOS",
+    #                 "result[0] contains MES",
     #                 "result[1] contains Loopback0"
     #             ]
     #         }
@@ -303,16 +283,13 @@ Examples
     - name: Run commands that require answering a prompt
       nikitamishagin.eltex_mes.mes_command:
         commands:
-          - command: "clear counters GigabitEthernet2"
-            prompt: 'Clear "show interface" counters on this interface \[confirm\]'
+          - command: write
+            prompt: 'Overwrite file [startup-config].... (Y/N)[N] ?'
             answer: "y"
-          - command: "clear counters GigabitEthernet3"
-            prompt: "[confirm]"
-            answer: "\r"
 
     # output-
 
-    # ok: [iosxeappliance] => {
+    # ok: [sw1] => {
     #     "changed": false,
     #     "invocation": {
     #         "module_args": {
@@ -320,19 +297,10 @@ Examples
     #                 {
     #                     "answer": "y",
     #                     "check_all": false,
-    #                     "command": "clear counters GigabitEthernet2",
+    #                     "command": "write",
     #                     "newline": true,
     #                     "output": null,
-    #                     "prompt": "Clear \"show interface\" counters on this interface \\[confirm\\]",
-    #                     "sendonly": false
-    #                 },
-    #                 {
-    #                     "answer": "\r",
-    #                     "check_all": false,
-    #                     "command": "clear counters GigabitEthernet3",
-    #                     "newline": true,
-    #                     "output": null,
-    #                     "prompt": "[confirm]",
+    #                     "prompt": "Overwrite file [startup-config].... (Y/N)[N] ?",
     #                     "sendonly": false
     #                 }
     #             ],
@@ -343,15 +311,12 @@ Examples
     #         }
     #     },
     #     "stdout": [
-    #         "Clear \"show interface\" counters on this interface [confirm]y",
-    #         "Clear \"show interface\" counters on this interface [confirm]"
+    #         "Overwrite file [startup-config].... (Y/N)[N] ?y\nCopy succeeded"
     #     ],
     #     "stdout_lines": [
     #         [
-    #             "Clear \"show interface\" counters on this interface [confirm]y"
-    #         ],
-    #         [
-    #             "Clear \"show interface\" counters on this interface [confirm]"
+    #             "Overwrite file [startup-config].... (Y/N)[N] ?y",
+    #             "Copy succeeded"
     #         ]
     #     ]
     # }
@@ -359,17 +324,17 @@ Examples
     - name: Run commands with complex values like special characters in variables
       nikitamishagin.eltex_mes.mes_command:
         commands:
-          ["{{ 'test aaa group TEST ' ~ user ~ ' ' ~ password ~ ' new-code' }}"]
+          ["{{ 'username ' ~ user ~ ' password ' ~ password ~ ' privilege 1' }}"]
       vars:
-        user: "dummy"
-        password: "!dummy"
+        user: "admin"
+        password: "eltex"
 
-    # ok: [iosxeappliance] => {
+    # ok: [sw1] => {
     #     "changed": false,
     #     "invocation": {
     #         "module_args": {
     #             "commands": [
-    #                 "test aaa group group test !dummy new-code"
+    #                 "username admin password eltex privilege 1"
     #             ],
     #             "interval": 1,
     #             "match": "all",
@@ -377,14 +342,8 @@ Examples
     #             "wait_for": null
     #         }
     #     },
-    #     "stdout": [
-    #         "User was successfully authenticated."
-    #     ],
-    #     "stdout_lines": [
-    #         [
-    #             "User was successfully authenticated."
-    #         ]
-    #     ]
+    #     "stdout": [],
+    #     "stdout_lines": []
     # }
 
 
