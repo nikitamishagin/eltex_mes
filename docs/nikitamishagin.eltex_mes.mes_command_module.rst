@@ -191,7 +191,7 @@ Examples
     #         }
     #     },
     #     "stdout": [
-    #         "System Description:                       MES2324P AC 28-port 1G/10G Managed Switch with 24 POE+ ports\nSystem Up Time (days,hour:min:sec):       51,04:18:34 ...  1            43              OK"
+    #         "System Description:                       MES2324P AC 28-port 1G/10G Managed Switch with 24 POE+ ... OK"
     #     ],
     #     "stdout_lines": [
     #         [
