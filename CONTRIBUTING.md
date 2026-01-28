@@ -100,9 +100,9 @@ Notes:
   - [x] Adapt terminal module
 - [ ] Adapt facts modules
 - [ ] Adapt high-priority modules
-  - [ ] Adapt command module
+  - [x] Adapt command module
   - [ ] Adapt config module
-  - [ ] Adapt hostname module
+  - [x] Adapt hostname module
   - [ ] Adapt vlans module
   - [ ] Adapt interfaces module
   - [ ] Adapt l2_interfaces module
@@ -130,29 +130,6 @@ Notes:
 - [ ] Try to adapt the remaining modules
 
 Ansible Cisco IOS Collection: https://github.com/ansible-collections/cisco.ios
-
-## Progress of improvement
-
-- The improvement plan has been drafted and added to the README.
-- A brief section for contributors has been added.
-- A new branch has been created to evolve the project into an Ansible collection. The branch is named
-  `feature/ansible-collection`. It is currently a copy of the cisco.ios project. All development of the new collection
-  is planned to take place in this branch (as if it were the new main).
-- Compiled a list of modules suitable for adaptation to Eltex.
-- Added an important development task: implement getting facts.
-- Merged the `feature/ansible-collection` branch into `main` to preserve the original cisco.ios project history and
-  incorporate it into this project.
-- Improved the part of the README that covers legacy solutions.
-- Improved the contribution section.
-- Added templates for issues and pull requests.
-- Fixed pre-commit hooks and documentation generation.
-- Fixed all import paths in modules and tests.
-- Defined the order of the most important modules.
-- Updated project improvement plan.
-- Cliconf module adapted.
-- Terminal module adapted.
-- Cliconf and terminal modules tested on real devices.
-- GitHub Actions workflows updated.
 
 ### List of modules that can be adapted for Eltex (series 23xx/33xx/53xx/54xx)
 

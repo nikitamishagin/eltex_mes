@@ -30,11 +30,11 @@ from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils impor
 from .mes_module import TestMesModule, load_fixture
 
 
-class TestIosCommandModule(TestMesModule):
+class TestMesCommandModule(TestMesModule):
     module = mes_command
 
     def setUp(self):
-        super(TestIosCommandModule, self).setUp()
+        super(TestMesCommandModule, self).setUp()
 
         self.mock_run_commands = patch(
             "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_command.run_commands",
@@ -42,7 +42,7 @@ class TestIosCommandModule(TestMesModule):
         self.run_commands = self.mock_run_commands.start()
 
     def tearDown(self):
-        super(TestIosCommandModule, self).tearDown()
+        super(TestMesCommandModule, self).tearDown()
         self.mock_run_commands.stop()
 
     def load_fixtures(self, commands=None):
@@ -62,66 +62,66 @@ class TestIosCommandModule(TestMesModule):
 
         self.run_commands.side_effect = load_from_file
 
-    def test_ios_command_simple(self):
-        set_module_args(dict(commands=["show version"]))
+    def test_mes_command_simple(self):
+        set_module_args(dict(commands=["show system"]))
         result = self.execute_module()
         self.assertEqual(len(result["stdout"]), 1)
-        self.assertTrue(result["stdout"][0].startswith("Cisco IOS Software"))
+        self.assertTrue(result["stdout"][0].startswith("System Description"))
 
-    def test_ios_command_multiple(self):
-        set_module_args(dict(commands=["show version", "show version"]))
+    def test_mes_command_multiple(self):
+        set_module_args(dict(commands=["show system", "show system"]))
         result = self.execute_module()
         self.assertEqual(len(result["stdout"]), 2)
-        self.assertTrue(result["stdout"][0].startswith("Cisco IOS Software"))
+        self.assertTrue(result["stdout"][0].startswith("System Description"))
 
-    def test_ios_command_wait_for(self):
-        wait_for = 'result[0] contains "Cisco IOS"'
-        set_module_args(dict(commands=["show version"], wait_for=wait_for))
+    def test_mes_command_wait_for(self):
+        wait_for = 'result[0] contains "MES2324P"'
+        set_module_args(dict(commands=["show system"], wait_for=wait_for))
         self.execute_module()
 
-    def test_ios_command_wait_for_fails(self):
+    def test_mes_command_wait_for_fails(self):
         wait_for = 'result[0] contains "test string"'
-        set_module_args(dict(commands=["show version"], wait_for=wait_for))
+        set_module_args(dict(commands=["show system"], wait_for=wait_for))
         self.execute_module(failed=True)
         self.assertEqual(self.run_commands.call_count, 10)
 
-    def test_ios_command_retries(self):
+    def test_mes_command_retries(self):
         wait_for = 'result[0] contains "test string"'
-        set_module_args(dict(commands=["show version"], wait_for=wait_for, retries=2))
+        set_module_args(dict(commands=["show system"], wait_for=wait_for, retries=2))
         self.execute_module(failed=True)
         self.assertEqual(self.run_commands.call_count, 3)
 
-    def test_ios_command_retries_0(self):
-        set_module_args(dict(commands=["show version"], retries=0))
+    def test_mes_command_retries_0(self):
+        set_module_args(dict(commands=["show system"], retries=0))
         self.execute_module(failed=False)
         self.assertEqual(self.run_commands.call_count, 1)
 
-    def test_ios_command_match_any(self):
+    def test_mes_command_match_any(self):
         wait_for = [
-            'result[0] contains "Cisco IOS"',
+            'result[0] contains "MES2324P"',
             'result[0] contains "test string"',
         ]
-        set_module_args(dict(commands=["show version"], wait_for=wait_for, match="any"))
+        set_module_args(dict(commands=["show system"], wait_for=wait_for, match="any"))
         self.execute_module()
 
-    def test_ios_command_match_all(self):
+    def test_mes_command_match_all(self):
         wait_for = [
-            'result[0] contains "Cisco IOS"',
-            'result[0] contains "IOSv Software"',
+            'result[0] contains "MES2324P"',
+            'result[0] contains "28-port"',
         ]
-        set_module_args(dict(commands=["show version"], wait_for=wait_for, match="all"))
+        set_module_args(dict(commands=["show system"], wait_for=wait_for, match="all"))
         self.execute_module()
 
-    def test_ios_command_match_all_failure(self):
+    def test_mes_command_match_all_failure(self):
         wait_for = [
-            'result[0] contains "Cisco IOS"',
+            'result[0] contains "MES2324P"',
             'result[0] contains "test string"',
         ]
-        commands = ["show version", "show version"]
+        commands = ["show system", "show system"]
         set_module_args(dict(commands=commands, wait_for=wait_for, match="all"))
         self.execute_module(failed=True)
 
-    def test_ios_command_configure_check_warning(self):
+    def test_mes_command_configure_check_warning(self):
         commands = ["configure terminal"]
         set_module_args({"commands": commands, "_ansible_check_mode": True})
         result = self.execute_module()
@@ -132,7 +132,7 @@ class TestIosCommandModule(TestMesModule):
             ],
         )
 
-    def test_ios_command_configure_not_warning(self):
+    def test_mes_command_configure_not_warning(self):
         commands = ["configure terminal"]
         set_module_args(dict(commands=commands))
         result = self.execute_module()

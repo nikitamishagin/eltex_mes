@@ -29,6 +29,7 @@ from __future__ import absolute_import, division, print_function
 
 
 __metaclass__ = type
+
 import json
 
 from ansible.module_utils._text import to_text
@@ -40,32 +41,34 @@ _DEVICE_CONFIGS = {}
 
 
 def get_connection(module):
-    if hasattr(module, "_ios_connection"):
-        return module._ios_connection
+    if hasattr(module, "_mes_connection"):
+        return module._mes_connection
 
     capabilities = get_capabilities(module)
     network_api = capabilities.get("network_api")
     if network_api == "cliconf":
-        module._ios_connection = Connection(module._socket_path)
+        module._mes_connection = Connection(module._socket_path)
     else:
         module.fail_json(msg="Invalid connection type %s" % network_api)
 
-    return module._ios_connection
+    return module._mes_connection
 
 
 def get_capabilities(module):
-    if hasattr(module, "_ios_capabilities"):
-        return module._ios_capabilities
+    if hasattr(module, "_mes_capabilities"):
+        return module._mes_capabilities
+    capabilities = None
     try:
         capabilities = Connection(module._socket_path).get_capabilities()
     except ConnectionError as exc:
         module.fail_json(msg=to_text(exc, errors="surrogate_then_replace"))
-    module._ios_capabilities = json.loads(capabilities)
-    return module._ios_capabilities
+    module._mes_capabilities = json.loads(capabilities)
+    return module._mes_capabilities
 
 
 def get_defaults_flag(module):
     connection = get_connection(module)
+    out = None
     try:
         out = connection.get_defaults_flag()
     except ConnectionError as exc:
@@ -76,9 +79,8 @@ def get_defaults_flag(module):
 def get_config(module, flags=None):
     flags = to_list(flags)
 
-    section_filter = False
     if flags and "section" in flags[-1]:
-        section_filter = True
+        module.fail_json(msg="Eltex MES does not support `| section ...` filter")
 
     flag_str = " ".join(flags)
 
@@ -86,14 +88,11 @@ def get_config(module, flags=None):
         return _DEVICE_CONFIGS[flag_str]
     except KeyError:
         connection = get_connection(module)
+        out = None
         try:
             out = connection.get_config(flags=flags)
         except ConnectionError as exc:
-            if section_filter:
-                # Some ios devices don't understand `| section foo`
-                out = get_config(module, flags=flags[:-1])
-            else:
-                module.fail_json(msg=to_text(exc, errors="surrogate_then_replace"))
+            module.fail_json(msg=to_text(exc, errors="surrogate_then_replace"))
         cfg = to_text(out, errors="surrogate_then_replace").strip()
         _DEVICE_CONFIGS[flag_str] = cfg
         return cfg
@@ -131,32 +130,20 @@ def normalize_interface(name):
 
     if name.lower().startswith("gi"):
         if_type = "GigabitEthernet"
-    elif name.lower().startswith("twe"):
-        if_type = "TwentyFiveGigE"
-    elif name.lower().startswith("tw"):
-        if_type = "TwoGigabitEthernet"
     elif name.lower().startswith("te"):
         if_type = "TenGigabitEthernet"
-    elif name.lower().startswith("fa"):
-        if_type = "FastEthernet"
-    elif name.lower().startswith("fo"):
+    elif name.lower().startswith("fo"):  # I'm not sure, but maybe
         if_type = "FortyGigabitEthernet"
-    elif name.lower().startswith("fiv"):
-        if_type = "FiveGigabitEthernet"
-    elif name.lower().startswith("fif"):
-        if_type = "FiftyGigabitEthernet"
-    elif name.lower().startswith("et"):
-        if_type = "Ethernet"
+    elif name.lower().startswith("hu"):
+        if_type = "HundredGigabitEthernet"
     elif name.lower().startswith("vl"):
         if_type = "Vlan"
     elif name.lower().startswith("lo"):
         if_type = "loopback"
     elif name.lower().startswith("po"):
         if_type = "port-channel"
-    elif name.lower().startswith("nv"):
+    elif name.lower().startswith("nv"):  # I'm not sure, but maybe
         if_type = "nve"
-    elif name.lower().startswith("hu"):
-        if_type = "HundredGigE"
     elif name.lower().startswith("se"):
         if_type = "Serial"
     else:
