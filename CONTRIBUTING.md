@@ -101,7 +101,7 @@ Notes:
 - [ ] Adapt facts modules
 - [ ] Adapt high-priority modules
   - [x] Adapt command module
-  - [ ] Adapt config module
+  - [x] Adapt config module
   - [x] Adapt hostname module
   - [ ] Adapt vlans module
   - [ ] Adapt interfaces module

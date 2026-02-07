@@ -17,7 +17,7 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Cisco IOS configurations use a simple block indent file syntax for segmenting configuration into sections.  This module provides an implementation for working with IOS configuration sections in a deterministic way.
+- Eltex MES configurations use a simple block indent file syntax for segmenting configuration into sections.  This module provides an implementation for working with MES configuration sections in a deterministic way.
 
 
 
@@ -256,7 +256,7 @@ Parameters
                         <b>Default:</b><br/><div style="color: blue">"@"</div>
                 </td>
                 <td>
-                        <div>This argument is used when pushing a multiline configuration element to the IOS device.  It specifies the character to use as the delimiting character.  This only applies to the configuration action.</div>
+                        <div>This argument is used when pushing a multiline configuration element to the MES device.  It specifies the character to use as the delimiting character.  This only applies to the configuration action.</div>
                 </td>
             </tr>
             <tr>
@@ -354,10 +354,9 @@ Notes
 -----
 
 .. note::
-   - Tested against Cisco IOSXE Version 17.3 on CML.
-   - Abbreviated commands are NOT idempotent, see https://docs.ansible.com/ansible/latest/network/user_guide/faq.html#why-do-the-config-modules-always-return-changed-true-with-abbreviated-commands
+   - Abbreviated commands are NOT idempotent.
    - To ensure idempotency and correct diff the configuration lines in the relevant module options should be similar to how they appear if present in the running configuration on device including the indentation.
-   - This module works with connection ``network_cli``. See https://docs.ansible.com/ansible/latest/network/user_guide/platform_ios.html
+   - This module works with connection ``network_cli``.
 
 
 
@@ -375,7 +374,7 @@ Examples
         lines:
           - description test interface
           - ip address 172.31.1.1 255.255.255.0
-        parents: interface Ethernet1
+        parents: interface GigabitEthernet1/0/1
 
     - name: Configure ip helpers on multiple interfaces
       nikitamishagin.eltex_mes.mes_config:
@@ -384,9 +383,9 @@ Examples
           - ip helper-address 172.26.3.8
         parents: "{{ item }}"
       with_items:
-        - interface Ethernet1
-        - interface Ethernet2
-        - interface GigabitEthernet1
+        - interface GigabitEthernet1/0/1
+        - interface GigabitEthernet1/0/2
+        - interface GigabitEthernet1/0/3
 
     - name: Configure policer in Scavenger class
       nikitamishagin.eltex_mes.mes_config:
@@ -401,11 +400,11 @@ Examples
     - name: Load new acl into device
       nikitamishagin.eltex_mes.mes_config:
         lines:
-          - 10 permit ip host 192.0.2.1 any log
-          - 20 permit ip host 192.0.2.2 any log
-          - 30 permit ip host 192.0.2.3 any log
-          - 40 permit ip host 192.0.2.4 any log
-          - 50 permit ip host 192.0.2.5 any log
+          - permit ip host 192.0.2.1 any
+          - permit ip host 192.0.2.2 any
+          - permit ip host 192.0.2.3 any
+          - permit ip host 192.0.2.4 any
+          - permit ip host 192.0.2.5 any
         parents: ip access-list extended test
         before: no ip access-list extended test
         match: exact
@@ -419,7 +418,7 @@ Examples
       nikitamishagin.eltex_mes.mes_config:
         diff_against: startup
         diff_ignore_lines:
-          - ntp clock .*
+          - sntp server .*
 
     - name: Save running to startup when modified
       nikitamishagin.eltex_mes.mes_config:
@@ -433,17 +432,16 @@ Examples
         # parents: int gig1/0/11
         parents: interface GigabitEthernet1/0/11
 
-    # Set boot image based on comparison to a group_var (version) and the version
+    # Copy boot image based on comparison to a group_var (version) and the version
     # that is returned from the `mes_facts` module
     - name: Setting boot image
       nikitamishagin.eltex_mes.mes_config:
         lines:
-          - no boot system
-          - boot system flash bootflash:{{new_image}}
+          - boot system tftp://tftp_ip_address/directory/{{new_image}}
         host: "{{ inventory_hostname }}"
       when: ansible_net_version != version
 
-    - name: Render a Jinja2 template onto an IOS device
+    - name: Render a Jinja2 template onto an MES device
       nikitamishagin.eltex_mes.mes_config:
         backup: true
         src: mes_template.j2
@@ -457,11 +455,11 @@ Examples
           dir_path: /home/user
 
     # Example mes_template.j2
-    # ip access-list extended test
-    #  permit ip host 192.0.2.1 any log
-    #  permit ip host 192.0.2.2 any log
-    #  permit ip host 192.0.2.3 any log
-    #  permit ip host 192.0.2.4 any log
+    # ip access-list extended EltexAL
+    #   permit ip host 192.0.2.1 any
+    #   permit ip host 192.0.2.2 any
+    #   permit ip host 192.0.2.3 any
+    #   permit ip host 192.0.2.4 any
 
 
 
@@ -491,7 +489,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                             <div>The full path to the backup file</div>
                     <br/>
                         <div style="font-size: smaller"><b>Sample:</b></div>
-                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">/playbooks/ansible/backup/ios_config.2016-07-16@22:28:34</div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">/playbooks/ansible/backup/mes_config.2016-07-16@22:28:34</div>
                 </td>
             </tr>
             <tr>
@@ -542,7 +540,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                             <div>The name of the backup file</div>
                     <br/>
                         <div style="font-size: smaller"><b>Sample:</b></div>
-                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">ios_config.2016-07-16@22:28:34</div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">mes_config.2016-07-16@22:28:34</div>
                 </td>
             </tr>
             <tr>
@@ -559,7 +557,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                             <div>The full path to the backup file excluding the timestamp</div>
                     <br/>
                         <div style="font-size: smaller"><b>Sample:</b></div>
-                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">/playbooks/ansible/backup/ios_config</div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">/playbooks/ansible/backup/mes_config</div>
                 </td>
             </tr>
             <tr>

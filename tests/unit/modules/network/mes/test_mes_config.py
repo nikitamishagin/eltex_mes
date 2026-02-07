@@ -30,11 +30,11 @@ from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils impor
 from .mes_module import TestMesModule, load_fixture
 
 
-class TestIosConfigModule(TestMesModule):
+class TestMesConfigModule(TestMesModule):
     module = mes_config
 
     def setUp(self):
-        super(TestIosConfigModule, self).setUp()
+        super(TestMesConfigModule, self).setUp()
 
         self.mock_get_config = patch(
             "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_config.get_config",
@@ -55,27 +55,27 @@ class TestIosConfigModule(TestMesModule):
         self.run_commands = self.mock_run_commands.start()
 
         self.cliconf_obj = Cliconf(MagicMock())
-        self.running_config = load_fixture("ios_config_config.cfg")
+        self.running_config = load_fixture("mes_config_config.cfg")
 
     def tearDown(self):
-        super(TestIosConfigModule, self).tearDown()
+        super(TestMesConfigModule, self).tearDown()
         self.mock_get_config.stop()
         self.mock_run_commands.stop()
         self.mock_get_connection.stop()
 
     def load_fixtures(self, commands=None):
-        config_file = "ios_config_config.cfg"
+        config_file = "mes_config_config.cfg"
         self.get_config.return_value = load_fixture(config_file)
         self.get_connection.edit_config.return_value = None
 
-    def test_ios_config_unchanged(self):
-        src = load_fixture("ios_config_config.cfg")
+    def test_mes_config_unchanged(self):
+        src = load_fixture("mes_config_config.cfg")
         self.conn.get_diff = MagicMock(return_value=self.cliconf_obj.get_diff(src, src))
         set_module_args(dict(src=src))
         self.execute_module()
 
-    def test_ios_config_src(self):
-        src = load_fixture("ios_config_src.cfg")
+    def test_mes_config_src(self):
+        src = load_fixture("mes_config_src.cfg")
         set_module_args(dict(src=src))
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(src, self.running_config),
@@ -83,13 +83,13 @@ class TestIosConfigModule(TestMesModule):
         commands = ["hostname foo", "interface GigabitEthernet0/0", "no ip address"]
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_config_backup(self):
+    def test_mes_config_backup(self):
         set_module_args(dict(backup=True))
         result = self.execute_module()
         self.assertIn("__backup__", result)
 
-    def test_ios_config_save_changed_true(self):
-        src = load_fixture("ios_config_src.cfg")
+    def test_mes_config_save_changed_true(self):
+        src = load_fixture("mes_config_src.cfg")
         set_module_args(dict(src=src, save_when="changed"))
         commands = ["hostname foo", "interface GigabitEthernet0/0", "no ip address"]
         self.conn.get_diff = MagicMock(
@@ -102,14 +102,14 @@ class TestIosConfigModule(TestMesModule):
         args = self.run_commands.call_args[0][1]
         self.assertIn("copy running-config startup-config\r", args)
 
-    def test_ios_config_save_changed_false(self):
+    def test_mes_config_save_changed_false(self):
         set_module_args(dict(save_when="changed"))
         self.execute_module(changed=False)
         self.assertEqual(self.run_commands.call_count, 0)
         self.assertEqual(self.get_config.call_count, 0)
         self.assertEqual(self.conn.edit_config.call_count, 0)
 
-    def test_ios_config_save_always(self):
+    def test_mes_config_save_always(self):
         self.run_commands.return_value = "hostname foo"
         set_module_args(dict(save_when="always"))
         self.execute_module(changed=True)
@@ -119,7 +119,7 @@ class TestIosConfigModule(TestMesModule):
         args = self.run_commands.call_args[0][1]
         self.assertIn("copy running-config startup-config\r", args)
 
-    def test_ios_config_lines_wo_parents(self):
+    def test_mes_config_lines_wo_parents(self):
         lines = ["hostname foo"]
         set_module_args(dict(lines=lines))
         self.conn.get_diff = MagicMock(
@@ -131,7 +131,7 @@ class TestIosConfigModule(TestMesModule):
         commands = ["hostname foo"]
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_config_lines_w_parents(self):
+    def test_mes_config_lines_w_parents(self):
         lines = ["shutdown"]
         parents = ["interface GigabitEthernet0/0"]
         set_module_args(dict(lines=lines, parents=parents))
@@ -149,7 +149,7 @@ class TestIosConfigModule(TestMesModule):
         commands = ["interface GigabitEthernet0/0", "shutdown"]
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_config_before(self):
+    def test_mes_config_before(self):
         lines = ["hostname foo"]
         set_module_args(dict(lines=lines, before=["test1", "test2"]))
         self.conn.get_diff = MagicMock(
@@ -161,7 +161,7 @@ class TestIosConfigModule(TestMesModule):
         commands = ["test1", "test2", "hostname foo"]
         self.execute_module(changed=True, commands=commands, sort=False)
 
-    def test_ios_config_after(self):
+    def test_mes_config_after(self):
         lines = ["hostname foo"]
         set_module_args(dict(lines=lines, after=["test1", "test2"]))
         self.conn.get_diff = MagicMock(
@@ -173,8 +173,8 @@ class TestIosConfigModule(TestMesModule):
         commands = ["hostname foo", "test1", "test2"]
         self.execute_module(changed=True, commands=commands, sort=False)
 
-    def test_ios_config_before_after_no_change(self):
-        lines = ["hostname router"]
+    def test_mes_config_before_after_no_change(self):
+        lines = ["hostname SW1"]
         set_module_args(
             dict(lines=lines, before=["test1", "test2"], after=["test3", "test4"]),
         )
@@ -186,17 +186,17 @@ class TestIosConfigModule(TestMesModule):
         )
         self.execute_module()
 
-    def test_ios_config_config(self):
+    def test_mes_config_config(self):
         config = "hostname localhost"
-        lines = ["hostname router"]
+        lines = ["hostname SW1"]
         set_module_args(dict(lines=lines, config=config))
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff("\n".join(lines), config),
         )
-        commands = ["hostname router"]
+        commands = ["hostname SW1"]
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_config_replace_block(self):
+    def test_mes_config_replace_block(self):
         lines = ["description test string", "test string"]
         parents = ["interface GigabitEthernet0/0"]
         set_module_args(dict(lines=lines, replace="block", parents=parents))
@@ -217,8 +217,8 @@ class TestIosConfigModule(TestMesModule):
         commands = parents + lines
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_config_replace_block_src(self):
-        src = load_fixture("ios_config_src.cfg")
+    def test_mes_config_replace_block_src(self):
+        src = load_fixture("mes_config_src.cfg")
         set_module_args(dict(src=src, replace="block"))
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(src, self.running_config),
@@ -226,8 +226,8 @@ class TestIosConfigModule(TestMesModule):
         commands = ["hostname foo", "interface GigabitEthernet0/0", "no ip address"]
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_config_match_none(self):
-        lines = ["hostname router"]
+    def test_mes_config_match_none(self):
+        lines = ["hostname SW1"]
         set_module_args(dict(lines=lines, match="none"))
         self.conn.get_diff = MagicMock(
             return_value=self.cliconf_obj.get_diff(
@@ -238,7 +238,7 @@ class TestIosConfigModule(TestMesModule):
         )
         self.execute_module(changed=True, commands=lines)
 
-    def test_ios_config_match_none2(self):
+    def test_mes_config_match_none2(self):
         lines = ["ip address 1.2.3.4 255.255.255.0", "description test string"]
         parents = ["interface GigabitEthernet0/0"]
         set_module_args(dict(lines=lines, parents=parents, match="none"))
@@ -258,7 +258,7 @@ class TestIosConfigModule(TestMesModule):
         commands = parents + lines
         self.execute_module(changed=True, commands=commands, sort=False)
 
-    def test_ios_config_match_strict(self):
+    def test_mes_config_match_strict(self):
         lines = [
             "ip address 1.2.3.4 255.255.255.0",
             "description test string",
@@ -282,7 +282,7 @@ class TestIosConfigModule(TestMesModule):
         commands = parents + ["shutdown"]
         self.execute_module(changed=True, commands=commands, sort=False)
 
-    def test_ios_config_match_exact(self):
+    def test_mes_config_match_exact(self):
         lines = [
             "ip address 1.2.3.4 255.255.255.0",
             "description test string",
@@ -306,32 +306,32 @@ class TestIosConfigModule(TestMesModule):
         commands = parents + lines
         self.execute_module(changed=True, commands=commands, sort=False)
 
-    def test_ios_config_src_and_lines_fails(self):
+    def test_mes_config_src_and_lines_fails(self):
         args = dict(src="foo", lines="foo")
         set_module_args(args)
         self.execute_module(failed=True)
 
-    def test_ios_config_src_and_parents_fails(self):
+    def test_mes_config_src_and_parents_fails(self):
         args = dict(src="foo", parents="foo")
         set_module_args(args)
         self.execute_module(failed=True)
 
-    def test_ios_config_match_exact_requires_lines(self):
+    def test_mes_config_match_exact_requires_lines(self):
         args = dict(match="exact")
         set_module_args(args)
         self.execute_module(failed=True)
 
-    def test_ios_config_match_strict_requires_lines(self):
+    def test_mes_config_match_strict_requires_lines(self):
         args = dict(match="strict")
         set_module_args(args)
         self.execute_module(failed=True)
 
-    def test_ios_config_replace_block_requires_lines(self):
+    def test_mes_config_replace_block_requires_lines(self):
         args = dict(replace="block")
         set_module_args(args)
         self.execute_module(failed=True)
 
-    def test_ios_config_replace_config_requires_src(self):
+    def test_mes_config_replace_config_requires_src(self):
         args = dict(replace="config")
         set_module_args(args)
         self.execute_module(failed=True)

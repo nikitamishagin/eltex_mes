@@ -25,18 +25,15 @@ module: mes_config
 author: Peter Sprygada (@privateip)
 short_description: Module to manage configuration sections.
 description:
-  - Cisco IOS configurations use a simple block indent file syntax for segmenting configuration
-    into sections.  This module provides an implementation for working with IOS configuration
+  - Eltex MES configurations use a simple block indent file syntax for segmenting configuration
+    into sections.  This module provides an implementation for working with MES configuration
     sections in a deterministic way.
 version_added: 1.0.0
 notes:
-  - Tested against Cisco IOSXE Version 17.3 on CML.
-  - Abbreviated commands are NOT idempotent, see
-    U(https://docs.ansible.com/ansible/latest/network/user_guide/faq.html#why-do-the-config-modules-always-return-changed-true-with-abbreviated-commands)
+  - Abbreviated commands are NOT idempotent.
   - To ensure idempotency and correct diff the configuration lines in the relevant module options should be similar to how they
     appear if present in the running configuration on device including the indentation.
   - This module works with connection C(network_cli).
-    See U(https://docs.ansible.com/ansible/latest/network/user_guide/platform_ios.html)
 options:
   lines:
     description:
@@ -110,7 +107,7 @@ options:
   multiline_delimiter:
     description:
       - This argument is used when pushing a multiline configuration element to the
-        IOS device.  It specifies the character to use as the delimiting character.  This
+        MES device.  It specifies the character to use as the delimiting character.  This
         only applies to the configuration action.
     default: "@"
     type: str
@@ -233,7 +230,7 @@ EXAMPLES = """
     lines:
       - description test interface
       - ip address 172.31.1.1 255.255.255.0
-    parents: interface Ethernet1
+    parents: interface GigabitEthernet1/0/1
 
 - name: Configure ip helpers on multiple interfaces
   nikitamishagin.eltex_mes.mes_config:
@@ -242,9 +239,9 @@ EXAMPLES = """
       - ip helper-address 172.26.3.8
     parents: "{{ item }}"
   with_items:
-    - interface Ethernet1
-    - interface Ethernet2
-    - interface GigabitEthernet1
+    - interface GigabitEthernet1/0/1
+    - interface GigabitEthernet1/0/2
+    - interface GigabitEthernet1/0/3
 
 - name: Configure policer in Scavenger class
   nikitamishagin.eltex_mes.mes_config:
@@ -259,11 +256,11 @@ EXAMPLES = """
 - name: Load new acl into device
   nikitamishagin.eltex_mes.mes_config:
     lines:
-      - 10 permit ip host 192.0.2.1 any log
-      - 20 permit ip host 192.0.2.2 any log
-      - 30 permit ip host 192.0.2.3 any log
-      - 40 permit ip host 192.0.2.4 any log
-      - 50 permit ip host 192.0.2.5 any log
+      - permit ip host 192.0.2.1 any
+      - permit ip host 192.0.2.2 any
+      - permit ip host 192.0.2.3 any
+      - permit ip host 192.0.2.4 any
+      - permit ip host 192.0.2.5 any
     parents: ip access-list extended test
     before: no ip access-list extended test
     match: exact
@@ -277,7 +274,7 @@ EXAMPLES = """
   nikitamishagin.eltex_mes.mes_config:
     diff_against: startup
     diff_ignore_lines:
-      - ntp clock .*
+      - sntp server .*
 
 - name: Save running to startup when modified
   nikitamishagin.eltex_mes.mes_config:
@@ -291,17 +288,16 @@ EXAMPLES = """
     # parents: int gig1/0/11
     parents: interface GigabitEthernet1/0/11
 
-# Set boot image based on comparison to a group_var (version) and the version
+# Copy boot image based on comparison to a group_var (version) and the version
 # that is returned from the `mes_facts` module
 - name: Setting boot image
   nikitamishagin.eltex_mes.mes_config:
     lines:
-      - no boot system
-      - boot system flash bootflash:{{new_image}}
+      - boot system tftp://tftp_ip_address/directory/{{new_image}}
     host: "{{ inventory_hostname }}"
   when: ansible_net_version != version
 
-- name: Render a Jinja2 template onto an IOS device
+- name: Render a Jinja2 template onto an MES device
   nikitamishagin.eltex_mes.mes_config:
     backup: true
     src: mes_template.j2
@@ -315,11 +311,11 @@ EXAMPLES = """
       dir_path: /home/user
 
 # Example mes_template.j2
-# ip access-list extended test
-#  permit ip host 192.0.2.1 any log
-#  permit ip host 192.0.2.2 any log
-#  permit ip host 192.0.2.3 any log
-#  permit ip host 192.0.2.4 any log
+# ip access-list extended EltexAL
+#   permit ip host 192.0.2.1 any
+#   permit ip host 192.0.2.2 any
+#   permit ip host 192.0.2.3 any
+#   permit ip host 192.0.2.4 any
 """
 
 RETURN = """
@@ -337,17 +333,17 @@ backup_path:
   description: The full path to the backup file
   returned: when backup is yes
   type: str
-  sample: /playbooks/ansible/backup/ios_config.2016-07-16@22:28:34
+  sample: /playbooks/ansible/backup/mes_config.2016-07-16@22:28:34
 filename:
   description: The name of the backup file
   returned: when backup is yes and filename is not specified in backup options
   type: str
-  sample: ios_config.2016-07-16@22:28:34
+  sample: mes_config.2016-07-16@22:28:34
 shortname:
   description: The full path to the backup file excluding the timestamp
   returned: when backup is yes and filename is not specified in backup options
   type: str
-  sample: /playbooks/ansible/backup/ios_config
+  sample: /playbooks/ansible/backup/mes_config
 date:
   description: The date extracted from the backup file name
   returned: when backup is yes
@@ -416,10 +412,10 @@ def get_running_config(module, current_config=None, flags=None):
 def save_config(module, result):
     result["changed"] = True
     if not module.check_mode:
-        run_commands(module, "copy running-config startup-config\r")
+        run_commands(module, "write\r")
     else:
         module.warn(
-            "Skipping command `copy running-config startup-config` due to check_mode.  Configuration not copied to non-volatile storage",
+            "Skipping command `write` due to check_mode.  Configuration not copied to non-volatile storage",
         )
 
 
@@ -477,6 +473,7 @@ def main():
         path = module.params["parents"]
         candidate = get_candidate_config(module)
         running = get_running_config(module, contents, flags=flags)
+        response = {}
         try:
             response = connection.get_diff(
                 candidate=candidate,
