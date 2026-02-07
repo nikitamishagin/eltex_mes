@@ -99,6 +99,16 @@ collections:
 This collection
 includes [network resource modules](https://docs.ansible.com/ansible/latest/network/user_guide/network_resource_modules.html).
 
+## Support the Project
+
+If this project is useful for you in production, labs, or learning — you can support its development. Your support helps
+keep the project maintained, tested against real hardware, and evolving with new features.
+
+* Support via GitHub Sponsors: **https://github.com/sponsors/nikitamishagin**
+* Support via Boosty: **https://boosty.to/nikitamishagin/donate**
+
+Even a small monthly contribution makes a difference. Thank you for your support ❤️
+
 ## Licensing
 
 GNU General Public License v3.0 or later.
