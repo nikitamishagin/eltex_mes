@@ -100,7 +100,7 @@ class TestMesConfigModule(TestMesModule):
         self.assertEqual(self.get_config.call_count, 1)
         self.assertEqual(self.conn.edit_config.call_count, 1)
         args = self.run_commands.call_args[0][1]
-        self.assertIn("copy running-config startup-config\r", args)
+        self.assertIn("write\r", args)
 
     def test_mes_config_save_changed_false(self):
         set_module_args(dict(save_when="changed"))
@@ -117,7 +117,7 @@ class TestMesConfigModule(TestMesModule):
         self.assertEqual(self.get_config.call_count, 0)
         self.assertEqual(self.conn.edit_config.call_count, 0)
         args = self.run_commands.call_args[0][1]
-        self.assertIn("copy running-config startup-config\r", args)
+        self.assertIn("write\r", args)
 
     def test_mes_config_lines_wo_parents(self):
         lines = ["hostname foo"]
