@@ -1,6 +1,0 @@
----
-major_changes:
-  - Adapted the `mes_hostname` module for Eltex MES devices, adjusting command parsing logic and resource module templates.
-minor_changes:
-  - Refactored test module classes to replace `TestIosModule` with `TestMesModule` for consistency with Eltex MES naming conventions.
-  - Updated test class and method names in `test_mes_hostname.py` to align with Eltex MES naming conventions for consistency and clarity.
