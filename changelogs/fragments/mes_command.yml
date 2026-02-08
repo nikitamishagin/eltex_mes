@@ -1,6 +1,0 @@
----
-major_changes:
-  - Adapted the `mes_command` module to support Eltex MES devices, including command parsing and output handling.
-minor_changes:
-  - Updated test class and method names to replace `ios` references with `mes` and adjusted corresponding fixture and command output to align with Eltex MES expectations.
-  - Replaced all references to Cisco IOS commands and outputs with Eltex MES equivalents in documentation and examples.
