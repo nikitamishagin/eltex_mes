@@ -11,7 +11,8 @@ Minor Changes
 -------------
 
 - Refactor `mes_config` module for Eltex MES support (https://github.com/nikitamishagin/eltex_mes/pull/29)
-- [Adaptation]: Command module (https://github.com/nikitamishagin/eltex_mes/pull/25)
+- Refactor `mes_command` module for Eltex MES support (https://github.com/nikitamishagin/eltex_mes/pull/25)
+- Refactor `mes_hostname` module for Eltex MES support (https://github.com/nikitamishagin/eltex_mes/pull/24)
 
 v0.0.1
 ======
