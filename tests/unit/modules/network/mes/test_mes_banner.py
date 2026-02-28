@@ -26,11 +26,11 @@ from ansible_collections.nikitamishagin.eltex_mes.tests.unit.modules.utils impor
 from .mes_module import TestMesModule, load_fixture
 
 
-class TestIosBannerModule(TestMesModule):
+class TestMesBannerModule(TestMesModule):
     module = mes_banner
 
     def setUp(self):
-        super(TestIosBannerModule, self).setUp()
+        super(TestMesBannerModule, self).setUp()
 
         self.mock_get_config = patch(
             "ansible_collections.nikitamishagin.eltex_mes.plugins.modules.mes_banner.get_config",
@@ -43,38 +43,38 @@ class TestIosBannerModule(TestMesModule):
         self.load_config = self.mock_load_config.start()
 
     def tearDown(self):
-        super(TestIosBannerModule, self).tearDown()
+        super(TestMesBannerModule, self).tearDown()
         self.mock_get_config.stop()
         self.mock_load_config.stop()
 
     def load_fixtures(self, commands=None):
         def load_from_file(*args, **kwargs):
-            return load_fixture("ios_banner_show_running_config_ios12.txt")
+            return load_fixture("mes_banner_show_running_config_mes.txt")
 
         self.get_config.side_effect = load_from_file
 
-    def test_ios_banner_create(self):
+    def test_mes_banner_create(self):
         for banner_type in ("login", "motd", "exec", "incoming", "slip-ppp"):
             set_module_args(dict(banner=banner_type, text="test\nbanner\nstring"))
             commands = ["banner {0} @\ntest\nbanner\nstring\n@".format(banner_type)]
             self.execute_module(changed=True, commands=commands)
 
-    def test_ios_banner_remove(self):
+    def test_mes_banner_remove(self):
         set_module_args(dict(banner="login", state="absent"))
         commands = ["no banner login"]
         self.execute_module(changed=True, commands=commands)
 
-    def test_ios_banner_nochange(self):
-        banner_text = load_fixture("ios_banner_show_banner.txt")
+    def test_mes_banner_nochange(self):
+        banner_text = load_fixture("mes_banner_show_banner.txt")
         set_module_args(dict(banner="login", text=banner_text[:-1]))
         self.execute_module()
 
-    def test_ios_banner_idemp(self):
+    def test_mes_banner_idemp(self):
         banner_text = ""
         set_module_args(dict(banner="login", text=banner_text))
         self.execute_module()
 
-    def test_ios_banner_create_delimiter(self):
+    def test_mes_banner_create_delimiter(self):
         for banner_type in ("login", "motd", "exec", "incoming", "slip-ppp"):
             set_module_args(
                 dict(
@@ -87,14 +87,14 @@ class TestIosBannerModule(TestMesModule):
             self.execute_module(changed=True, commands=commands)
 
 
-class TestIosBannerIos12Module(TestIosBannerModule):
+class TestMesBannerMesModule(TestMesBannerModule):
     def load_fixtures(self, commands=None):
         def load_from_file(*args, **kwargs):
-            return load_fixture("ios_banner_show_running_config_ios12.txt")
+            return load_fixture("mes_banner_show_running_config_mes.txt")
 
         self.get_config.side_effect = load_from_file
 
-    def test_ios_banner_nochange(self):
-        banner_text = load_fixture("ios_banner_show_banner.txt")
+    def test_mes_banner_nochange(self):
+        banner_text = load_fixture("mes_banner_show_banner.txt")
         set_module_args(dict(banner="exec", text=banner_text[:-1]))
         self.execute_module()

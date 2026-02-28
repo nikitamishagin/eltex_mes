@@ -151,8 +151,8 @@ TenGigabitEthernet2/5/5 is down, line protocol is down (notconnect)
 tunnel2 is down (not connected)
   Interface index is 10001
   Hardware is tunnel, MAC address is ec:b1:e0:57:b8:c0
-  Tunnel source is 
-  Tunnel destination is 
+  Tunnel source is
+  Tunnel destination is
   Tunnel mode is GRE
   IPv4 address is 10.10.10.10/24
   Interface MTU is 1476
@@ -168,7 +168,7 @@ TenGigabitEthernet1/0/3 is down (not connected)
       0 packets input, 0 bytes received
       0 broadcasts, 0 multicasts
       0 packets dropped
-      0 input errors, 0 FCS                           
+      0 input errors, 0 FCS
       0 oversize, 0 internal MAC
       0 pause frames received
       0 packets output, 0 bytes sent

@@ -86,14 +86,14 @@ Notes:
 
 - [x] Fork the Ansible cisco.ios collection
 - [x] Create a list of modules that can be adapted for Eltex
-- [ ] Polish the repository
+- [x] Polish the repository
   - [x] Improve the README
   - [x] Add the contribution page
   - [x] Add Pull Request and Issue templates
   - [x] Fix pre-commit hooks
   - [x] Fix import paths
   - [x] Adapt GitHub Actions workflows
-  - [ ] Add the support page
+  - [x] Add the support page
 - [x] Define the order of the most important modules
 - [x] Adapt the main modules to get a minimally functional collection
   - [x] Adapt cliconf module
@@ -108,7 +108,7 @@ Notes:
   - [ ] Adapt l2_interfaces module
   - [ ] Adapt l3_interfaces module
   - [ ] Adapt ping module
-  - [ ] Adapt banner module
+  - [x] Adapt banner module
   - [ ] Adapt static_routes module
   - [ ] Adapt user module
   - [ ] Adapt system module

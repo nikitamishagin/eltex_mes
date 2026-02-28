@@ -24,11 +24,10 @@ module: mes_banner
 author: Ricardo Carrillo Cruz (@rcarrillocruz)
 short_description: Module to configure multiline banners.
 description:
-  - This will configure both login and motd banners on remote devices running Cisco
-    IOS. It allows playbooks to add or remote banner text from the active running configuration.
+  - This will configure both login and motd banners on remote devices running Eltex
+    MES. It allows playbooks to add or remote banner text from the active running configuration.
 version_added: 1.0.0
 notes:
-  - Tested against Cisco IOSXE Version 17.3 on CML.
   - This module works with connection C(network_cli).
     See U(https://docs.ansible.com/ansible/latest/network/user_guide/platform_ios.html)
 options:
@@ -106,6 +105,7 @@ commands:
     - string
 """
 from re import M, search
+from typing import Any
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.nikitamishagin.eltex_mes.plugins.module_utils.network.mes.mes import (
@@ -144,7 +144,7 @@ def map_config_to_obj(module):
     """
     out = get_config(module, flags="| begin banner %s" % module.params["banner"])
     if out:
-        regex = search("banner " + module.params["banner"] + " \\^C{1,}\n", out, M)
+        regex = search("banner " + module.params["banner"] + " \\^C+\n", out, M)
         if regex:
             regex = regex.group()
             output = str((out.split(regex))[1].split("^C\n")[0])
@@ -184,7 +184,7 @@ def main():
         supports_check_mode=True,
     )
     warnings = list()
-    result = {"changed": False}
+    result: dict[str, Any] = {"changed": False}
     if warnings:
         result["warnings"] = warnings
     want = map_params_to_obj(module)
