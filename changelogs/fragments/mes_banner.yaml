@@ -1,0 +1,6 @@
+---
+major_changes:
+  - Adapted the `mes_banner` module to support Eltex MES devices.
+minor_changes:
+  - Updated test class and method names to replace `ios` references with `mes` and adjusted corresponding fixture and command output to align with Eltex MES expectations.
+  - Updated progress on the improvement plan.
