@@ -49,7 +49,7 @@ class TestMesBannerModule(TestMesModule):
 
     def load_fixtures(self, commands=None):
         def load_from_file(*args, **kwargs):
-            return load_fixture("ios_banner_show_running_config_ios12.txt")
+            return load_fixture("mes_banner_show_running_config_mes.txt")
 
         self.get_config.side_effect = load_from_file
 
@@ -65,7 +65,7 @@ class TestMesBannerModule(TestMesModule):
         self.execute_module(changed=True, commands=commands)
 
     def test_mes_banner_nochange(self):
-        banner_text = load_fixture("ios_banner_show_banner.txt")
+        banner_text = load_fixture("mes_banner_show_banner.txt")
         set_module_args(dict(banner="login", text=banner_text[:-1]))
         self.execute_module()
 
@@ -87,14 +87,14 @@ class TestMesBannerModule(TestMesModule):
             self.execute_module(changed=True, commands=commands)
 
 
-class TestMesBannerMes12Module(TestMesBannerModule):
+class TestMesBannerMesModule(TestMesBannerModule):
     def load_fixtures(self, commands=None):
         def load_from_file(*args, **kwargs):
-            return load_fixture("ios_banner_show_running_config_ios12.txt")
+            return load_fixture("mes_banner_show_running_config_mes.txt")
 
         self.get_config.side_effect = load_from_file
 
     def test_mes_banner_nochange(self):
-        banner_text = load_fixture("ios_banner_show_banner.txt")
+        banner_text = load_fixture("mes_banner_show_banner.txt")
         set_module_args(dict(banner="exec", text=banner_text[:-1]))
         self.execute_module()
