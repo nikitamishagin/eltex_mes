@@ -3,7 +3,7 @@ authors:
   - Ansible Network Community (ansible-network)
   - Nikita Mishagin
 dependencies:
-  "ansible.netcommon": ">=8.1.0"
+  "ansible.netcommon": ">=8.5.2"
 license_file: LICENSE
 name: eltex_mes
 namespace: nikitamishagin
